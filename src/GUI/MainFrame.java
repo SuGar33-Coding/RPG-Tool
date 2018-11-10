@@ -4,7 +4,7 @@ import backEnd.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.Character;
+import java.io.File;
 
 public class MainFrame {
     private static JFrame frame = new JFrame("RPG Tool");
@@ -19,11 +19,15 @@ public class MainFrame {
     public MainFrame() {
         loadCharacterButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fc = new JFileChooser();
+                ClassLoader loader = MainFrame.class.getClassLoader();
+                String filePath = loader.getResource("GUI").getPath();
+                System.out.println(filePath);
+                filePath = str2path(filePath);
+                System.out.println(filePath);
+                JFileChooser fc = new JFileChooser(filePath);
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
-                System.out.println(fc.getSelectedFile());
-                System.out.println("AHH");
+
             }
         });
         diceyButton.addActionListener(new ActionListener() {
@@ -32,6 +36,11 @@ public class MainFrame {
                 frame.validate();
                 frame.repaint();
 
+            }
+        });
+        newCharacterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
             }
         });
     }
@@ -47,6 +56,18 @@ public class MainFrame {
         frame.setContentPane(new MainFrame().mainMenu);
         frame.validate();
         frame.repaint();
+    }
+
+    public String str2path(String path){
+        String rhet = "";
+        String sep = System.getProperty("file.separator");
+        for(int i = 1; i < path.length(); i++)
+            if(path.charAt(i)=='/')
+                rhet = rhet + sep;
+            else
+                rhet = rhet + path.charAt(i);
+
+        return rhet;
     }
 
 
