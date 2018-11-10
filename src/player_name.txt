@@ -1,8 +1,8 @@
 player name
 char name
 class
-level (dont forget proficiency)
 race
+level (dont forget proficiency)
 alignment
 xp
 Inspiration
@@ -10,6 +10,12 @@ AC
 Speed
 Max HP
 Current HP
+Strength
+Dexterity
+Constitution
+Intelligence
+Wisdom
+Charisma
 Strength Saving
 Athleitcs
 Dex Save

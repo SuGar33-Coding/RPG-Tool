@@ -1,8 +1,10 @@
 package GUI;
+import backEnd.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.Character;
 
 public class MainFrame {
     private static JFrame frame = new JFrame("RPG Tool");
