@@ -12,8 +12,16 @@ public class UI {
     private JPanel buttons;
     private JLabel hiThere;
 
-    public UI() {
+    private UI() {
 
+        loadCharacterButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fc = new JFileChooser();
+                fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                fc.showOpenDialog(mainMenu);
+                System.out.println(fc.getSelectedFile());
+            }
+        });
     }
 
     public static void main(String[] args) {

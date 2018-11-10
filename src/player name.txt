@@ -1,0 +1,36 @@
+player name
+char name
+class
+level (dont forget proficiency)
+race
+alignment
+xp
+Inspiration
+AC
+Speed
+Max HP
+Current HP
+Strength Saving
+Athleitcs
+Dex Save
+Acrobatics
+Slight of Hand
+Stealth
+Constituion Saving
+Intell Saving
+Arcana
+History
+Investigation
+Nature
+Relgion
+Wisdom Saving
+Animal handling
+Insight
+Medicine
+Perception
+Survival
+Charisma Saving
+Deception
+Intimidation
+Performance
+Persuasion
