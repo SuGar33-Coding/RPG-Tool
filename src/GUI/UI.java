@@ -1,5 +1,6 @@
 package GUI;
 
+import backEnd.Dicey;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,9 +9,7 @@ public class UI {
     private JPanel mainMenu;
     private JButton newCharacterButton;
     private JButton loadCharacterButton;
-    private JPanel hello;
-    private JPanel buttons;
-    private JLabel hiThere;
+    private JButton diceyButton;
 
     public UI() {
         loadCharacterButton.addActionListener(new ActionListener() {
@@ -19,6 +18,11 @@ public class UI {
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
                 System.out.println(fc.getSelectedFile());
+            }
+        });
+        diceyButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(Dicey.Roll(1,6,0));
             }
         });
     }
