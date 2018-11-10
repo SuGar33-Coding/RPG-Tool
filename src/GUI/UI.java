@@ -18,6 +18,7 @@ public class UI {
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
                 System.out.println(fc.getSelectedFile());
+                System.out.println("AHH");
             }
         });
         diceyButton.addActionListener(new ActionListener() {
