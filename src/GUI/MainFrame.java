@@ -3,6 +3,11 @@ package GUI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.Writer;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.io.IOException;
 import java.io.File;
 
 public class MainFrame {
@@ -20,10 +25,8 @@ public class MainFrame {
             public void actionPerformed(ActionEvent e) {
                 ClassLoader loader = MainFrame.class.getClassLoader();
                 String filePath = loader.getResource("GUI").getPath();
-                System.out.println(filePath);
                 filePath = str2path(filePath);
-                System.out.println(filePath);
-                JFileChooser fc = new JFileChooser(filePath);
+                JFileChooser fc = new JFileChooser("Characters");
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
 
@@ -40,6 +43,17 @@ public class MainFrame {
         newCharacterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                File dir = new File("newChar");
+                dir.mkdir();
+                Writer writer = null;
+                try {
+                    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("newChar/newChar.txt"), "utf-8"));
+                    writer.write("Something");
+                } catch (IOException ex) {
+                    // Report
+                } finally {
+                    try {writer.close();} catch (Exception ex) {/*ignore*/}
+                }
             }
         });
     }
@@ -60,7 +74,7 @@ public class MainFrame {
     public String str2path(String path){
         String rhet = "";
         String sep = System.getProperty("file.separator");
-        for(int i = 1; i < path.length(); i++)
+        for(int i = 0; i < path.length(); i++)
             if(path.charAt(i)=='/')
                 rhet = rhet + sep;
             else
