@@ -23,7 +23,7 @@ public class UI {
         });
         diceyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println(Dicey.Roll(1,6));
+                System.out.println(Dicey.Roll(1,6,0));
             }
         });
     }
