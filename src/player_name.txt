@@ -17,7 +17,7 @@ Intelligence
 Wisdom
 Charisma
 Strength Saving
-Athleitcs
+Athletics
 Dex Save
 Acrobatics
 Slight of Hand
