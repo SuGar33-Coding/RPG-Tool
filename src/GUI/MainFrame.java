@@ -1,12 +1,10 @@
 package GUI;
 
-import backEnd.Dicey;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class UI {
+public class MainFrame {
     private static JFrame frame = new JFrame("RPG Tool");
     private JPanel mainMenu;
     private JButton newCharacterButton;
@@ -16,7 +14,7 @@ public class UI {
     private JLabel hiThere;
     private JPanel buttons;
 
-    public UI() {
+    public MainFrame() {
         loadCharacterButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fc = new JFileChooser();
@@ -37,14 +35,14 @@ public class UI {
     }
 
     public static void main(String[] args) {
-        frame.setContentPane(new UI().mainMenu);
+        frame.setContentPane(new MainFrame().mainMenu);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
 
     public static void init(){
-        frame.setContentPane(new UI().mainMenu);
+        frame.setContentPane(new MainFrame().mainMenu);
         frame.validate();
         frame.repaint();
     }
