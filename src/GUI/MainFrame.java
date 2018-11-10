@@ -64,6 +64,14 @@ public class MainFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
+        boolean debug = false;
+
+        if (debug) {
+            RPGCharacter c = new RPGCharacter("/Users/cassandra/IdeaProjects/GM-Tool/src/Gabe.txt");
+            System.out.println(c.getStrength());
+            System.out.println(c.getCharisma());
+        }
     }
 
     public static void init(){
