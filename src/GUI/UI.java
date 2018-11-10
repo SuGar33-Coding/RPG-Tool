@@ -12,8 +12,7 @@ public class UI {
     private JPanel buttons;
     private JLabel hiThere;
 
-    private UI() {
-
+    public UI() {
         loadCharacterButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fc = new JFileChooser();
