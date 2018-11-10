@@ -2,14 +2,19 @@ package GUI;
 
 import backEnd.Dicey;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UI {
+    private static JFrame frame = new JFrame("RPG Tool");
     private JPanel mainMenu;
     private JButton newCharacterButton;
     private JButton loadCharacterButton;
     private JButton diceyButton;
+    private JPanel hello;
+    private JLabel hiThere;
+    private JPanel buttons;
 
     public UI() {
         loadCharacterButton.addActionListener(new ActionListener() {
@@ -23,18 +28,27 @@ public class UI {
         });
         diceyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println(Dicey.Roll(1,6,0));
+                frame.setContentPane(new DI().DicePanel);
+                frame.validate();
+                frame.repaint();
+
             }
         });
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Main Menu");
         frame.setContentPane(new UI().mainMenu);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
+
+    public static void init(){
+        frame.setContentPane(new UI().mainMenu);
+        frame.validate();
+        frame.repaint();
+    }
+
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
