@@ -11,7 +11,7 @@ Speed
 Max HP
 Current HP
 Strength Saving
-Athleitcs
+Athletics
 Dex Save
 Acrobatics
 Slight of Hand
