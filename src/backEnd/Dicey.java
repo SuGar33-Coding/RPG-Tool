@@ -3,11 +3,12 @@ public class Dicey {
 
     public static int[] Roll(int number, int sides, int buff){
         int total = 0;
-        int[] rolls = new int[number+1];
+        int[] rolls = new int[number+2];
         for(int i = 0; i < number; i++) {
             rolls[i] = (int) (Math.random() * sides + 1);
             total += rolls[i];
         }
+        rolls[number] = total;
         total += buff;
         rolls[number] = total;
         return rolls;
@@ -36,7 +37,7 @@ public class Dicey {
                 buff = Integer.parseInt(command.substring(plusPos+1));
             return Roll(num,sides,buff);
         }
-        int[] zeroArray = {0};
+        int[] zeroArray = {0,0};
         return zeroArray;
     }
 }

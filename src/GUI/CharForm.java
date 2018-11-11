@@ -144,32 +144,43 @@ public class CharForm {
         int groupCounter = 0;
         for(int i = 0; i<actor.skills.length; i++){
             for(int j=0;j<actor.skills[i].length;j++){
-                checkGroup[groupCounter].setSelected(actor.skills[i][j]);
+                JCheckBox currentBox = checkGroup[groupCounter];
+                currentBox.setSelected(actor.skills[i][j]);
+                int bonus = 0;
+                String bString = "";
+                switch(i) {
+                    case 0:
+                        bonus = actor.getStrength();
+                        break;
+                    case 1:
+                        bonus = actor.getDexterity();
+                        break;
+                    case 2:
+                        bonus = actor.getConstitution();
+                        break;
+                    case 3:
+                        bonus = actor.getIntelligence();
+                        break;
+                    case 4:
+                        bonus = actor.getWisdom();
+                        break;
+                    case 5:
+                        bonus = actor.getCharisma();
+                        break;
+                    default:
+                        bonus = 0;
+                        break;
+                }
+                if(currentBox.isSelected())
+                    bonus += actor.getProficiencyBonus();
+                if(bonus<0)
+                    bString = String.valueOf(bonus);
+                else
+                    bString = "+" + String.valueOf(bonus);
+                currentBox.setText(currentBox.getText()+bString);
+
                 groupCounter++;
             }
         }
-        /*strSave.setSelected(actor.skills[0][0]);
-        athleticsCheckBox.setSelected(actor.skills[0][1]);
-        dexSave.setSelected(actor.skills[1][0]);
-        acrobaticsCheckBox.setSelected(actor.skills[1][2]);
-        sleightOfHandCheckBox.setSelected(actor.skills[1][3]);
-        stealthCheckBox.setSelected(actor.skills[2][0]);
-        conSave.setSelected(actor.skills[3][0]);
-        intSave.setSelected(actor.skills[3][1]);
-        arcanaCheckBox.setSelected(actor.skills[3][2]);
-        historyCheckBox.setSelected(actor.skills[3][3]);
-        investigationCheckBox.setSelected(actor.skills[3][4]);
-        natureCheckBox.setSelected(actor.skills[3][5]);
-        religionCheckBox.setSelected(actor.skills[4][0]);
-        wisSave.setSelected(actor.skills[4][1]);
-        animalhCheckBox.setSelected(actor.skills[4][2]);
-        insightCheckBox.setSelected(actor.skills[4][3]);
-        medicineCheckBox.setSelected(actor.skills[4][4]);
-        perceptionCheckBox.setSelected(actor.skills[4][5]);
-        survivalCheckBox.setSelected(actor.skills[5][0]);
-        chSave.setSelected(actor.skills[5][1]);
-        deceptionCheckBox.setSelected(actor.skills[5][2]);
-        performanceCheckBox.setSelected(actor.skills[5][3]);
-        persuasionCheckBox.setSelected(actor.skills[5][4])*/;
     }
 }
