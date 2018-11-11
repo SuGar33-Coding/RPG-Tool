@@ -55,13 +55,13 @@ public class RPGCharacter {
 
         /* Read from file into array of stats */
         try {
-            File statsFile = new File(filePath + System.getProperty("file.separator") + "Characters/stats.txt");
+            File statsFile = new File(filePath + System.getProperty("file.separator") + "stats.txt");
             BufferedReader br = new BufferedReader(new FileReader(statsFile));
             String stat;
             while ((stat = br.readLine()) != null)
                 rawStats.add(stat);
 
-            File inventoryFile = new File(filePath + System.getProperty("file.separator") + "Characters/inventory.txt");
+            File inventoryFile = new File(filePath + System.getProperty("file.separator") + "inventory.txt");
             br = new BufferedReader(new FileReader(inventoryFile));
             String item;
             while ((item = br.readLine()) != null)
@@ -147,7 +147,7 @@ public class RPGCharacter {
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters/" + charName + "/newChar.txt"), "utf-8"));
             writer.write("Something");
         } catch (IOException ex) {
-            // Report
+            // TODO Report
         } finally {
             try {
                 writer.close();
