@@ -123,5 +123,29 @@ public class CharForm {
                 RPGCharacter.createNewCharFiles(data);
             }
         });
+
+    }
+
+    public void updateData(RPGCharacter actor){
+        playerF.setText(actor.getPlayerName());
+        charF.setText(actor.getName());
+        classF.setText(actor.getCharacterClass());
+        raceF.setText(actor.getRace());
+        levelF.setText(String.valueOf(actor.getLevel()));
+        alignmentF.setText(actor.getAlignment());
+        xpF.setText(String.valueOf(actor.getXp()));
+        strengthF.setText(String.valueOf(actor.getRawStrength()));
+        dexterityF.setText(String.valueOf(actor.getRawDexterity()));
+        constitutionF.setText(String.valueOf(actor.getRawConstitution()));
+        intelligenceF.setText(String.valueOf(actor.getRawIntelligence()));
+        wisdomF.setText(String.valueOf(actor.getRawWisdom()));
+        charismaF.setText(String.valueOf(actor.getRawCharisma()));
+        SB.setText("SB: "+actor.getStrength());
+        DB.setText("SB: "+actor.getDexterity());
+        CB.setText("SB: "+actor.getConstitution());
+        IB.setText("SB: "+actor.getIntelligence());
+        WB.setText("SB: "+actor.getWisdom());
+        ChB.setText("ChB: "+actor.getCharisma());
+
     }
 }
