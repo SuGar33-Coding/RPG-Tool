@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class RPGCharacter {
+    private int ProficiencyBonus = 2;
     /* Basic character stats */
     private String playerName;
     private String name;
@@ -372,5 +373,10 @@ public class RPGCharacter {
 
     public void setRawCharisma(int rawCharisma) {
         this.rawCharisma = rawCharisma;
+    }
+
+    public int getProficiencyBonus() { return ProficiencyBonus;   }
+
+    public void setProficiencyBonus(int proficiencyBonus) { ProficiencyBonus = proficiencyBonus;
     }
 }

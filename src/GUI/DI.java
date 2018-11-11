@@ -39,7 +39,13 @@ public class DI {
                         buff = Integer.parseInt(bufff);
                     int num = Integer.parseInt(numf);
                     int sides = Integer.parseInt(sidef);
-                    resLab.setText("Result: " + String.valueOf(Dicey.Roll(num,sides,buff)));
+                    int rolls[] = Dicey.Roll(num,sides,buff);
+                    String rollString = String.valueOf(rolls[0]);
+                    for(int i=1; i<rolls.length-2;i++){
+                        rollString += " + " + String.valueOf(rolls[i]);
+                    }
+                    rollString += " = " + String.valueOf(rolls[rolls.length-2]) + "+" + buff + " = " + String.valueOf(rolls[rolls.length-1]);
+                    resLab.setText("Result: " + rollString);
                 }
             }
         });
