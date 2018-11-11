@@ -120,6 +120,9 @@ public class CharForm {
                 data.add(Boolean.toString(survivalCheckBox.isSelected()));
                 data.add(Boolean.toString(chSave.isSelected()));
                 data.add(Boolean.toString(deceptionCheckBox.isSelected())); // TODO: See if you can do this better with button groups?
+                data.add(Boolean.toString(intimidationCheckBox.isSelected()));
+                data.add(Boolean.toString(performanceCheckBox.isSelected()));
+                data.add(Boolean.toString(persuasionCheckBox.isSelected()));
                 RPGCharacter.createNewCharFiles(data);
             }
         });
