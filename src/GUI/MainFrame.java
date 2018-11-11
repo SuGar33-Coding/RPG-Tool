@@ -17,9 +17,10 @@ public class MainFrame {
     private JButton newCharacterButton;
     private JButton loadCharacterButton;
     private JButton diceyButton;
-    private JPanel hello;
-    private JLabel hiThere;
+    private JPanel welcomePanel;
+    private JLabel welcomeLabel;
     private JPanel buttons;
+    private JButton deleteButton;
 
     public MainFrame() {
         loadCharacterButton.addActionListener(new ActionListener() {
@@ -50,6 +51,24 @@ public class MainFrame {
                 frame.setContentPane(new CharForm().charPan);
                 frame.validate();
                 frame.repaint();
+            }
+        });
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fc = new JFileChooser("Characters");
+                fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                fc.showOpenDialog(mainMenu);
+                String fldrName = fc.getName(fc.getSelectedFile());
+                File dir = new File("Characters"+System.getProperty("file.separator")+fldrName);
+
+                if(dir.isDirectory() != false) {
+                    File[] listFiles = dir.listFiles();
+                    for (File file : listFiles) {
+                        file.delete();
+                    }
+                    dir.delete();
+                }
             }
         });
     }
