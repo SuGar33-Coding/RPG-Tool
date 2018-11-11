@@ -27,7 +27,7 @@ public class MainFrame {
                 JFileChooser fc = new JFileChooser("Characters");
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
-
+                RPGCharacter actor = new RPGCharacter(fc.getName(fc.getSelectedFile()));
             }
         });
         diceyButton.addActionListener(new ActionListener() {
