@@ -145,9 +145,12 @@ public class CharForm {
         for(int i = 0; i<actor.skills.length; i++){
             for(int j=0;j<actor.skills[i].length;j++){
                 JCheckBox currentBox = checkGroup[groupCounter];
+                String currentString = currentBox.getText();
+                if(Character.isDigit(currentString.charAt(currentString.length()-1)))
+                    currentString = currentString.substring(0,currentString.length()-4);
                 currentBox.setSelected(actor.skills[i][j]);
-                int bonus = 0;
-                String bString = "";
+                int bonus;
+                String bString;
                 switch(i) {
                     case 0:
                         bonus = actor.getStrength();
@@ -174,10 +177,10 @@ public class CharForm {
                 if(currentBox.isSelected())
                     bonus += actor.getProficiencyBonus();
                 if(bonus<0)
-                    bString = String.valueOf(bonus);
+                    bString = "  " + String.valueOf(bonus);
                 else
                     bString = "  +" + String.valueOf(bonus);
-                currentBox.setText(currentBox.getText()+bString);
+                currentBox.setText(currentString+bString);
 
                 groupCounter++;
             }
