@@ -47,13 +47,13 @@ public class RPGCharacter {
 
         /* Read from file into array of stats */
         try {
-            File statsFile = new File(filePath + System.getProperty("file.separator") + "stats.txt");
+            File statsFile = new File(filePath + System.getProperty("file.separator") + "Characters/stats.txt");
             BufferedReader br = new BufferedReader(new FileReader(statsFile));
             String stat;
             while ((stat = br.readLine()) != null)
                 rawStats.add(stat);
 
-            File inventoryFile = new File(filePath + System.getProperty("file.separator") + "inventory.txt");
+            File inventoryFile = new File(filePath + System.getProperty("file.separator") + "Characters/inventory.txt");
             br = new BufferedReader(new FileReader(inventoryFile));
             String item;
             while ((item = br.readLine()) != null)
