@@ -1,6 +1,7 @@
 package GUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,15 +17,17 @@ public class DI {
     private JLabel resLab;
     private JButton backButton;
     private JButton rollButton;
+    private JScrollPane resultsScrollPane;
+    private JTextArea resultTextArea;
 
     public DI() {
 
-        backButton.addActionListener(new ActionListener() {
+        /*backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainFrame.init();  // Return to main menu
             }
-        });
+        }); some nice legacy code for ya*/
         rollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,7 +53,7 @@ public class DI {
                             rollString += "+";
                         rollString += buff + " = " + String.valueOf(rolls[rolls.length - 1]);
                     }
-                    resLab.setText("Result: " + rollString);
+                    resultTextArea.append("\nResult: " + rollString);
                 }
             }
         });
