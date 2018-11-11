@@ -10,7 +10,7 @@ public class Dicey {
         }
         rolls[number] = total;
         total += buff;
-        rolls[number] = total;
+        rolls[number+1] = total;
         return rolls;
     }
 

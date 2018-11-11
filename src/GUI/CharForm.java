@@ -176,7 +176,7 @@ public class CharForm {
                 if(bonus<0)
                     bString = String.valueOf(bonus);
                 else
-                    bString = "+" + String.valueOf(bonus);
+                    bString = "  +" + String.valueOf(bonus);
                 currentBox.setText(currentBox.getText()+bString);
 
                 groupCounter++;
