@@ -105,9 +105,6 @@ public class RPGCharacter {
             }
         }
 
-        /* (hopefully) Garbage collect that shit */
-        rawStats = null;
-
         calculateRealStats();
         // TODO: calculate relevant stats
     }
