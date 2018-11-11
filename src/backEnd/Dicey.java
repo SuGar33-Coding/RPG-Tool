@@ -9,6 +9,11 @@ public class Dicey {
         return total;
     }
 
+    /**
+     * Takes string in the standard format for decided amount of dice and amount of sides and rolls accordingly
+     * @param command String in the form #D# or #d#
+     * @return Dice roll result
+     */
     public static int Roll(String command){
         int dpos = 0;
         int plusPos = 0;
