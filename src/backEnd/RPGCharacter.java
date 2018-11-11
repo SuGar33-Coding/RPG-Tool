@@ -24,6 +24,14 @@ public class RPGCharacter {
     private int currentHitDiceAmount;
 
     public boolean[][] skills = {new boolean[2], new boolean[4], new boolean[1], new boolean[6], new boolean[6], new boolean[5]};
+    /*
+    Strength Skills: Str Save, Athletics
+    Dex Skills: Dex Save, Acrobatics, Sleight of Hand, Stealth
+    Constitution Skills: Cons Save
+    Intelligence Skills: Int Save, Arcana, History, Investigation, Nature, Religion
+    Wisdom Skills: Wis Save, Animal handling, Insight, Medicine, Perception, Survival
+    Charisma Skills: Cha Save, Deception, Intimidation, Performance, Persuasion
+     */
 
     /* Raw skill stats */
     private int rawStrength;

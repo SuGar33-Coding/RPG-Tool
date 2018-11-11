@@ -160,6 +160,7 @@ public class CharForm {
         IB.setText("SB: "+actor.getIntelligence());
         WB.setText("SB: "+actor.getWisdom());
         ChB.setText("ChB: "+actor.getCharisma());
+        athleticsCheckBox
 
     }
 }
