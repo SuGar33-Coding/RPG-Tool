@@ -2,6 +2,7 @@ package backEnd;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class RPGCharacter {
     /* Basic character stats */
@@ -17,32 +18,11 @@ public class RPGCharacter {
     private int speed;
     private int maxHP;
     private int currentHP;
+    private int hitDiceSides;
+    private int hitDiceAmount;
+    private int currentHitDiceAmount;
 
     public boolean[][] skills = {new boolean[2], new boolean[4], new boolean[1], new boolean[6], new boolean[6], new boolean[5]};
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public int getDexterity() {
-        return dexterity;
-    }
-
-    public int getConstitution() {
-        return constitution;
-    }
-
-    public int getIntelligence() {
-        return intelligence;
-    }
-
-    public int getWisdom() {
-        return wisdom;
-    }
-
-    public int getCharisma() {
-        return charisma;
-    }
 
     /* Skill stats */
     private int strength;
@@ -52,9 +32,13 @@ public class RPGCharacter {
     private int wisdom;
     private int charisma;
 
+    /* Items list */
+    LinkedList<Item> items = new LinkedList<>();
+
     public RPGCharacter(String filePath) {
         ArrayList<String> rawStats = new ArrayList<String>();
 
+        /* Read from file into array of stats */
         try {
             File file = new File(filePath);
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -65,29 +49,35 @@ public class RPGCharacter {
             e.printStackTrace();
         }
 
-        this.playerName = rawStats.remove(0);
-        this.name = rawStats.remove(0);
-        this.characterClass = rawStats.remove(0);
-        this.race = rawStats.remove(0);
-        this.level = Integer.parseInt(rawStats.remove(0));
-        this.alignment = rawStats.remove(0);
-        this.xp = Integer.parseInt(rawStats.remove(0));
-        this.inspiration = Boolean.parseBoolean(rawStats.remove(0));
-        this.ac = Integer.parseInt(rawStats.remove(0));
-        this.speed = Integer.parseInt(rawStats.remove(0));
-        this.maxHP = Integer.parseInt(rawStats.remove(0));
-        this.currentHP = Integer.parseInt(rawStats.remove(0));
+        int counter = 0; //to avoid hardcoding the indexes for reading from file
+        this.playerName = rawStats.get(counter); counter ++;
+        this.name = rawStats.get(counter); counter ++;
+        this.characterClass = rawStats.get(counter); counter ++;
+        this.race = rawStats.get(counter); counter ++;
+        this.level = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.alignment = rawStats.get(counter); counter ++;
+        this.xp = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.inspiration = Boolean.parseBoolean(rawStats.get(counter)); counter ++;
+        this.ac = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.speed = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.maxHP = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.currentHP = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.hitDiceSides = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.hitDiceAmount = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.currentHitDiceAmount = Integer.parseInt(rawStats.get(counter)); counter ++;
 
-        this.strength = Integer.parseInt(rawStats.remove(0));
-        this.dexterity = Integer.parseInt(rawStats.remove(0));
-        this.constitution = Integer.parseInt(rawStats.remove(0));
-        this.intelligence = Integer.parseInt(rawStats.remove(0));
-        this.wisdom = Integer.parseInt(rawStats.remove(0));
-        this.charisma = Integer.parseInt(rawStats.remove(0));
+        this.strength = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.dexterity = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.constitution = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.intelligence = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.wisdom = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.charisma = Integer.parseInt(rawStats.get(counter)); counter ++;
+
 
         for (int i = 0; i < this.skills.length; i++) {
             for (int j = 0; j < this.skills[i].length; j++) {
-                skills[i][j] = Boolean.parseBoolean(rawStats.remove(0));
+                skills[i][j] = Boolean.parseBoolean(rawStats.get(counter));
+                counter ++;
             }
         }
 
@@ -125,5 +115,31 @@ public class RPGCharacter {
                 writer.close();
             } catch (Exception ex) {/*ignore*/}
         }
+    }
+
+    // TODO: Usse ENUMS and arrays cause its more sugar33
+    /* Getters */
+    public int getStrength() {
+        return strength;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public int getConstitution() {
+        return constitution;
+    }
+
+    public int getIntelligence() {
+        return intelligence;
+    }
+
+    public int getWisdom() {
+        return wisdom;
+    }
+
+    public int getCharisma() {
+        return charisma;
     }
 }

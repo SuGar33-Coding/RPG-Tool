@@ -1,0 +1,4 @@
+WEAPON name attkBonus damage type
+ARMOR name bonus type
+CURRENCY type amount
+MISC name
