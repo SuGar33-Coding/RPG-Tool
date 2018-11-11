@@ -3,6 +3,7 @@ package backEnd;
 public class Armor extends Item {
     /* priority in Items list sorting */
     int priority = 1;
+    public static final String TYPE = "Armor";
 
     int bonus;
     String armorType;
