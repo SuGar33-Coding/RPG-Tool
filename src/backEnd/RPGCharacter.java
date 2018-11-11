@@ -55,13 +55,13 @@ public class RPGCharacter {
 
         /* Read from file into array of stats */
         try {
-            File statsFile = new File(filePath + System.getProperty("file.separator") + "Characters/stats.txt");
+            File statsFile = new File(filePath + System.getProperty("file.separator") + "stats.txt");
             BufferedReader br = new BufferedReader(new FileReader(statsFile));
             String stat;
             while ((stat = br.readLine()) != null)
                 rawStats.add(stat);
 
-            File inventoryFile = new File(filePath + System.getProperty("file.separator") + "Characters/inventory.txt");
+            File inventoryFile = new File(filePath + System.getProperty("file.separator") + "inventory.txt");
             br = new BufferedReader(new FileReader(inventoryFile));
             String item;
             while ((item = br.readLine()) != null)
@@ -138,19 +138,16 @@ public class RPGCharacter {
         }
     }
 
-    public static void createNewCharFiles(ArrayList<String> data) {
-        String charName = data.get(1);
+    public void createNewCharFiles() {
+        String charName = "Ikilian";
         File dir = new File("Characters/" + charName);
         dir.mkdir();
         Writer writer = null;
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters/" + charName + "/stats.txt"), "utf-8"));
-            for(int i = 0; i < data.size();i++){
-                writer.write(data.get(i));
-                writer.write("\n");
-            }
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters/" + charName + "/newChar.txt"), "utf-8"));
+            writer.write("Something");
         } catch (IOException ex) {
-            System.out.println("Something went wrong when writing to character file.");
+            // Report
         } finally {
             try {
                 writer.close();
