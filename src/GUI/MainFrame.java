@@ -27,7 +27,7 @@ public class MainFrame {
                 JFileChooser fc = new JFileChooser("Characters");
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
-                RPGCharacter actor = new RPGCharacter("Characters" + System.getProperty("file.separator")+fc.getName(fc.getSelectedFile()));
+                RPGCharacter actor = new RPGCharacter(fc.getName(fc.getSelectedFile()));
                 CharForm charFrame = new CharForm();
                 JPanel pan = charFrame.charPan;
                 frame.setContentPane(pan);
