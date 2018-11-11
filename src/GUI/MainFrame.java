@@ -24,9 +24,6 @@ public class MainFrame {
     public MainFrame() {
         loadCharacterButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ClassLoader loader = MainFrame.class.getClassLoader();
-                String filePath = loader.getResource("GUI").getPath();
-                filePath = str2path(filePath);
                 JFileChooser fc = new JFileChooser("Characters");
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
@@ -44,17 +41,9 @@ public class MainFrame {
         newCharacterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                File dir = new File("newChar");
-                dir.mkdir();
-                Writer writer = null;
-                try {
-                    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("newChar/newChar.txt"), "utf-8"));
-                    writer.write("Something");
-                } catch (IOException ex) {
-                    // Report
-                } finally {
-                    try {writer.close();} catch (Exception ex) {/*ignore*/}
-                }
+                frame.setContentPane(new CharForm().charPan);
+                frame.validate();
+                frame.repaint();
             }
         });
     }
