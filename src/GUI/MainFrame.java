@@ -57,7 +57,7 @@ public class MainFrame {
         /* add debugging statements to here */
         boolean debug = false;
         if (debug) {
-            RPGCharacter c = new RPGCharacter("/Users/cassandra/IdeaProjects/GM-Tool/src");
+            RPGCharacter c = new RPGCharacter("/Users/cassandra/IdeaProjects/GM-Tool/Characters");
             System.out.println(c.getStrength());
             System.out.println(c.getCharisma());
             for (Item i : c.items)
