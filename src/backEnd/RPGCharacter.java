@@ -1,9 +1,6 @@
 package backEnd;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class RPGCharacter {
@@ -111,5 +108,22 @@ public class RPGCharacter {
         this.intelligence = (this.intelligence - 10)/2;
         this.wisdom = (this.wisdom - 10)/2;
         this.charisma = (this.charisma - 10)/2;
+    }
+
+    public void createNewCharFiles() {
+        String charName = "Ikilian";
+        File dir = new File("Characters/" + charName);
+        dir.mkdir();
+        Writer writer = null;
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters/" + charName + "/newChar.txt"), "utf-8"));
+            writer.write("Something");
+        } catch (IOException ex) {
+            // Report
+        } finally {
+            try {
+                writer.close();
+            } catch (Exception ex) {/*ignore*/}
+        }
     }
 }
