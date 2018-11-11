@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class RPGCharacter {
-
     /* Basic character stats */
     private String playerName;
     private String name;
@@ -145,7 +144,7 @@ public class RPGCharacter {
     public static void createNewCharFiles(ArrayList<String> data) {
         String charName = data.get(1);//.replace(" ","_"); have to decide whether we want underscores, does function without
         String sep = System.getProperty("file.separator");
-        File dir = new File("Characters/" + charName);
+        File dir = new File("Characters" + sep + charName);
         dir.mkdir();
         Writer writer = null;
         try {
