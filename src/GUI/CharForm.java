@@ -62,7 +62,6 @@ public class CharForm {
     private JCheckBox chSave;
     private JCheckBox animalhCheckBox;
     private JCheckBox athleticsCheckBox;
-    private JCheckBox checkBox17;
     private JCheckBox intimidationCheckBox;
     private JCheckBox medicineCheckBox;
     private JCheckBox perceptionCheckBox;
@@ -73,6 +72,10 @@ public class CharForm {
     private JCheckBox historyCheckBox;
     private JButton updateSaveButton;
     private JButton backButton;
+    private JCheckBox[] checkGroup =
+            {strSave,athleticsCheckBox,dexSave,acrobaticsCheckBox,sleightOfHandCheckBox,stealthCheckBox,conSave,intSave,arcanaCheckBox,historyCheckBox,investigationCheckBox,
+                    natureCheckBox,religionCheckBox,wisSave,animalhCheckBox,insightCheckBox,medicineCheckBox,perceptionCheckBox,survivalCheckBox,chSave,deceptionCheckBox,
+                    intimidationCheckBox,performanceCheckBox,persuasionCheckBox}; // Just a list of all checkboxes/skills
 
     public CharForm() {
 
@@ -107,32 +110,10 @@ public class CharForm {
                 data.add(intelligenceF.getText());
                 data.add(wisdomF.getText());
                 data.add(charismaF.getText());
-                data.add(Boolean.toString(strSave.isSelected()));
-                data.add(Boolean.toString(athleticsCheckBox.isSelected()));
-                data.add(Boolean.toString(dexSave.isSelected()));
-                data.add(Boolean.toString(acrobaticsCheckBox.isSelected()));
-                data.add(Boolean.toString(sleightOfHandCheckBox.isSelected()));
-                data.add(Boolean.toString(stealthCheckBox.isSelected()));
-                data.add(Boolean.toString(conSave.isSelected()));
-                data.add(Boolean.toString(intSave.isSelected()));
-                data.add(Boolean.toString(arcanaCheckBox.isSelected()));
-                data.add(Boolean.toString(historyCheckBox.isSelected()));
-                data.add(Boolean.toString(investigationCheckBox.isSelected()));
-                data.add(Boolean.toString(natureCheckBox.isSelected()));
-                data.add(Boolean.toString(religionCheckBox.isSelected()));
-                data.add(Boolean.toString(wisSave.isSelected()));
-                data.add(Boolean.toString(animalhCheckBox.isSelected()));
-                data.add(Boolean.toString(insightCheckBox.isSelected()));
-                data.add(Boolean.toString(medicineCheckBox.isSelected()));
-                data.add(Boolean.toString(perceptionCheckBox.isSelected()));
-                data.add(Boolean.toString(survivalCheckBox.isSelected()));
-                data.add(Boolean.toString(chSave.isSelected()));
-                data.add(Boolean.toString(deceptionCheckBox.isSelected())); // TODO: See if you can do this better with button groups?
-                data.add(Boolean.toString(intimidationCheckBox.isSelected()));
-                data.add(Boolean.toString(performanceCheckBox.isSelected()));
-                data.add(Boolean.toString(persuasionCheckBox.isSelected()));
-                RPGCharacter.createNewCharFiles(data);
-                String sep = System.getProperty("file.separator");
+                for(JCheckBox checkBox : checkGroup){
+                    data.add(Boolean.toString(checkBox.isSelected()));
+                }
+                RPGCharacter.updateCharFiles(data);
                 RPGCharacter actor = new RPGCharacter(charF.getText());
                 updateData(actor);
             }
@@ -155,12 +136,40 @@ public class CharForm {
         wisdomF.setText(String.valueOf(actor.getRawWisdom()));
         charismaF.setText(String.valueOf(actor.getRawCharisma()));
         SB.setText("SB: "+actor.getStrength());
-        DB.setText("SB: "+actor.getDexterity());
-        CB.setText("SB: "+actor.getConstitution());
-        IB.setText("SB: "+actor.getIntelligence());
-        WB.setText("SB: "+actor.getWisdom());
+        DB.setText("DB: "+actor.getDexterity());
+        CB.setText("CB: "+actor.getConstitution());
+        IB.setText("IB: "+actor.getIntelligence());
+        WB.setText("WB: "+actor.getWisdom());
         ChB.setText("ChB: "+actor.getCharisma());
-        athleticsCheckBox
-
+        int groupCounter = 0;
+        for(int i = 0; i<actor.skills.length; i++){
+            for(int j=0;j<actor.skills[i].length;j++){
+                checkGroup[groupCounter].setSelected(actor.skills[i][j]);
+                groupCounter++;
+            }
+        }
+        /*strSave.setSelected(actor.skills[0][0]);
+        athleticsCheckBox.setSelected(actor.skills[0][1]);
+        dexSave.setSelected(actor.skills[1][0]);
+        acrobaticsCheckBox.setSelected(actor.skills[1][2]);
+        sleightOfHandCheckBox.setSelected(actor.skills[1][3]);
+        stealthCheckBox.setSelected(actor.skills[2][0]);
+        conSave.setSelected(actor.skills[3][0]);
+        intSave.setSelected(actor.skills[3][1]);
+        arcanaCheckBox.setSelected(actor.skills[3][2]);
+        historyCheckBox.setSelected(actor.skills[3][3]);
+        investigationCheckBox.setSelected(actor.skills[3][4]);
+        natureCheckBox.setSelected(actor.skills[3][5]);
+        religionCheckBox.setSelected(actor.skills[4][0]);
+        wisSave.setSelected(actor.skills[4][1]);
+        animalhCheckBox.setSelected(actor.skills[4][2]);
+        insightCheckBox.setSelected(actor.skills[4][3]);
+        medicineCheckBox.setSelected(actor.skills[4][4]);
+        perceptionCheckBox.setSelected(actor.skills[4][5]);
+        survivalCheckBox.setSelected(actor.skills[5][0]);
+        chSave.setSelected(actor.skills[5][1]);
+        deceptionCheckBox.setSelected(actor.skills[5][2]);
+        performanceCheckBox.setSelected(actor.skills[5][3]);
+        persuasionCheckBox.setSelected(actor.skills[5][4])*/;
     }
 }
