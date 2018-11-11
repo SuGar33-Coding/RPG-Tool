@@ -65,10 +65,10 @@ public class MainFrame {
         frame.pack();
         frame.setVisible(true);
 
+        /* add debugging statements to here */
         boolean debug = false;
-
         if (debug) {
-            RPGCharacter c = new RPGCharacter("/Users/cassandra/IdeaProjects/GM-Tool/src/Gabe.txt");
+            RPGCharacter c = new RPGCharacter("/Users/cassandra/IdeaProjects/GM-Tool/src/test_character.txt");
             System.out.println(c.getStrength());
             System.out.println(c.getCharisma());
         }
