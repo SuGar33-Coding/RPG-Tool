@@ -132,6 +132,9 @@ public class CharForm {
                 data.add(Boolean.toString(performanceCheckBox.isSelected()));
                 data.add(Boolean.toString(persuasionCheckBox.isSelected()));
                 RPGCharacter.createNewCharFiles(data);
+                String sep = System.getProperty("file.separator");
+                RPGCharacter actor = new RPGCharacter(charF.getText());
+                updateData(actor);
             }
         });
 

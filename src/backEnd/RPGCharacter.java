@@ -54,18 +54,21 @@ public class RPGCharacter {
         }
     };
 
-    public RPGCharacter(String filePath) {
+    public RPGCharacter(String charName) {  //character's name
+        // Changed so that this method handles creating file path so as to not be redundant in other files.
         ArrayList<String> rawStats = new ArrayList<String>();
+        String sep = System.getProperty("file.separator");
+        String filePath = "Characters" + sep + charName;//.replace(" ","_");  TODO: Decide whether we want under scores(does function without)
 
         /* Read from file into array of stats */
         try {
-            File statsFile = new File(filePath + System.getProperty("file.separator") + "stats.txt");
+            File statsFile = new File(filePath + sep + "stats.txt");
             BufferedReader br = new BufferedReader(new FileReader(statsFile));
             String stat;
             while ((stat = br.readLine()) != null)
                 rawStats.add(stat);
 
-            File inventoryFile = new File(filePath + System.getProperty("file.separator") + "inventory.txt");
+            File inventoryFile = new File(filePath + sep + "inventory.txt");
             br = new BufferedReader(new FileReader(inventoryFile));
             String item;
             while ((item = br.readLine()) != null)
@@ -140,7 +143,7 @@ public class RPGCharacter {
     }
 
     public static void createNewCharFiles(ArrayList<String> data) {
-        String charName = data.get(1);
+        String charName = data.get(1);//.replace(" ","_"); have to decide whether we want underscores, does function without
         String sep = System.getProperty("file.separator");
         File dir = new File("Characters/" + charName);
         dir.mkdir();
