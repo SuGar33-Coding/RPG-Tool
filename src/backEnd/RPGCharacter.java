@@ -92,7 +92,7 @@ public class RPGCharacter {
         this.currentHitDiceAmount = Integer.parseInt(rawStats.get(counter)); counter ++;
 
         this.rawStrength = Integer.parseInt(rawStats.get(counter)); counter ++;
-        this.rawCharisma = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.rawDexterity = Integer.parseInt(rawStats.get(counter)); counter ++;
         this.rawConstitution = Integer.parseInt(rawStats.get(counter)); counter ++;
         this.rawIntelligence = Integer.parseInt(rawStats.get(counter)); counter ++;
         this.rawWisdom = Integer.parseInt(rawStats.get(counter)); counter ++;
