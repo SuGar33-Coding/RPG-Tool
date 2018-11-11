@@ -2,6 +2,7 @@ package GUI;
 import backEnd.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
@@ -39,9 +40,14 @@ public class MainFrame {
         });
         diceyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new DI().DicePanel);
+                JFrame diceFrame = new JFrame("Dicey");
+                diceFrame.setContentPane(new DI().DicePanel);
+                diceFrame.setPreferredSize(new Dimension(500,300));
+                diceFrame.pack();
+                diceFrame.setVisible(true);
+                /*frame.setContentPane(new DI().DicePanel);
                 frame.validate();
-                frame.repaint();
+                frame.repaint();*/
 
             }
         });
