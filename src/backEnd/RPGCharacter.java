@@ -25,6 +25,14 @@ public class RPGCharacter {
 
     public boolean[][] skills = {new boolean[2], new boolean[4], new boolean[1], new boolean[6], new boolean[6], new boolean[5]};
 
+    /* Raw skill stats */
+    private int rawStrength;
+    private int rawDexterity;
+    private int rawConstitution;
+    private int rawIntelligence;
+    private int rawWisdom;
+    private int rawCharisma;
+
     /* Skill stats */
     private int strength;
     private int dexterity;
@@ -79,12 +87,12 @@ public class RPGCharacter {
         this.hitDiceAmount = Integer.parseInt(rawStats.get(counter)); counter ++;
         this.currentHitDiceAmount = Integer.parseInt(rawStats.get(counter)); counter ++;
 
-        this.strength = Integer.parseInt(rawStats.get(counter)); counter ++;
-        this.dexterity = Integer.parseInt(rawStats.get(counter)); counter ++;
-        this.constitution = Integer.parseInt(rawStats.get(counter)); counter ++;
-        this.intelligence = Integer.parseInt(rawStats.get(counter)); counter ++;
-        this.wisdom = Integer.parseInt(rawStats.get(counter)); counter ++;
-        this.charisma = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.rawStrength = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.rawCharisma = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.rawConstitution = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.rawIntelligence = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.rawWisdom = Integer.parseInt(rawStats.get(counter)); counter ++;
+        this.rawCharisma = Integer.parseInt(rawStats.get(counter)); counter ++;
 
 
         for (int i = 0; i < this.skills.length; i++) {
@@ -105,12 +113,12 @@ public class RPGCharacter {
      * Get's the REAL stats
      */
     private void calculateRealStats() {
-        this.strength = (this.strength - 10)/2;
-        this.dexterity = (this.dexterity - 10)/2;
-        this.constitution = (this.constitution - 10)/2;
-        this.intelligence = (this.intelligence - 10)/2;
-        this.wisdom = (this.wisdom - 10)/2;
-        this.charisma = (this.charisma - 10)/2;
+        this.strength = (this.rawStrength - 10)/2;
+        this.dexterity = (this.rawDexterity - 10)/2;
+        this.constitution = (this.rawConstitution - 10)/2;
+        this.intelligence = (this.rawIntelligence - 10)/2;
+        this.wisdom = (this.rawWisdom - 10)/2;
+        this.charisma = (this.rawCharisma - 10)/2;
     }
 
     private void addItem(String infoLine) {
@@ -283,5 +291,53 @@ public class RPGCharacter {
 
     public void setCurrentHitDiceAmount(int currentHitDiceAmount) {
         this.currentHitDiceAmount = currentHitDiceAmount;
+    }
+
+    public int getRawStrength() {
+        return rawStrength;
+    }
+
+    public void setRawStrength(int rawStrength) {
+        this.rawStrength = rawStrength;
+    }
+
+    public int getRawDexterity() {
+        return rawDexterity;
+    }
+
+    public void setRawDexterity(int rawDexterity) {
+        this.rawDexterity = rawDexterity;
+    }
+
+    public int getRawConstitution() {
+        return rawConstitution;
+    }
+
+    public void setRawConstitution(int rawConstitution) {
+        this.rawConstitution = rawConstitution;
+    }
+
+    public int getRawIntelligence() {
+        return rawIntelligence;
+    }
+
+    public void setRawIntelligence(int rawIntelligence) {
+        this.rawIntelligence = rawIntelligence;
+    }
+
+    public int getRawWisdom() {
+        return rawWisdom;
+    }
+
+    public void setRawWisdom(int rawWisdom) {
+        this.rawWisdom = rawWisdom;
+    }
+
+    public int getRawCharisma() {
+        return rawCharisma;
+    }
+
+    public void setRawCharisma(int rawCharisma) {
+        this.rawCharisma = rawCharisma;
     }
 }
