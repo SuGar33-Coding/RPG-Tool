@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class RPGCharacter {
+
     /* Basic character stats */
     private String playerName;
     private String name;
@@ -179,6 +180,14 @@ public class RPGCharacter {
 
     public int getCharisma() {
         return charisma;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
     public String getName() {
