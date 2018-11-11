@@ -3,6 +3,7 @@ package backEnd;
 public class Weapon extends Item {
     /* priority in Items list sorting */
     int priority = 0;
+    public static final String TYPE = "Weapon";
 
     int attackBonus;
     String damageDice;
