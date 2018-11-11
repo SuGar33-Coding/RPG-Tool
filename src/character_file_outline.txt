@@ -10,6 +10,9 @@ AC
 Speed
 Max HP
 Current HP
+Hit Dice Sides
+Hit Dice amount
+Current Hit Dice Amount
 Strength
 Dexterity
 Constitution

@@ -23,6 +23,30 @@ public class RPGCharacter {
 
     public boolean[][] skills = {new boolean[2], new boolean[4], new boolean[1], new boolean[6], new boolean[6], new boolean[5]};
 
+    public int getStrength() {
+        return strength;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public int getConstitution() {
+        return constitution;
+    }
+
+    public int getIntelligence() {
+        return intelligence;
+    }
+
+    public int getWisdom() {
+        return wisdom;
+    }
+
+    public int getCharisma() {
+        return charisma;
+    }
+
     /* Skill stats */
     private int strength;
     private int dexterity;
@@ -70,7 +94,22 @@ public class RPGCharacter {
             }
         }
 
+        /* (hopefully) Garbage collect that shit */
+        rawStats = null;
 
+        calculateRealStats();
         // TODO: calculate relevant stats
+    }
+
+    /**
+     * Get's the REAL stats
+     */
+    private void calculateRealStats() {
+        this.strength = (this.strength - 10)/2;
+        this.dexterity = (this.dexterity - 10)/2;
+        this.constitution = (this.constitution - 10)/2;
+        this.intelligence = (this.intelligence - 10)/2;
+        this.wisdom = (this.wisdom - 10)/2;
+        this.charisma = (this.charisma - 10)/2;
     }
 }
