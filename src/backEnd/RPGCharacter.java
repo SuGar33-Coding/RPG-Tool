@@ -110,13 +110,13 @@ public class RPGCharacter {
         this.charisma = (this.charisma - 10)/2;
     }
 
-    public void createNewCharFiles() {
+    public static void createNewCharFiles() {
         String charName = "Ikilian";
         File dir = new File("Characters/" + charName);
         dir.mkdir();
         Writer writer = null;
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters/" + charName + "/newChar.txt"), "utf-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters/" + charName + "/stats.txt"), "utf-8"));
             writer.write("Something");
         } catch (IOException ex) {
             // Report

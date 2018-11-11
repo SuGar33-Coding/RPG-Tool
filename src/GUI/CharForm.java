@@ -1,6 +1,9 @@
 package GUI;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class CharForm {
     public JPanel charPan;
@@ -12,7 +15,7 @@ public class CharForm {
     private JTextField charF;
     private JLabel race;
     private JLabel character;
-    private JTextField textField1;
+    private JTextField raceF;
     private JTextField classF;
     private JTextField levelF;
     private JTextField alignmentF;
@@ -65,4 +68,23 @@ public class CharForm {
     private JCheckBox sleightOfHandCheckBox;
     private JCheckBox survivalCheckBox;
     private JCheckBox strSave;
+    private JCheckBox historyCheckBox;
+    private JButton updateSaveButton;
+
+    public CharForm() {
+        updateSaveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<String> data = new ArrayList<>();
+                data.add(playerF.getText());
+                data.add(charF.getText());
+                data.add(classF.getText());
+                data.add(raceF.getText());
+                data.add(levelF.getText());
+                data.add(alignmentF.getText());
+                data.add(xpF.getText());
+
+            }
+        });
+    }
 }
