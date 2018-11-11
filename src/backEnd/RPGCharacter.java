@@ -149,7 +149,7 @@ public class RPGCharacter {
         }
     }
 
-    public static void createNewCharFiles(ArrayList<String> data) {
+    public static void updateCharFiles(ArrayList<String> data) {
         String charName = data.get(1);//.replace(" ","_"); have to decide whether we want underscores, does function without
         String sep = System.getProperty("file.separator");
         File dir = new File("Characters" + sep + charName);

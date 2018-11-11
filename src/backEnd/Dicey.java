@@ -1,12 +1,16 @@
 package backEnd;
 public class Dicey {
 
-    public static int Roll(int number, int sides, int buff){
+    public static int[] Roll(int number, int sides, int buff){
         int total = 0;
-        for(int i = 0; i < number; i++)
-            total += (int)(Math.random()*(sides)+1);
+        int[] rolls = new int[number+1];
+        for(int i = 0; i < number; i++) {
+            rolls[i] = (int) (Math.random() * sides + 1);
+            total += rolls[i];
+        }
         total += buff;
-        return total;
+        rolls[number] = total;
+        return rolls;
     }
 
     /**
@@ -14,7 +18,7 @@ public class Dicey {
      * @param command String in the form #D# or #d#
      * @return Dice roll result
      */
-    public static int Roll(String command){
+    public static int[] Roll(String command){
         int dpos = 0;
         int plusPos = 0;
         for(int i = 0; i < command.length();i++){
@@ -32,8 +36,7 @@ public class Dicey {
                 buff = Integer.parseInt(command.substring(plusPos+1));
             return Roll(num,sides,buff);
         }
-
-        return 0;
-
+        int[] zeroArray = {0};
+        return zeroArray;
     }
 }
