@@ -72,8 +72,16 @@ public class CharForm {
     private JCheckBox strSave;
     private JCheckBox historyCheckBox;
     private JButton updateSaveButton;
+    private JButton backButton;
 
     public CharForm() {
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainFrame.init();  // Return to main menu
+            }
+        });
         updateSaveButton.addActionListener(new ActionListener() {  // TODO: Handle parsing errors
             @Override
             public void actionPerformed(ActionEvent e) {
