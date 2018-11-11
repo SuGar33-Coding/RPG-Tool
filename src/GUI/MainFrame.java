@@ -55,7 +55,7 @@ public class MainFrame {
         frame.setVisible(true);
 
         /* add debugging statements to here */
-        boolean debug = false;
+        boolean debug = true;
         if (debug) {
             RPGCharacter c = new RPGCharacter("/Users/cassandra/IdeaProjects/GM-Tool/Characters");
             System.out.println(c.getStrength());
