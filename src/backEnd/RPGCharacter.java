@@ -42,8 +42,11 @@ public class RPGCharacter {
     private int wisdom;
     private int charisma;
 
-    /* Items list */
     public LinkedList<Item> items = new LinkedList<>() {
+        /**
+         * @param i
+         * @return LinkedList sorted as: WEAPON, ARMOR, MISC, CURRENCY
+         */
         public boolean add(Item i) {
             super.add(i);
             Collections.sort(items);
@@ -102,9 +105,6 @@ public class RPGCharacter {
                 counter ++;
             }
         }
-
-        /* (hopefully) Garbage collect that shit */
-        rawStats = null;
 
         calculateRealStats();
         // TODO: calculate relevant stats
