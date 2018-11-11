@@ -3,6 +3,7 @@ package backEnd;
 public class Currency extends Item {
     /* priority in Items list sorting */
     int priority = 3;
+    public static final String TYPE = "Currency";
 
     int amount;
 

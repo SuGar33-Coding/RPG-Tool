@@ -2,6 +2,7 @@ package backEnd;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class RPGCharacter {
@@ -33,18 +34,30 @@ public class RPGCharacter {
     private int charisma;
 
     /* Items list */
-    LinkedList<Item> items = new LinkedList<>();
+    public LinkedList<Item> items = new LinkedList<>() {
+        public boolean add(Item i) {
+            super.add(i);
+            Collections.sort(items);
+            return true;
+        }
+    };
 
     public RPGCharacter(String filePath) {
         ArrayList<String> rawStats = new ArrayList<String>();
 
         /* Read from file into array of stats */
         try {
-            File file = new File(filePath);
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            File statsFile = new File(filePath + System.getProperty("file.separator") + "stats.txt");
+            BufferedReader br = new BufferedReader(new FileReader(statsFile));
             String stat;
             while ((stat = br.readLine()) != null)
                 rawStats.add(stat);
+
+            File inventoryFile = new File(filePath + System.getProperty("file.separator") + "inventory.txt");
+            br = new BufferedReader(new FileReader(inventoryFile));
+            String item;
+            while ((item = br.readLine()) != null)
+                addItem(item);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -100,7 +113,24 @@ public class RPGCharacter {
         this.charisma = (this.charisma - 10)/2;
     }
 
-    public static void createNewCharFiles() {
+    private void addItem(String infoLine) {
+        String[] stringData = infoLine.split(" ");
+        switch (stringData[0]) {
+            case "WEAPON":
+                items.add(new Weapon(stringData[1], Integer.parseInt(stringData[2]), stringData[3], stringData[4]));
+                break;
+            case "ARMOR":
+                items.add(new Armor(stringData[1], Integer.parseInt(stringData[2]), stringData[3]));
+                break;
+            case "CURRENCY":
+                items.add(new Currency(stringData[1], Integer.parseInt(stringData[2])));
+                break;
+            case "MISC":
+                items.add(new Item(stringData[1]));
+        }
+    }
+
+    public void createNewCharFiles() {
         String charName = "Ikilian";
         File dir = new File("Characters/" + charName);
         dir.mkdir();
@@ -117,7 +147,7 @@ public class RPGCharacter {
         }
     }
 
-    // TODO: Usse ENUMS and arrays cause its more sugar33
+    // TODO: Use ENUMS and arrays cause its more sugar33
     /* Getters */
     public int getStrength() {
         return strength;
