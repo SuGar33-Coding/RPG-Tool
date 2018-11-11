@@ -1,0 +1,6 @@
+WEAPON firey_thing 10 6d3 slashing
+ARMOR BIGARMOR 100 metal
+WEAPON Big_Boy_Destoryer 5 2d8 bleeding
+MISC fucking_idk
+CURRENCY fool's_gold 100
+MISC DICKASS

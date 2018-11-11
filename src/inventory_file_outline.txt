@@ -1,4 +1,4 @@
 WEAPON name attkBonus damage type
 ARMOR name bonus type
-CURRENCY type amount
+CURRENCY name amount
 MISC name

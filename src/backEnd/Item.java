@@ -3,6 +3,7 @@ package backEnd;
 public class Item implements Comparable<Item>{
     /* priority in Items list sorting */
     int priority = 2;
+    public static final String TYPE = "Misc.";
 
     String name;
 
