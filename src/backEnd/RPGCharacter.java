@@ -141,20 +141,31 @@ public class RPGCharacter {
 
     public static void createNewCharFiles(ArrayList<String> data) {
         String charName = data.get(1);
+        String sep = System.getProperty("file.separator");
         File dir = new File("Characters/" + charName);
         dir.mkdir();
         Writer writer = null;
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters/" + charName + "/stats.txt"), "utf-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + charName + sep + "stats.txt"), "utf-8"));
             for(int i = 0; i < data.size();i++){
                 writer.write(data.get(i));
                 writer.write("\n");
             }
         } catch (IOException ex) {
-            // Report
+            System.out.println("Something went wrong while writing stats file.");
         } finally {
             try {
                 writer.close();
+            } catch (Exception ex) {/*ignore*/}
+        }
+        Writer inventoryWriter = null;
+        try {
+            inventoryWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + charName + sep + "inventory.txt"), "utf-8"));
+        } catch (IOException ex) {
+            System.out.println("Something went wrong while writing inventory file.");
+        } finally {
+            try {
+                inventoryWriter.close();
             } catch (Exception ex) {/*ignore*/}
         }
     }
