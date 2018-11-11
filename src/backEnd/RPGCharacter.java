@@ -137,8 +137,9 @@ public class RPGCharacter {
         Writer writer = null;
         try {
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters/" + charName + "/stats.txt"), "utf-8"));
-            for(int i = 0; i <= data.size();i++){
+            for(int i = 0; i < data.size();i++){
                 writer.write(data.get(i));
+                writer.write("\n");
             }
         } catch (IOException ex) {
             System.out.println("Something went wrong when writing to character file.");
