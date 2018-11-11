@@ -24,12 +24,12 @@ public class CharForm {
     private JLabel level;
     private JLabel alignment;
     private JLabel xp;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField5;
-    private JTextField textField6;
-    private JTextField textField7;
+    private JTextField strengthF;
+    private JTextField dexterityF;
+    private JTextField constitutionF;
+    private JTextField intelligenceF;
+    private JTextField wisdomF;
+    private JTextField charismaF;
     private JLabel strength;
     private JLabel dexterity;
     private JLabel constitution;
@@ -72,7 +72,7 @@ public class CharForm {
     private JButton updateSaveButton;
 
     public CharForm() {
-        updateSaveButton.addActionListener(new ActionListener() {
+        updateSaveButton.addActionListener(new ActionListener() {  // TODO: Handle parsing errors
             @Override
             public void actionPerformed(ActionEvent e) {
                 ArrayList<String> data = new ArrayList<>();
@@ -83,7 +83,41 @@ public class CharForm {
                 data.add(levelF.getText());
                 data.add(alignmentF.getText());
                 data.add(xpF.getText());
-
+                data.add("true");
+                data.add("10");
+                data.add("20");
+                data.add("50");
+                data.add("45");
+                data.add("8");
+                data.add(levelF.getText());
+                data.add("3");
+                data.add(strengthF.getText());
+                data.add(dexterityF.getText());
+                data.add(constitutionF.getText());
+                data.add(intelligenceF.getText());
+                data.add(wisdomF.getText());
+                data.add(charismaF.getText());
+                data.add(Boolean.toString(strSave.isSelected()));
+                data.add(Boolean.toString(athleticsCheckBox.isSelected()));
+                data.add(Boolean.toString(dexSave.isSelected()));
+                data.add(Boolean.toString(acrobaticsCheckBox.isSelected()));
+                data.add(Boolean.toString(sleightOfHandCheckBox.isSelected()));
+                data.add(Boolean.toString(stealthCheckBox.isSelected()));
+                data.add(Boolean.toString(conSave.isSelected()));
+                data.add(Boolean.toString(intSave.isSelected()));
+                data.add(Boolean.toString(arcanaCheckBox.isSelected()));
+                data.add(Boolean.toString(historyCheckBox.isSelected()));
+                data.add(Boolean.toString(investigationCheckBox.isSelected()));
+                data.add(Boolean.toString(natureCheckBox.isSelected()));
+                data.add(Boolean.toString(religionCheckBox.isSelected()));
+                data.add(Boolean.toString(wisSave.isSelected()));
+                data.add(Boolean.toString(animalhCheckBox.isSelected()));
+                data.add(Boolean.toString(insightCheckBox.isSelected()));
+                data.add(Boolean.toString(medicineCheckBox.isSelected()));
+                data.add(Boolean.toString(perceptionCheckBox.isSelected()));
+                data.add(Boolean.toString(survivalCheckBox.isSelected()));
+                data.add(Boolean.toString(chSave.isSelected()));
+                data.add(Boolean.toString(deceptionCheckBox.isSelected())); // TODO: See if you can do this better with button groups?
             }
         });
     }
