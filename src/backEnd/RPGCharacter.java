@@ -172,4 +172,116 @@ public class RPGCharacter {
     public int getCharisma() {
         return charisma;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCharacterClass() {
+        return characterClass;
+    }
+
+    public void setCharacterClass(String characterClass) {
+        this.characterClass = characterClass;
+    }
+
+    public String getRace() {
+        return race;
+    }
+
+    public void setRace(String race) {
+        this.race = race;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public String getAlignment() {
+        return alignment;
+    }
+
+    public void setAlignment(String alignment) {
+        this.alignment = alignment;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public boolean isInspiration() {
+        return inspiration;
+    }
+
+    public void setInspiration(boolean inspiration) {
+        this.inspiration = inspiration;
+    }
+
+    public int getAc() {
+        return ac;
+    }
+
+    public void setAc(int ac) {
+        this.ac = ac;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getMaxHP() {
+        return maxHP;
+    }
+
+    public void setMaxHP(int maxHP) {
+        this.maxHP = maxHP;
+    }
+
+    public int getCurrentHP() {
+        return currentHP;
+    }
+
+    public void setCurrentHP(int currentHP) {
+        this.currentHP = currentHP;
+    }
+
+    public int getHitDiceSides() {
+        return hitDiceSides;
+    }
+
+    public void setHitDiceSides(int hitDiceSides) {
+        this.hitDiceSides = hitDiceSides;
+    }
+
+    public int getHitDiceAmount() {
+        return hitDiceAmount;
+    }
+
+    public void setHitDiceAmount(int hitDiceAmount) {
+        this.hitDiceAmount = hitDiceAmount;
+    }
+
+    public int getCurrentHitDiceAmount() {
+        return currentHitDiceAmount;
+    }
+
+    public void setCurrentHitDiceAmount(int currentHitDiceAmount) {
+        this.currentHitDiceAmount = currentHitDiceAmount;
+    }
 }
