@@ -130,16 +130,18 @@ public class RPGCharacter {
         }
     }
 
-    public void createNewCharFiles() {
-        String charName = "Ikilian";
+    public static void createNewCharFiles(ArrayList<String> data) {
+        String charName = data.get(1);
         File dir = new File("Characters/" + charName);
         dir.mkdir();
         Writer writer = null;
         try {
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters/" + charName + "/stats.txt"), "utf-8"));
-            writer.write("Something");
+            for(int i = 0; i <= data.size();i++){
+                writer.write(data.get(i));
+            }
         } catch (IOException ex) {
-            // Report
+            System.out.println("Something went wrong when writing to character file.");
         } finally {
             try {
                 writer.close();
