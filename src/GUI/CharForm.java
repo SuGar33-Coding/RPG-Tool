@@ -3,6 +3,8 @@ package GUI;
 import backEnd.RPGCharacter;
 
 import javax.swing.*;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -72,6 +74,27 @@ public class CharForm {
     private JCheckBox historyCheckBox;
     private JButton updateSaveButton;
     private JButton backButton;
+    private JPanel backPanel;
+    private JPanel healthPanel;
+    private JTextField acField;
+    private JLabel AC;
+    private JTextField speedField;
+    private JLabel speed;
+    private JLabel HP;
+    private JTextField maxHPField;
+    private JTextField currentHPField;
+    private JLabel maxHP;
+    private JLabel currentHP;
+    private JLabel hitDice;
+    private JPanel HPPanel;
+    private JLabel maxHitDice;
+    private JLabel currentHitDice;
+    private JTextField hitDiceSizeF;
+    private JTextField currentHitDiceField;
+    private JPanel hitDicePanel;
+    private JCheckBox inspirationCheckBox;
+    private JLabel maxHitDiceAmount;
+    private JLabel proficiency;
     private JCheckBox[] checkGroup =
             {strSave,athleticsCheckBox,dexSave,acrobaticsCheckBox,sleightOfHandCheckBox,stealthCheckBox,conSave,intSave,arcanaCheckBox,historyCheckBox,investigationCheckBox,
                     natureCheckBox,religionCheckBox,wisSave,animalhCheckBox,insightCheckBox,medicineCheckBox,perceptionCheckBox,survivalCheckBox,chSave,deceptionCheckBox,
@@ -96,14 +119,14 @@ public class CharForm {
                 data.add(levelF.getText());
                 data.add(alignmentF.getText());
                 data.add(xpF.getText());
-                data.add("true");
-                data.add("10");
-                data.add("20");
-                data.add("50");
-                data.add("45");
-                data.add("8");
-                data.add(levelF.getText());
-                data.add("3");
+                data.add(Boolean.toString(inspirationCheckBox.isSelected()));
+                data.add(acField.getText());
+                data.add(speedField.getText());
+                data.add(maxHPField.getText());
+                data.add(currentHPField.getText());
+                data.add(hitDiceSizeF.getText());
+                data.add(levelF.getText()); // Max Hit dice
+                data.add(currentHitDiceField.getText());
                 data.add(strengthF.getText());
                 data.add(dexterityF.getText());
                 data.add(constitutionF.getText());
@@ -119,6 +142,23 @@ public class CharForm {
             }
         });
 
+
+        levelF.addCaretListener(new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                maxHitDiceAmount.setText(levelF.getText());
+                try{
+                    int lvl = Integer.parseInt(levelF.getText());
+                    int bonus = RPGCharacter.calculateProficiencyBonus(lvl);
+                    String append = "";
+                    if(bonus >= 0)
+                        append += "+";
+                    append += String.valueOf(bonus);
+                    proficiency.setText("Proficiency Bonus:  "+append);
+                } catch (NumberFormatException ex){}
+
+            }
+        });
     }
 
     public void updateData(RPGCharacter actor){
@@ -141,13 +181,30 @@ public class CharForm {
         IB.setText("IB: "+actor.getIntelligence());
         WB.setText("WB: "+actor.getWisdom());
         ChB.setText("ChB: "+actor.getCharisma());
+        inspirationCheckBox.setSelected(actor.isInspired());
+        acField.setText(String.valueOf(actor.getAc()));
+        speedField.setText(String.valueOf(actor.getSpeed()));
+        maxHPField.setText(String.valueOf(actor.getMaxHP()));
+        currentHPField.setText(String.valueOf(actor.getCurrentHP()));
+        hitDiceSizeF.setText(String.valueOf(actor.getHitDiceSides()));
+        currentHitDiceField.setText(String.valueOf(actor.getCurrentHitDiceAmount()));
+        int profBonus = actor.getProficiencyBonus();
+        String append = "";
+        if(profBonus >= 0)
+            append += "+";
+        append += String.valueOf(profBonus);
+        proficiency.setText("Proficiency Bonus:  "+append);
+        maxHitDiceAmount.setText(String.valueOf(actor.getLevel()));
+
         int groupCounter = 0;
         for(int i = 0; i<actor.skills.length; i++){
             for(int j=0;j<actor.skills[i].length;j++){
                 JCheckBox currentBox = checkGroup[groupCounter];
                 String currentString = currentBox.getText();
-                if(Character.isDigit(currentString.charAt(currentString.length()-1)))
-                    currentString = currentString.substring(0,currentString.length()-4);
+                if(Character.isDigit(currentString.charAt(currentString.length()-1))&&Character.isDigit(currentString.charAt(currentString.length()-2)))  //Checks for double digit bonus(rare but could happen)
+                    currentString = currentString.substring(0,currentString.length()-5);
+                else
+                    currentString = currentString.substring(0,currentString.length()-4);  // 4 so the "  +0" (or any integer) at the end of the string is replaced.
                 currentBox.setSelected(actor.skills[i][j]);
                 int bonus;
                 String bString;

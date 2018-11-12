@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class RPGCharacter {
-    private int ProficiencyBonus = 2;
+    private int proficiencyBonus;
     /* Basic character stats */
     private String playerName;
     private String name;
@@ -118,6 +118,7 @@ public class RPGCharacter {
         }
 
         calculateRealStats();
+        proficiencyBonus = calculateProficiencyBonus(this.level);
         // TODO: calculate relevant stats
     }
 
@@ -263,7 +264,7 @@ public class RPGCharacter {
         this.xp = xp;
     }
 
-    public boolean isInspiration() {
+    public boolean isInspired() {
         return inspiration;
     }
 
@@ -375,8 +376,25 @@ public class RPGCharacter {
         this.rawCharisma = rawCharisma;
     }
 
-    public int getProficiencyBonus() { return ProficiencyBonus;   }
+    public int getProficiencyBonus() { return proficiencyBonus;   }
 
-    public void setProficiencyBonus(int proficiencyBonus) { ProficiencyBonus = proficiencyBonus;
+    public void setProficiencyBonus(int proficiencyBonus) { proficiencyBonus = proficiencyBonus;
+    }
+
+    public static int calculateProficiencyBonus(int lvl){
+        int bonus = 2;
+        if(lvl >= 5){
+            bonus = 3;
+            if(lvl >= 9){
+                bonus = 4;
+                if(lvl >= 13){
+                    bonus = 5;
+                    if(lvl >= 17)
+                        bonus = 6;
+                }
+            }
+        }
+
+        return bonus;
     }
 }
