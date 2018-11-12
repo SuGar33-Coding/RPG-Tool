@@ -5,12 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileOutputStream;
-import java.io.Writer;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.io.IOException;
-import java.io.File;
+import java.io.*;
 
 public class MainFrame {
     private static JFrame frame = new JFrame("RPG Tool");
@@ -29,13 +24,15 @@ public class MainFrame {
                 JFileChooser fc = new JFileChooser("Characters");
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
-                RPGCharacter actor = new RPGCharacter(fc.getName(fc.getSelectedFile()));
-                CharForm charFrame = new CharForm();
-                JPanel pan = charFrame.charPan;
-                frame.setContentPane(pan);
-                frame.validate();
-                frame.repaint();
-                charFrame.updateData(actor);
+                if(fc.getName(fc.getSelectedFile()) != null){
+                    RPGCharacter actor = new RPGCharacter(fc.getName(fc.getSelectedFile()));
+                    CharForm charFrame = new CharForm();
+                    JPanel pan = charFrame.charPan;
+                    frame.setContentPane(pan);
+                    frame.validate();
+                    frame.repaint();
+                    charFrame.updateData(actor);
+                }
             }
         });
         diceyButton.addActionListener(new ActionListener() {
@@ -77,10 +74,14 @@ public class MainFrame {
                 }
             }
         });
+
     }
 
     public static void main(String[] args) {
-        frame.setContentPane(new MainFrame().mainMenu);
+        MainFrame mainFrame = new MainFrame();
+        JPanel mainMenu = mainFrame.getMainMenu();
+        frame.setContentPane(mainMenu);
+        frame.setPreferredSize(new Dimension(700,800));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
@@ -94,10 +95,13 @@ public class MainFrame {
             for (Item i : c.items)
                 System.out.println(i.getName());
         }
+        //mainFrame.letsRide();  Uncomment if you think you're cool enough
     }
 
     public static void init(){
-        frame.setContentPane(new MainFrame().mainMenu);
+        MainFrame mainFrame = new MainFrame();
+        JPanel mainMenu = mainFrame.getMainMenu();
+        frame.setContentPane(mainMenu);
         frame.validate();
         frame.repaint();
     }
@@ -112,6 +116,33 @@ public class MainFrame {
                 rhet = rhet + path.charAt(i);
 
         return rhet;
+    }
+
+    /*public void letsRide(){
+        for(int i = 1; i > 0; i++){
+            welcomePanel.setBackground(Color.BLACK);
+            welcomePanel.setBackground(Color.BLUE);
+            welcomePanel.setBackground(Color.red);
+            welcomePanel.setBackground(Color.green);
+            welcomePanel.setBackground(Color.gray);
+            welcomePanel.setBackground(Color.yellow);
+            welcomePanel.setBackground(Color.cyan);
+            welcomePanel.setBackground(Color.orange);
+            welcomePanel.setBackground(Color.pink);
+            buttons.setBackground(Color.BLACK);
+            buttons.setBackground(Color.BLUE);
+            buttons.setBackground(Color.red);
+            buttons.setBackground(Color.green);
+            buttons.setBackground(Color.gray);
+            buttons.setBackground(Color.yellow);
+            buttons.setBackground(Color.cyan);
+            buttons.setBackground(Color.orange);
+            buttons.setBackground(Color.pink);
+        }
+    }*/
+
+    public JPanel getMainMenu() {
+        return mainMenu;
     }
 
 
