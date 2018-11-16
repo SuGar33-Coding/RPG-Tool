@@ -89,10 +89,10 @@ public class MainFrame {
         /* add debugging statements to here */
         boolean debug = false;
         if (debug) {
-            RPGCharacter c = new RPGCharacter("/Users/cassandra/IdeaProjects/GM-Tool/Characters");
+            RPGCharacter c = new RPGCharacter("testChar");
             System.out.println(c.getStrength());
             System.out.println(c.getCharisma());
-            for (Item i : c.items)
+            for (Item i : c.items.get("Weapon"))
                 System.out.println(i.getName());
         }
         //mainFrame.letsRide();  Uncomment if you think you're cool enough
