@@ -87,7 +87,7 @@ public class MainFrame {
         frame.setVisible(true);
 
         /* add debugging statements to here */
-        boolean debug = false;
+        boolean debug = true;
         if (debug) {
             RPGCharacter c = new RPGCharacter("testChar");
             System.out.println(c.getStrength());

@@ -63,7 +63,7 @@ public class RPGCharacter {
 
     public RPGCharacter(String charName) {  //character's name
         //set up inventory
-        items.put("Weapons", new ArrayList<>());
+        items.put("Weapon", new ArrayList<>());
         items.put("Armor", new ArrayList<>());
         items.put("Misc", new ArrayList<>());
         items.put("Currency", new ArrayList<>());
@@ -123,7 +123,7 @@ public class RPGCharacter {
         }
 
         calculateRealStats();
-        proficiencyBonus = calculateProficiencyBonus(this.level);
+        this.proficiencyBonus = calculateProficiencyBonus(this.level);
         // TODO: calculate relevant stats
     }
 
@@ -392,7 +392,7 @@ public class RPGCharacter {
 
     public int getProficiencyBonus() { return proficiencyBonus;   }
 
-    public void setProficiencyBonus(int proficiencyBonus) { proficiencyBonus = proficiencyBonus;
+    public void setProficiencyBonus(int proficiencyBonus) { this.proficiencyBonus = proficiencyBonus;
     }
 
     public static int calculateProficiencyBonus(int lvl){
