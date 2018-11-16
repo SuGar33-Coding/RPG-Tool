@@ -1,9 +1,7 @@
 package backEnd;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.*;
 
 public class RPGCharacter {
     private int proficiencyBonus;
@@ -50,21 +48,28 @@ public class RPGCharacter {
     private int wisdom;
     private int charisma;
 
+    public Map<String, ArrayList<Item>> items = new HashMap<>();
+
+    /*
     public LinkedList<Item> items = new LinkedList<>() {
-        /**
-         * @param i
-         * @return LinkedList sorted as: WEAPON, ARMOR, MISC, CURRENCY
-         */
+
         public boolean add(Item i) {
             super.add(i);
             Collections.sort(items);
             return true;
         }
     };
+    */
 
     public RPGCharacter(String charName) {  //character's name
+        //set up inventory
+        items.put("Weapons", new ArrayList<>());
+        items.put("Armor", new ArrayList<>());
+        items.put("Misc", new ArrayList<>());
+        items.put("Currency", new ArrayList<>());
+
         // Changed so that this method handles creating file path so as to not be redundant in other files.
-        ArrayList<String> rawStats = new ArrayList<String>();
+        ArrayList<String> rawStats = new ArrayList<>();
         String sep = System.getProperty("file.separator");
         String filePath = "Characters" + sep + charName;//.replace(" ","_");  TODO: Decide whether we want under scores(does function without)
 
@@ -80,7 +85,7 @@ public class RPGCharacter {
             br = new BufferedReader(new FileReader(inventoryFile));
             String item;
             while ((item = br.readLine()) != null)
-                addItem(item);
+                addItem(item, items);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -133,23 +138,32 @@ public class RPGCharacter {
         this.wisdom = (this.rawWisdom - 10)/2;
         this.charisma = (this.rawCharisma - 10)/2;
     }
-
-    private void addItem(String infoLine) {
+    
+    private void addItem(String infoLine, Map<String, ArrayList<Item>> inventory) {
         String[] stringData = infoLine.split(" ");
         switch (stringData[0]) {
-            case "WEAPON":
-                items.add(new Weapon(stringData[1], Integer.parseInt(stringData[2]), stringData[3], stringData[4]));
+            case "Weapon":
+                inventory.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]), stringData[3], stringData[4]));
                 break;
-            case "ARMOR":
-                items.add(new Armor(stringData[1], Integer.parseInt(stringData[2]), stringData[3]));
+            case "Armor":
+                inventory.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]), stringData[3]));
                 break;
-            case "CURRENCY":
-                items.add(new Currency(stringData[1], Integer.parseInt(stringData[2])));
+            case "Currency":
+                inventory.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2])));
                 break;
-            case "MISC":
-                items.add(new Item(stringData[1]));
+            case "Misc":
+                inventory.get(stringData[0]).add(new Item(stringData[0], stringData[1]));
         }
     }
+
+    /*
+    private void addItem(String infoLine, Map<String, ArrayList<Item>> inventory) {
+        String[] stringData = infoLine.split(" ");
+        for (int i = 0; i < stringData.length; i++) {
+            inventory.get(stringData[0]).add(new Item());
+        }
+    }
+    */
 
     public static void updateCharFiles(ArrayList<String> data) {
         String charName = data.get(1);//.replace(" ","_"); have to decide whether we want underscores, does function without
