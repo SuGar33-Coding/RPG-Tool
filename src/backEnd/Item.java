@@ -23,16 +23,6 @@ public class Item{
     }
 
     /**
-     * For Misc type
-     * @param type
-     * @param name
-     */
-    public Item(String type, String name) {
-        this.type = type;
-        this.name = name;
-    }
-
-    /**
      * For Weapon type
      * @param type
      * @param name
@@ -63,6 +53,16 @@ public class Item{
     }
 
     /**
+     * For Misc type
+     * @param type
+     * @param name
+     */
+    public Item(String type, String name) {
+        this.type = type;
+        this.name = name;
+    }
+
+    /**
      * For Currency type
      * @param type
      * @param name
@@ -81,5 +81,28 @@ public class Item{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String toString() {
+        switch (this.type) {
+            case "Weapon":
+                return this.type
+                        + " " + this.name
+                        + " " + this.attackBonus
+                        + " " + this.damageDice
+                        + " " + this.damageType;
+            case "Armor":
+                return this.type
+                        + " " + this.name
+                        + " " + this.bonus
+                        + " " + this.armorType;
+            case "Misc":
+                return this.type
+                        + " " + this.name;
+            case "Currency":
+                return this.type
+                        + " " + this.name
+                        + " " + this.amount;
+        }
     }
 }
