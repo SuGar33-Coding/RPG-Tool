@@ -13,7 +13,7 @@ public class RPGCharacter {
     private int level;
     private String alignment;
     private int xp;
-    private boolean inspiration;
+    private boolean inspired;
     private int ac;
     private int speed;
     private int maxHP;
@@ -93,7 +93,7 @@ public class RPGCharacter {
         this.level = Integer.parseInt(rawStats.get(counter)); counter ++;
         this.alignment = rawStats.get(counter); counter ++;
         this.xp = Integer.parseInt(rawStats.get(counter)); counter ++;
-        this.inspiration = Boolean.parseBoolean(rawStats.get(counter)); counter ++;
+        this.inspired = Boolean.parseBoolean(rawStats.get(counter)); counter ++;
         this.ac = Integer.parseInt(rawStats.get(counter)); counter ++;
         this.speed = Integer.parseInt(rawStats.get(counter)); counter ++;
         this.maxHP = Integer.parseInt(rawStats.get(counter)); counter ++;
@@ -143,6 +143,10 @@ public class RPGCharacter {
     }
     */
 
+    public void addToInventory(Item i) {
+        this.inventory.addItem(i.toString());
+    }
+
     public void updateCharFile(ArrayList<String> charData) {
         String sep = System.getProperty("file.separator");
         File dir = new File("Characters" + sep + this.name);
@@ -160,14 +164,15 @@ public class RPGCharacter {
         }
     }
 
-    public void updateInvFile(Map<String, ArrayList<Item>> invData) {
+    public void updateInvFile() {
         String sep = System.getProperty("file.separator");
         File dir = new File("Characters" + sep + this.name);
         try {
             Writer inventoryWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + this.name + sep + "inventory.txt"), "utf-8"));
-            for (ArrayList<Item> itemType : invData.values()){
+            for (ArrayList<Item> itemType : this.inventory.inv.values()){
                 for (Item i : itemType) {
                     inventoryWriter.write(i.toString());
+                    inventoryWriter.write("\n");
                 }
             }
             inventoryWriter.close();
@@ -176,8 +181,6 @@ public class RPGCharacter {
             ex.printStackTrace();
         }
     }
-
-    // TODO: Use ENUMS and arrays cause its more sugar33
 
     public static int calculateProficiencyBonus(int lvl){
         int bonus = 2;
@@ -194,5 +197,121 @@ public class RPGCharacter {
         }
 
         return bonus;
+    }
+
+    // TODO: Use ENUMS and arrays cause its more sugar33
+
+    /* Getters */
+
+    public int getProficiencyBonus() {
+        return proficiencyBonus;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCharacterClass() {
+        return characterClass;
+    }
+
+    public String getRace() {
+        return race;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public String getAlignment() {
+        return alignment;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public boolean isInspired() {
+        return inspired;
+    }
+
+    public int getAc() {
+        return ac;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getMaxHP() {
+        return maxHP;
+    }
+
+    public int getCurrentHP() {
+        return currentHP;
+    }
+
+    public int getHitDiceSides() {
+        return hitDiceSides;
+    }
+
+    public int getHitDiceAmount() {
+        return hitDiceAmount;
+    }
+
+    public int getCurrentHitDiceAmount() {
+        return currentHitDiceAmount;
+    }
+
+    public int getRawStrength() {
+        return rawStrength;
+    }
+
+    public int getRawDexterity() {
+        return rawDexterity;
+    }
+
+    public int getRawConstitution() {
+        return rawConstitution;
+    }
+
+    public int getRawIntelligence() {
+        return rawIntelligence;
+    }
+
+    public int getRawWisdom() {
+        return rawWisdom;
+    }
+
+    public int getRawCharisma() {
+        return rawCharisma;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public int getConstitution() {
+        return constitution;
+    }
+
+    public int getIntelligence() {
+        return intelligence;
+    }
+
+    public int getWisdom() {
+        return wisdom;
+    }
+
+    public int getCharisma() {
+        return charisma;
     }
 }

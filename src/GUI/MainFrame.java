@@ -90,8 +90,8 @@ public class MainFrame {
         boolean debug = false;
         if (debug) {
             RPGCharacter c = new RPGCharacter("testChar");
-            for (Item i : c.items.get("Weapon"))
-                System.out.println(i.getName());
+            c.addToInventory(new Item("Weapon", "DICK_DIGGER", 69, "6D9", "Penetration"));
+            c.updateInvFile();
         }
         //mainFrame.letsRide();  Uncomment if you think you're cool enough
     }
