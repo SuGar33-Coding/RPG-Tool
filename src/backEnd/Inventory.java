@@ -9,40 +9,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Inventory {
-    public Map<String, ArrayList<Item>> items = new HashMap<>();
+    Map<String, ArrayList<Item>> inv = new HashMap<>();
 
     public Inventory(File inventoryFile) {
         //set up inventory
-        items.put("Weapon", new ArrayList<>());
-        items.put("Armor", new ArrayList<>());
-        items.put("Misc", new ArrayList<>());
-        items.put("Currency", new ArrayList<>());
+        inv.put("Weapon", new ArrayList<>());
+        inv.put("Armor", new ArrayList<>());
+        inv.put("Misc", new ArrayList<>());
+        inv.put("Currency", new ArrayList<>());
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(inventoryFile));
             String item;
             while ((item = br.readLine()) != null)
-                addItem(item, items);
+                addItem(item);
         } catch (IOException e) {
             System.out.println("Error loading inventory");
             e.printStackTrace();
         }
     }
 
-    private void addItem(String infoLine, Map<String, ArrayList<Item>> inventory) {
+    public void addItem(String infoLine) {
         String[] stringData = infoLine.split(" ");
         switch (stringData[0]) {
             case "Weapon":
-                inventory.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]), stringData[3], stringData[4]));
+                this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]), stringData[3], stringData[4]));
                 break;
             case "Armor":
-                inventory.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]), stringData[3]));
+                this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]), stringData[3]));
                 break;
             case "Currency":
-                inventory.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2])));
+                this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2])));
                 break;
             case "Misc":
-                inventory.get(stringData[0]).add(new Item(stringData[0], stringData[1]));
+                this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1]));
         }
     }
 }

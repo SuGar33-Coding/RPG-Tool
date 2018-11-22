@@ -136,8 +136,8 @@ public class CharForm {
                 for(JCheckBox checkBox : checkGroup){
                     data.add(Boolean.toString(checkBox.isSelected()));
                 }
-                RPGCharacter.updateCharFiles(data);
                 RPGCharacter actor = new RPGCharacter(charF.getText());
+                actor.updateCharFile(data);
                 updateData(actor);
             }
         });
