@@ -197,29 +197,14 @@ public class RPGCharacter {
     }
 
     // TODO: Use ENUMS and arrays cause its more sugar33
-    /* Getters */
-    public int getStrength() {
-        return strength;
+    /* Getters & Setters*/
+
+    public int getProficiencyBonus() {
+        return proficiencyBonus;
     }
 
-    public int getDexterity() {
-        return dexterity;
-    }
-
-    public int getConstitution() {
-        return constitution;
-    }
-
-    public int getIntelligence() {
-        return intelligence;
-    }
-
-    public int getWisdom() {
-        return wisdom;
-    }
-
-    public int getCharisma() {
-        return charisma;
+    public void setProficiencyBonus(int proficiencyBonus) {
+        this.proficiencyBonus = proficiencyBonus;
     }
 
     public String getPlayerName() {
@@ -278,7 +263,7 @@ public class RPGCharacter {
         this.xp = xp;
     }
 
-    public boolean isInspired() {
+    public boolean isInspiration() {
         return inspiration;
     }
 
@@ -390,9 +375,52 @@ public class RPGCharacter {
         this.rawCharisma = rawCharisma;
     }
 
-    public int getProficiencyBonus() { return proficiencyBonus;   }
+    public int getStrength() {
+        return strength;
+    }
 
-    public void setProficiencyBonus(int proficiencyBonus) { this.proficiencyBonus = proficiencyBonus;
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public void setDexterity(int dexterity) {
+        this.dexterity = dexterity;
+    }
+
+    public int getConstitution() {
+        return constitution;
+    }
+
+    public void setConstitution(int constitution) {
+        this.constitution = constitution;
+    }
+
+    public int getIntelligence() {
+        return intelligence;
+    }
+
+    public void setIntelligence(int intelligence) {
+        this.intelligence = intelligence;
+    }
+
+    public int getWisdom() {
+        return wisdom;
+    }
+
+    public void setWisdom(int wisdom) {
+        this.wisdom = wisdom;
+    }
+
+    public int getCharisma() {
+        return charisma;
+    }
+
+    public void setCharisma(int charisma) {
+        this.charisma = charisma;
     }
 
     public static int calculateProficiencyBonus(int lvl){
