@@ -48,9 +48,7 @@ public class RPGCharacter {
     private int wisdom;
     private int charisma;
 
-    public Map<String, ArrayList<Item>> items = new HashMap<>();
-
-    /*
+    /* deprecated version of inventory data structure
     public LinkedList<Item> items = new LinkedList<>() {
 
         public boolean add(Item i) {
@@ -61,12 +59,10 @@ public class RPGCharacter {
     };
     */
 
+    Inventory inventory;
+
     public RPGCharacter(String charName) {  //character's name
-        //set up inventory
-        items.put("Weapon", new ArrayList<>());
-        items.put("Armor", new ArrayList<>());
-        items.put("Misc", new ArrayList<>());
-        items.put("Currency", new ArrayList<>());
+
 
         // Changed so that this method handles creating file path so as to not be redundant in other files.
         ArrayList<String> rawStats = new ArrayList<>();
@@ -80,15 +76,14 @@ public class RPGCharacter {
             String stat;
             while ((stat = br.readLine()) != null)
                 rawStats.add(stat);
-
-            File inventoryFile = new File(filePath + sep + "inventory.txt");
-            br = new BufferedReader(new FileReader(inventoryFile));
-            String item;
-            while ((item = br.readLine()) != null)
-                addItem(item, items);
+            br.close();
         } catch (IOException e) {
+            System.out.println("Error loading character");
             e.printStackTrace();
         }
+
+        File inventoryFile = new File(filePath + sep + "inventory.txt");
+        inventory = new Inventory(inventoryFile);
 
         int counter = 0; //to avoid hardcoding the indexes for reading from file
         this.playerName = rawStats.get(counter); counter ++;
@@ -138,25 +133,8 @@ public class RPGCharacter {
         this.wisdom = (this.rawWisdom - 10)/2;
         this.charisma = (this.rawCharisma - 10)/2;
     }
-    
-    private void addItem(String infoLine, Map<String, ArrayList<Item>> inventory) {
-        String[] stringData = infoLine.split(" ");
-        switch (stringData[0]) {
-            case "Weapon":
-                inventory.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]), stringData[3], stringData[4]));
-                break;
-            case "Armor":
-                inventory.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]), stringData[3]));
-                break;
-            case "Currency":
-                inventory.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2])));
-                break;
-            case "Misc":
-                inventory.get(stringData[0]).add(new Item(stringData[0], stringData[1]));
-        }
-    }
 
-    /*
+    /* deprecated
     private void addItem(String infoLine, Map<String, ArrayList<Item>> inventory) {
         String[] stringData = infoLine.split(" ");
         for (int i = 0; i < stringData.length; i++) {
