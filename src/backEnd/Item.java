@@ -19,6 +19,7 @@ public class Item{
     int amount;
 
     public Item() {
+        this.type = "CODE-BREAKING_ERROR";
         this.name = "VERY UNIQUE ITEM THAT DOES THINGS";
     }
 
@@ -104,5 +105,7 @@ public class Item{
                         + " " + this.name
                         + " " + this.amount;
         }
+
+        return this.type + this.name;
     }
 }
