@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Inventory {
-    Map<String, ArrayList<Item>> inv = new HashMap<>();
+    public Map<String, ArrayList<Item>> inv = new HashMap<>();
 
     public Inventory(File inventoryFile) {
         //set up inventory

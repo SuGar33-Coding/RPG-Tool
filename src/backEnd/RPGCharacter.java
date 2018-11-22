@@ -22,15 +22,15 @@ public class RPGCharacter {
     private int hitDiceAmount;
     private int currentHitDiceAmount;
 
-    public boolean[][] skills = {new boolean[2], new boolean[4], new boolean[1], new boolean[6], new boolean[6], new boolean[5]};
     /*
-    Strength Skills: Str Save, Athletics
-    Dex Skills: Dex Save, Acrobatics, Sleight of Hand, Stealth
-    Constitution Skills: Cons Save
-    Intelligence Skills: Int Save, Arcana, History, Investigation, Nature, Religion
-    Wisdom Skills: Wis Save, Animal handling, Insight, Medicine, Perception, Survival
-    Charisma Skills: Cha Save, Deception, Intimidation, Performance, Persuasion
+     * Strength Skills: Str Save, Athletics
+     * Dex Skills: Dex Save, Acrobatics, Sleight of Hand, Stealth
+     * Constitution Skills: Cons Save
+     * Intelligence Skills: Int Save, Arcana, History, Investigation, Nature, Religion
+     * Wisdom Skills: Wis Save, Animal handling, Insight, Medicine, Perception, Survival
+     * Charisma Skills: Cha Save, Deception, Intimidation, Performance, Persuasion
      */
+    public boolean[][] skills = {new boolean[2], new boolean[4], new boolean[1], new boolean[6], new boolean[6], new boolean[5]};
 
     /* Raw skill stats */
     private int rawStrength;
@@ -62,28 +62,9 @@ public class RPGCharacter {
     Inventory inventory;
 
     public RPGCharacter(String charName) {  //character's name
+        ArrayList<String> rawStats = loadCharFile(charName);
 
-
-        // Changed so that this method handles creating file path so as to not be redundant in other files.
-        ArrayList<String> rawStats = new ArrayList<>();
-        String sep = System.getProperty("file.separator");
-        String filePath = "Characters" + sep + charName;//.replace(" ","_");  TODO: Decide whether we want under scores(does function without)
-
-        /* Read from file into array of stats */
-        try {
-            File statsFile = new File(filePath + sep + "stats.txt");
-            BufferedReader br = new BufferedReader(new FileReader(statsFile));
-            String stat;
-            while ((stat = br.readLine()) != null)
-                rawStats.add(stat);
-            br.close();
-        } catch (IOException e) {
-            System.out.println("Error loading character");
-            e.printStackTrace();
-        }
-
-        File inventoryFile = new File(filePath + sep + "inventory.txt");
-        inventory = new Inventory(inventoryFile);
+        inventory = new Inventory(getInventoryFile(charName));
 
         int counter = 0; //to avoid hardcoding the indexes for reading from file
         this.playerName = rawStats.get(counter); counter ++;
@@ -142,6 +123,33 @@ public class RPGCharacter {
         }
     }
     */
+
+    public static ArrayList<String> loadCharFile(String charName) {
+        ArrayList<String> rawStats = new ArrayList<>();
+        String sep = System.getProperty("file.separator");
+        String filePath = "Characters" + sep + charName;//.replace(" ","_");  TODO: Decide whether we want under scores(does function without)
+
+        /* Read from file into array of stats */
+        try {
+            File statsFile = new File(filePath + sep + "stats.txt");
+            BufferedReader br = new BufferedReader(new FileReader(statsFile));
+            String stat;
+            while ((stat = br.readLine()) != null)
+                rawStats.add(stat);
+            br.close();
+        } catch (IOException e) {
+            System.out.println("Error loading character");
+            e.printStackTrace();
+        }
+
+        return rawStats;
+    }
+
+    public static File getInventoryFile(String charName) {
+        String sep = System.getProperty("file.separator");
+        String filePath = "Characters" + sep + charName;//.replace(" ","_");
+        return new File(filePath + sep + "inventory.txt");
+    }
 
     public void addToInventory(Item i) {
         this.inventory.addItem(i.toString());
