@@ -143,255 +143,41 @@ public class RPGCharacter {
     }
     */
 
-    public static void updateCharFiles(ArrayList<String> data) {
-        String charName = data.get(1);//.replace(" ","_"); have to decide whether we want underscores, does function without
+    public void updateCharFile(ArrayList<String> charData) {
         String sep = System.getProperty("file.separator");
-        File dir = new File("Characters" + sep + charName);
+        File dir = new File("Characters" + sep + this.name);
         dir.mkdir();
         try {
-            Writer charWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + charName + sep + "stats.txt"), "utf-8"));
-            for(int i = 0; i < data.size();i++){
-                charWriter.write(data.get(i));
+            Writer charWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + this.name + sep + "stats.txt"), "utf-8"));
+            for(int i = 0; i < charData.size();i++){
+                charWriter.write(charData.get(i));
                 charWriter.write("\n");
             }
             charWriter.close();
         } catch (IOException ex) {
             System.out.println("Something went wrong while writing stats file.");
+            ex.printStackTrace();
         }
+    }
+
+    public void updateInvFile(Map<String, ArrayList<Item>> invData) {
+        String sep = System.getProperty("file.separator");
+        File dir = new File("Characters" + sep + this.name);
         try {
-            Writer inventoryWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + charName + sep + "inventory.txt"), "utf-8"));
+            Writer inventoryWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + this.name + sep + "inventory.txt"), "utf-8"));
+            for (ArrayList<Item> itemType : invData.values()){
+                for (Item i : itemType) {
+                    inventoryWriter.write(i.toString());
+                }
+            }
             inventoryWriter.close();
         } catch (IOException ex) {
             System.out.println("Something went wrong while writing inventory file.");
+            ex.printStackTrace();
         }
     }
 
     // TODO: Use ENUMS and arrays cause its more sugar33
-    /* Getters & Setters*/
-
-    public int getProficiencyBonus() {
-        return proficiencyBonus;
-    }
-
-    public void setProficiencyBonus(int proficiencyBonus) {
-        this.proficiencyBonus = proficiencyBonus;
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCharacterClass() {
-        return characterClass;
-    }
-
-    public void setCharacterClass(String characterClass) {
-        this.characterClass = characterClass;
-    }
-
-    public String getRace() {
-        return race;
-    }
-
-    public void setRace(String race) {
-        this.race = race;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public String getAlignment() {
-        return alignment;
-    }
-
-    public void setAlignment(String alignment) {
-        this.alignment = alignment;
-    }
-
-    public int getXp() {
-        return xp;
-    }
-
-    public void setXp(int xp) {
-        this.xp = xp;
-    }
-
-    public boolean isInspiration() {
-        return inspiration;
-    }
-
-    public void setInspiration(boolean inspiration) {
-        this.inspiration = inspiration;
-    }
-
-    public int getAc() {
-        return ac;
-    }
-
-    public void setAc(int ac) {
-        this.ac = ac;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public int getMaxHP() {
-        return maxHP;
-    }
-
-    public void setMaxHP(int maxHP) {
-        this.maxHP = maxHP;
-    }
-
-    public int getCurrentHP() {
-        return currentHP;
-    }
-
-    public void setCurrentHP(int currentHP) {
-        this.currentHP = currentHP;
-    }
-
-    public int getHitDiceSides() {
-        return hitDiceSides;
-    }
-
-    public void setHitDiceSides(int hitDiceSides) {
-        this.hitDiceSides = hitDiceSides;
-    }
-
-    public int getHitDiceAmount() {
-        return hitDiceAmount;
-    }
-
-    public void setHitDiceAmount(int hitDiceAmount) {
-        this.hitDiceAmount = hitDiceAmount;
-    }
-
-    public int getCurrentHitDiceAmount() {
-        return currentHitDiceAmount;
-    }
-
-    public void setCurrentHitDiceAmount(int currentHitDiceAmount) {
-        this.currentHitDiceAmount = currentHitDiceAmount;
-    }
-
-    public int getRawStrength() {
-        return rawStrength;
-    }
-
-    public void setRawStrength(int rawStrength) {
-        this.rawStrength = rawStrength;
-    }
-
-    public int getRawDexterity() {
-        return rawDexterity;
-    }
-
-    public void setRawDexterity(int rawDexterity) {
-        this.rawDexterity = rawDexterity;
-    }
-
-    public int getRawConstitution() {
-        return rawConstitution;
-    }
-
-    public void setRawConstitution(int rawConstitution) {
-        this.rawConstitution = rawConstitution;
-    }
-
-    public int getRawIntelligence() {
-        return rawIntelligence;
-    }
-
-    public void setRawIntelligence(int rawIntelligence) {
-        this.rawIntelligence = rawIntelligence;
-    }
-
-    public int getRawWisdom() {
-        return rawWisdom;
-    }
-
-    public void setRawWisdom(int rawWisdom) {
-        this.rawWisdom = rawWisdom;
-    }
-
-    public int getRawCharisma() {
-        return rawCharisma;
-    }
-
-    public void setRawCharisma(int rawCharisma) {
-        this.rawCharisma = rawCharisma;
-    }
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public void setStrength(int strength) {
-        this.strength = strength;
-    }
-
-    public int getDexterity() {
-        return dexterity;
-    }
-
-    public void setDexterity(int dexterity) {
-        this.dexterity = dexterity;
-    }
-
-    public int getConstitution() {
-        return constitution;
-    }
-
-    public void setConstitution(int constitution) {
-        this.constitution = constitution;
-    }
-
-    public int getIntelligence() {
-        return intelligence;
-    }
-
-    public void setIntelligence(int intelligence) {
-        this.intelligence = intelligence;
-    }
-
-    public int getWisdom() {
-        return wisdom;
-    }
-
-    public void setWisdom(int wisdom) {
-        this.wisdom = wisdom;
-    }
-
-    public int getCharisma() {
-        return charisma;
-    }
-
-    public void setCharisma(int charisma) {
-        this.charisma = charisma;
-    }
 
     public static int calculateProficiencyBonus(int lvl){
         int bonus = 2;

@@ -90,8 +90,6 @@ public class MainFrame {
         boolean debug = false;
         if (debug) {
             RPGCharacter c = new RPGCharacter("testChar");
-            System.out.println(c.getStrength());
-            System.out.println(c.getCharisma());
             for (Item i : c.items.get("Weapon"))
                 System.out.println(i.getName());
         }
