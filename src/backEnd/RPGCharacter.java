@@ -148,29 +148,21 @@ public class RPGCharacter {
         String sep = System.getProperty("file.separator");
         File dir = new File("Characters" + sep + charName);
         dir.mkdir();
-        Writer writer = null;
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + charName + sep + "stats.txt"), "utf-8"));
+            Writer charWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + charName + sep + "stats.txt"), "utf-8"));
             for(int i = 0; i < data.size();i++){
-                writer.write(data.get(i));
-                writer.write("\n");
+                charWriter.write(data.get(i));
+                charWriter.write("\n");
             }
+            charWriter.close();
         } catch (IOException ex) {
             System.out.println("Something went wrong while writing stats file.");
-        } finally {
-            try {
-                writer.close();
-            } catch (Exception ex) {/*ignore*/}
         }
-        Writer inventoryWriter = null;
         try {
-            inventoryWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + charName + sep + "inventory.txt"), "utf-8"));
+            Writer inventoryWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + charName + sep + "inventory.txt"), "utf-8"));
+            inventoryWriter.close();
         } catch (IOException ex) {
             System.out.println("Something went wrong while writing inventory file.");
-        } finally {
-            try {
-                inventoryWriter.close();
-            } catch (Exception ex) {/*ignore*/}
         }
     }
 
