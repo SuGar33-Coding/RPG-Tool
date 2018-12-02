@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import static GUI.MainFrame.actor;
+
 public class CharForm {
     public JPanel charPan;
     private JPanel namePan;
@@ -125,7 +127,6 @@ public class CharForm {
                 data.add(maxHPField.getText());
                 data.add(currentHPField.getText());
                 data.add(hitDiceSizeF.getText());
-                data.add(levelF.getText()); // Max Hit dice
                 data.add(currentHitDiceField.getText());
                 data.add(strengthF.getText());
                 data.add(dexterityF.getText());
@@ -136,9 +137,8 @@ public class CharForm {
                 for(JCheckBox checkBox : checkGroup){
                     data.add(Boolean.toString(checkBox.isSelected()));
                 }
-                RPGCharacter actor = new RPGCharacter(charF.getText());
-                actor.updateCharFile(data);
-                updateData(actor);
+                RPGCharacter.writeCharFile(data);
+                updateFormData(data);
             }
         });
 
@@ -161,78 +161,91 @@ public class CharForm {
         });
     }
 
-    public void updateData(RPGCharacter actor){
-        playerF.setText(actor.getPlayerName());
-        charF.setText(actor.getName());
-        classF.setText(actor.getCharacterClass());
-        raceF.setText(actor.getRace());
-        levelF.setText(String.valueOf(actor.getLevel()));
-        alignmentF.setText(actor.getAlignment());
-        xpF.setText(String.valueOf(actor.getXp()));
-        strengthF.setText(String.valueOf(actor.getRawStrength()));
-        dexterityF.setText(String.valueOf(actor.getRawDexterity()));
-        constitutionF.setText(String.valueOf(actor.getRawConstitution()));
-        intelligenceF.setText(String.valueOf(actor.getRawIntelligence()));
-        wisdomF.setText(String.valueOf(actor.getRawWisdom()));
-        charismaF.setText(String.valueOf(actor.getRawCharisma()));
-        SB.setText("SB: "+actor.getStrength());
-        DB.setText("DB: "+actor.getDexterity());
-        CB.setText("CB: "+actor.getConstitution());
-        IB.setText("IB: "+actor.getIntelligence());
-        WB.setText("WB: "+actor.getWisdom());
-        ChB.setText("ChB: "+actor.getCharisma());
-        inspirationCheckBox.setSelected(actor.isInspired());
-        acField.setText(String.valueOf(actor.getAc()));
-        speedField.setText(String.valueOf(actor.getSpeed()));
-        maxHPField.setText(String.valueOf(actor.getMaxHP()));
-        currentHPField.setText(String.valueOf(actor.getCurrentHP()));
-        hitDiceSizeF.setText(String.valueOf(actor.getHitDiceSides()));
-        currentHitDiceField.setText(String.valueOf(actor.getCurrentHitDiceAmount()));
-        int profBonus = actor.getProficiencyBonus();
+    public void updateFormData(ArrayList<String> charStats){
+        int counter = 0;
+        playerF.setText(charStats.get(counter)); counter++;
+        charF.setText(charStats.get(counter)); counter++;
+        classF.setText(charStats.get(counter)); counter++;
+        raceF.setText(charStats.get(counter)); counter++;
+        levelF.setText(String.valueOf(charStats.get(counter))); counter++;
+        alignmentF.setText(charStats.get(counter)); counter++;
+        xpF.setText(String.valueOf(charStats.get(counter))); counter++;
+        inspirationCheckBox.setSelected(Boolean.parseBoolean(charStats.get(counter))); counter++;
+        acField.setText(String.valueOf(charStats.get(counter))); counter++;
+        speedField.setText(String.valueOf(charStats.get(counter))); counter++;
+        maxHPField.setText(String.valueOf(charStats.get(counter))); counter++;
+        currentHPField.setText(String.valueOf(charStats.get(counter))); counter++;
+        hitDiceSizeF.setText(String.valueOf(charStats.get(counter))); counter++;
+        currentHitDiceField.setText(String.valueOf(charStats.get(counter))); counter++;
+        strengthF.setText(String.valueOf(charStats.get(counter))); counter++;
+        dexterityF.setText(String.valueOf(charStats.get(counter))); counter++;
+        constitutionF.setText(String.valueOf(charStats.get(counter))); counter++;
+        intelligenceF.setText(String.valueOf(charStats.get(counter))); counter++;
+        wisdomF.setText(String.valueOf(charStats.get(counter))); counter++;
+        charismaF.setText(String.valueOf(charStats.get(counter))); counter++;
+        SB.setText("SB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(strengthF.getText())));
+        DB.setText("DB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(dexterityF.getText())));
+        CB.setText("CB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(constitutionF.getText())));
+        IB.setText("IB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(intelligenceF.getText())));
+        WB.setText("WB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(wisdomF.getText())));
+        ChB.setText("ChB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(charismaF.getText())));
+        int profBonus = RPGCharacter.calculateProficiencyBonus(Integer.parseInt(levelF.getText()));
+        boolean[][] skills = {new boolean[2],
+                new boolean[4],
+                new boolean[1],
+                new boolean[6],
+                new boolean[6],
+                new boolean[5]};
+        for (int i = 0; i < skills.length; i++) {
+            for (int j = 0; j < skills[i].length; j++) {
+                skills[i][j] = Boolean.parseBoolean(charStats.get(counter));
+                counter++;
+            }
+        }
         String append = "";
         if(profBonus >= 0)
             append += "+";
         append += String.valueOf(profBonus);
         proficiency.setText("Proficiency Bonus:  "+append);
-        maxHitDiceAmount.setText(String.valueOf(actor.getLevel()));
+        maxHitDiceAmount.setText(String.valueOf(levelF.getText()));
 
         int groupCounter = 0;
-        for(int i = 0; i<actor.skills.length; i++){
-            for(int j=0;j<actor.skills[i].length;j++){
+        for(int i = 0; i<skills.length; i++){
+            for(int j=0;j<skills[i].length;j++){
                 JCheckBox currentBox = checkGroup[groupCounter];
                 String currentString = currentBox.getText();
                 if(Character.isDigit(currentString.charAt(currentString.length()-1))&&Character.isDigit(currentString.charAt(currentString.length()-2)))  //Checks for double digit bonus(rare but could happen)
                     currentString = currentString.substring(0,currentString.length()-5);
                 else
                     currentString = currentString.substring(0,currentString.length()-4);  // 4 so the "  +0" (or any integer) at the end of the string is replaced.
-                currentBox.setSelected(actor.skills[i][j]);
+                currentBox.setSelected(skills[i][j]);
                 int bonus;
                 String bString;
                 switch(i) {
                     case 0:
-                        bonus = actor.getStrength();
+                        bonus = RPGCharacter.calculateActionBonus(Integer.parseInt(strengthF.getText()));
                         break;
                     case 1:
-                        bonus = actor.getDexterity();
+                        bonus = RPGCharacter.calculateActionBonus(Integer.parseInt(dexterityF.getText()));
                         break;
                     case 2:
-                        bonus = actor.getConstitution();
+                        bonus = RPGCharacter.calculateActionBonus(Integer.parseInt(constitutionF.getText()));
                         break;
                     case 3:
-                        bonus = actor.getIntelligence();
+                        bonus = RPGCharacter.calculateActionBonus(Integer.parseInt(intelligenceF.getText()));
                         break;
                     case 4:
-                        bonus = actor.getWisdom();
+                        bonus = RPGCharacter.calculateActionBonus(Integer.parseInt(wisdomF.getText()));
                         break;
                     case 5:
-                        bonus = actor.getCharisma();
+                        bonus = RPGCharacter.calculateActionBonus(Integer.parseInt(charismaF.getText()));
                         break;
                     default:
                         bonus = 0;
                         break;
                 }
                 if(currentBox.isSelected())
-                    bonus += actor.getProficiencyBonus();
+                    bonus += profBonus;
                 if(bonus<0)
                     bString = "  " + String.valueOf(bonus);
                 else
