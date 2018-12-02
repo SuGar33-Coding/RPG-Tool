@@ -1,15 +1,12 @@
 package backEnd;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Inventory {
-    public Map<String, ArrayList<Item>> inv = new HashMap<>();
+    public HashMap<String, ArrayList<Item>> inv = new HashMap<>();
 
     public Inventory(File inventoryFile) {
         //set up inventory
@@ -26,6 +23,24 @@ public class Inventory {
         } catch (IOException e) {
             System.out.println("Error loading inventory");
             e.printStackTrace();
+        }
+    }
+
+    public void writeInvFile(String charName) {
+        String sep = System.getProperty("file.separator");
+        File dir = new File("Characters" + sep + charName);
+        try {
+            Writer inventoryWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + charName + sep + "inventory.txt"), "utf-8"));
+            for (ArrayList<Item> itemType : this.inv.values()){
+                for (Item i : itemType) {
+                    inventoryWriter.write(i.toString());
+                    inventoryWriter.write("\n");
+                }
+            }
+            inventoryWriter.close();
+        } catch (IOException ex) {
+            System.out.println("Something went wrong while writing inventory file.");
+            ex.printStackTrace();
         }
     }
 

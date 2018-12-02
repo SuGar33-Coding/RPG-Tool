@@ -18,33 +18,37 @@ public class MainFrame {
     private JPanel buttons;
     private JButton deleteButton;
 
+    /* The current loaded character to work with */
+    public static RPGCharacter actor;
+
     public MainFrame() {
         loadCharacterButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fc = new JFileChooser("Characters");
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
-                if(fc.getName(fc.getSelectedFile()) != null){
-                    RPGCharacter actor = new RPGCharacter(fc.getName(fc.getSelectedFile()));
+                if (fc.getName(fc.getSelectedFile()) != null) {
                     CharForm charFrame = new CharForm();
                     JPanel pan = charFrame.charPan;
                     frame.setContentPane(pan);
                     frame.validate();
                     frame.repaint();
-                    charFrame.updateData(actor);
+                    charFrame.updateFormData(RPGCharacter.loadCharFile(fc.getName(fc.getSelectedFile())));
                 }
             }
         });
         diceyButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame diceFrame = new JFrame("Dicey");
                 diceFrame.setContentPane(new DI().DicePanel);
-                diceFrame.setPreferredSize(new Dimension(500,300));
+                diceFrame.setPreferredSize(new Dimension(500, 300));
                 diceFrame.pack();
                 diceFrame.setVisible(true);
-                /*frame.setContentPane(new DI().DicePanel);
-                frame.validate();
-                frame.repaint();*/
+            /*frame.setContentPane(new DI().DicePanel);
+            frame.validate();
+            frame.repaint();*/
 
             }
         });
@@ -63,9 +67,9 @@ public class MainFrame {
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
                 String fldrName = fc.getName(fc.getSelectedFile());
-                File dir = new File("Characters"+System.getProperty("file.separator")+fldrName);
+                File dir = new File("Characters" + System.getProperty("file.separator") + fldrName);
 
-                if(dir.isDirectory() != false) {
+                if (dir.isDirectory() != false) {
                     File[] listFiles = dir.listFiles();
                     for (File file : listFiles) {
                         file.delete();
@@ -89,9 +93,6 @@ public class MainFrame {
         /* add debugging statements to here */
         boolean debug = false;
         if (debug) {
-            RPGCharacter c = new RPGCharacter("testChar");
-            c.addToInventory(new Item("Weapon", "DONG_DIGGER", 69, "6D9", "Penetration"));
-            c.updateInvFile();
         }
         //mainFrame.letsRide();  Uncomment if you think you're cool enough
     }
@@ -116,7 +117,7 @@ public class MainFrame {
         return rhet;
     }
 
-    /*public void letsRide(){
+    public void letsRide(){
         for(int i = 1; i > 0; i++){
             welcomePanel.setBackground(Color.BLACK);
             welcomePanel.setBackground(Color.BLUE);
@@ -137,7 +138,7 @@ public class MainFrame {
             buttons.setBackground(Color.orange);
             buttons.setBackground(Color.pink);
         }
-    }*/
+    }
 
     public JPanel getMainMenu() {
         return mainMenu;
