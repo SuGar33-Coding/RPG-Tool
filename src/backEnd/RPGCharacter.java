@@ -72,8 +72,4 @@ public class RPGCharacter {
 
         return bonus;
     }
-
-    // TODO: Use ENUMS and arrays cause its more sugar33
-
-    /* Getters */
 }
