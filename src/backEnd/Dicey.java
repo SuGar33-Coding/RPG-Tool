@@ -40,4 +40,6 @@ public class Dicey {
         int[] zeroArray = {0,0};
         return zeroArray;
     }
+
+    //public static int
 }
