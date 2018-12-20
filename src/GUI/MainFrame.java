@@ -1,6 +1,5 @@
 package GUI;
 import backEnd.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,7 +33,7 @@ public class MainFrame {
                     frame.setContentPane(pan);
                     frame.validate();
                     frame.repaint();
-                    charFrame.updateFormData(RPGCharacter.loadCharFile(fc.getName(fc.getSelectedFile())));
+                    charFrame.updateFormData(RPGCharacter.loadCharJSON(fc.getName(fc.getSelectedFile())));
                 }
             }
         });
@@ -94,7 +93,9 @@ public class MainFrame {
         boolean debug = false;
         if (debug) {
         }
-        //mainFrame.letsRide();  Uncomment if you think you're cool enough
+
+        /* Uncomment if you think you're cool enough */
+        //mainFrame.letsRide();
     }
 
     public static void init(){

@@ -1,6 +1,8 @@
 package GUI;
 
 import backEnd.RPGCharacter;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
@@ -113,32 +115,35 @@ public class CharForm {
         updateSaveButton.addActionListener(new ActionListener() {  // TODO: Handle parsing errors
             @Override
             public void actionPerformed(ActionEvent e) {
-                ArrayList<String> data = new ArrayList<>();
-                data.add(playerF.getText());
-                data.add(charF.getText());
-                data.add(classF.getText());
-                data.add(raceF.getText());
-                data.add(levelF.getText());
-                data.add(alignmentF.getText());
-                data.add(xpF.getText());
-                data.add(Boolean.toString(inspirationCheckBox.isSelected()));
-                data.add(acField.getText());
-                data.add(speedField.getText());
-                data.add(maxHPField.getText());
-                data.add(currentHPField.getText());
-                data.add(hitDiceSizeF.getText());
-                data.add(currentHitDiceField.getText());
-                data.add(strengthF.getText());
-                data.add(dexterityF.getText());
-                data.add(constitutionF.getText());
-                data.add(intelligenceF.getText());
-                data.add(wisdomF.getText());
-                data.add(charismaF.getText());
+                JSONObject data = new JSONObject();
+                data.put("player name",playerF.getText());
+                data.put("char name", charF.getText());
+                data.put("class", classF.getText());
+                data.put("race", raceF.getText());
+                data.put("level", levelF.getText());
+                data.put("alignment", alignmentF.getText());
+                data.put("xp", xpF.getText());
+                data.put("inspiration", Boolean.toString(inspirationCheckBox.isSelected()));
+                data.put("ac", acField.getText());
+                data.put("speed", speedField.getText());
+                data.put("max HP", maxHPField.getText());
+                data.put("current HP", currentHPField.getText());
+                data.put("hit dice size", hitDiceSizeF.getText());
+                data.put("current hit dice", currentHitDiceField.getText());
+                data.put("strength", strengthF.getText());
+                data.put("dexterity", dexterityF.getText());
+                data.put("constitution", constitutionF.getText());
+                data.put("intelligence", intelligenceF.getText());
+                data.put("wisdom", wisdomF.getText());
+                data.put("charisma", charismaF.getText());
+                JSONArray skillBonuses = new JSONArray();
                 for(JCheckBox checkBox : checkGroup){
-                    data.add(Boolean.toString(checkBox.isSelected()));
+                    skillBonuses.put(Boolean.toString(checkBox.isSelected()));
                 }
-                RPGCharacter.writeCharFile(data);
-                updateFormData(data);
+                data.put("skill bonuses", skillBonuses);
+
+                RPGCharacter.writeCharJSON(data);
+                //TODO: Add inventory to JSON data
             }
         });
 
@@ -161,28 +166,28 @@ public class CharForm {
         });
     }
 
-    public void updateFormData(ArrayList<String> charStats){
+    public void updateFormData(JSONObject charStats){
         int counter = 0;
-        playerF.setText(charStats.get(counter)); counter++;
-        charF.setText(charStats.get(counter)); counter++;
-        classF.setText(charStats.get(counter)); counter++;
-        raceF.setText(charStats.get(counter)); counter++;
-        levelF.setText(String.valueOf(charStats.get(counter))); counter++;
-        alignmentF.setText(charStats.get(counter)); counter++;
-        xpF.setText(String.valueOf(charStats.get(counter))); counter++;
-        inspirationCheckBox.setSelected(Boolean.parseBoolean(charStats.get(counter))); counter++;
-        acField.setText(String.valueOf(charStats.get(counter))); counter++;
-        speedField.setText(String.valueOf(charStats.get(counter))); counter++;
-        maxHPField.setText(String.valueOf(charStats.get(counter))); counter++;
-        currentHPField.setText(String.valueOf(charStats.get(counter))); counter++;
-        hitDiceSizeF.setText(String.valueOf(charStats.get(counter))); counter++;
-        currentHitDiceField.setText(String.valueOf(charStats.get(counter))); counter++;
-        strengthF.setText(String.valueOf(charStats.get(counter))); counter++;
-        dexterityF.setText(String.valueOf(charStats.get(counter))); counter++;
-        constitutionF.setText(String.valueOf(charStats.get(counter))); counter++;
-        intelligenceF.setText(String.valueOf(charStats.get(counter))); counter++;
-        wisdomF.setText(String.valueOf(charStats.get(counter))); counter++;
-        charismaF.setText(String.valueOf(charStats.get(counter))); counter++;
+        playerF.setText(charStats.getString("player name")); counter++;
+        charF.setText(charStats.getString("char name")); counter++;
+        classF.setText(charStats.getString("class")); counter++;
+        raceF.setText(charStats.getString("race")); counter++;
+        levelF.setText(charStats.getString("level")); counter++;
+        alignmentF.setText(charStats.getString("alignment")); counter++;
+        xpF.setText(charStats.getString("xp")); counter++;
+        inspirationCheckBox.setSelected(charStats.getBoolean("inspiration")); counter++;
+        acField.setText(charStats.getString("ac")); counter++;
+        speedField.setText(charStats.getString("speed")); counter++;
+        maxHPField.setText(charStats.getString("max HP")); counter++;
+        currentHPField.setText(charStats.getString("current HP")); counter++;
+        hitDiceSizeF.setText(charStats.getString("hit dice size")); counter++;
+        currentHitDiceField.setText(charStats.getString("current hit dice")); counter++;
+        strengthF.setText(charStats.getString("strength")); counter++;
+        dexterityF.setText(charStats.getString("dexterity")); counter++;
+        constitutionF.setText(charStats.getString("constitution")); counter++;
+        intelligenceF.setText(charStats.getString("intelligence")); counter++;
+        wisdomF.setText(charStats.getString("wisdom")); counter++;
+        charismaF.setText(charStats.getString("charisma")); counter++;
         SB.setText("SB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(strengthF.getText())));
         DB.setText("DB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(dexterityF.getText())));
         CB.setText("CB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(constitutionF.getText())));
@@ -196,10 +201,11 @@ public class CharForm {
                 new boolean[6],
                 new boolean[6],
                 new boolean[5]};
+        int k = 0;
         for (int i = 0; i < skills.length; i++) {
             for (int j = 0; j < skills[i].length; j++) {
-                skills[i][j] = Boolean.parseBoolean(charStats.get(counter));
-                counter++;
+                skills[i][j] = charStats.getJSONArray("skill bonuses").getBoolean(k);
+                k++;
             }
         }
         String append = "";
