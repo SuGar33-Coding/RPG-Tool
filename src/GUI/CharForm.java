@@ -11,6 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //import static GUI.MainFrame.actor;
+import java.util.ArrayList;
+
+//import static GUI.MainFrame.actor;
 
 public class CharForm {
     public JPanel charPan;
