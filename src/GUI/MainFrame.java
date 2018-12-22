@@ -100,7 +100,7 @@ public class MainFrame {
         frame.setVisible(true);
 
         /* add debugging statements to here */
-        boolean debug = true;
+        boolean debug = false;
         if (debug) {
             inventory = new Inventory(RPGCharacter.loadCharJSON("Bitchmoney"));
             System.out.println(inventory);
