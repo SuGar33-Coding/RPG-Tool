@@ -86,21 +86,21 @@ public class Item{
 
     public String toString() {
         switch (this.type) {
-            case "Weapon":
+            case "weapon":
                 return this.type
                         + " " + this.name
                         + " " + this.attackBonus
                         + " " + this.damageDice
                         + " " + this.damageType;
-            case "Armor":
+            case "armor":
                 return this.type
                         + " " + this.name
                         + " " + this.bonus
                         + " " + this.armorType;
-            case "Misc":
+            case "misc":
                 return this.type
                         + " " + this.name;
-            case "Currency":
+            case "currency":
                 return this.type
                         + " " + this.name
                         + " " + this.amount;

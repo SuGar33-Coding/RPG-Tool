@@ -1,5 +1,8 @@
 package GUI;
+
 import backEnd.*;
+import org.json.JSONObject;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +21,10 @@ public class MainFrame {
     private JButton deleteButton;
 
     /* The current loaded character to work with */
-    public static RPGCharacter actor;
+    //public static RPGCharacter actor;
+
+    /* Active inventory */
+    static Inventory inventory;
 
     public MainFrame() {
         loadCharacterButton.addActionListener(new ActionListener() {
@@ -33,7 +39,9 @@ public class MainFrame {
                     frame.setContentPane(pan);
                     frame.validate();
                     frame.repaint();
-                    charFrame.updateFormData(RPGCharacter.loadCharJSON(fc.getName(fc.getSelectedFile())));
+                    JSONObject charJSON = RPGCharacter.loadCharJSON(fc.getName(fc.getSelectedFile()));
+                    inventory = new Inventory(charJSON);
+                    charFrame.updateFormData(charJSON);
                 }
             }
         });
@@ -57,6 +65,8 @@ public class MainFrame {
                 frame.setContentPane(new CharForm().charPan);
                 frame.validate();
                 frame.repaint();
+
+                inventory = new Inventory();
             }
         });
         deleteButton.addActionListener(new ActionListener() {
@@ -84,21 +94,23 @@ public class MainFrame {
         MainFrame mainFrame = new MainFrame();
         JPanel mainMenu = mainFrame.getMainMenu();
         frame.setContentPane(mainMenu);
-        frame.setPreferredSize(new Dimension(700,800));
+        frame.setPreferredSize(new Dimension(700, 800));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
 
         /* add debugging statements to here */
-        boolean debug = false;
+        boolean debug = true;
         if (debug) {
+            inventory = new Inventory(RPGCharacter.loadCharJSON("Bitchmoney"));
+            System.out.println(inventory);
         }
 
         /* Uncomment if you think you're cool enough */
         //mainFrame.letsRide();
     }
 
-    public static void init(){
+    public static void init() {
         MainFrame mainFrame = new MainFrame();
         JPanel mainMenu = mainFrame.getMainMenu();
         frame.setContentPane(mainMenu);
@@ -106,11 +118,11 @@ public class MainFrame {
         frame.repaint();
     }
 
-    public String str2path(String path){
+    public String str2path(String path) {
         String rhet = "";
         String sep = System.getProperty("file.separator");
-        for(int i = 0; i < path.length(); i++)
-            if(path.charAt(i)=='/')
+        for (int i = 0; i < path.length(); i++)
+            if (path.charAt(i) == '/')
                 rhet = rhet + sep;
             else
                 rhet = rhet + path.charAt(i);
@@ -118,8 +130,9 @@ public class MainFrame {
         return rhet;
     }
 
-    public void letsRide(){
-        for(int i = 1; i > 0; i++){
+    public void letsRide() {
+        /* tfw you use an infinitely incrementing for loop as opposed to a while(true) */
+        for (int i = 1; i > 0; i++) {
             welcomePanel.setBackground(Color.BLACK);
             welcomePanel.setBackground(Color.BLUE);
             welcomePanel.setBackground(Color.red);

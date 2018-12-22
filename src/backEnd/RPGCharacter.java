@@ -6,10 +6,9 @@ import java.io.*;
 import java.util.*;
 
 public class RPGCharacter {
-    Inventory inventory;
 
     public static int calculateActionBonus(int rawStat) {
-        return (rawStat - 10)/2;
+        return (rawStat - 10) / 2;
     }
 
     public static ArrayList<String> loadCharFile(String charName) {
@@ -58,7 +57,6 @@ public class RPGCharacter {
     }
 
 
-
     public static File getInventoryFile(String charName) {
         String sep = System.getProperty("file.separator");
         String filePath = "Characters" + sep + charName;//.replace(" ","_");
@@ -71,7 +69,7 @@ public class RPGCharacter {
         dir.mkdir();
         try {
             Writer charWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + charData.get(1) + sep + "stats.txt"), "utf-8"));
-            for(int i = 0; i < charData.size();i++){
+            for (int i = 0; i < charData.size(); i++) {
                 charWriter.write(charData.get(i));
                 charWriter.write("\n");
             }
@@ -95,16 +93,15 @@ public class RPGCharacter {
     }
 
 
-
-    public static int calculateProficiencyBonus(int lvl){
+    public static int calculateProficiencyBonus(int lvl) {
         int bonus = 2;
-        if(lvl >= 5){
+        if (lvl >= 5) {
             bonus = 3;
-            if(lvl >= 9){
+            if (lvl >= 9) {
                 bonus = 4;
-                if(lvl >= 13){
+                if (lvl >= 13) {
                     bonus = 5;
-                    if(lvl >= 17)
+                    if (lvl >= 17)
                         bonus = 6;
                 }
             }

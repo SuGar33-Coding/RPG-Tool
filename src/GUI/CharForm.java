@@ -9,9 +9,8 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-import static GUI.MainFrame.actor;
+//import static GUI.MainFrame.actor;
 
 public class CharForm {
     public JPanel charPan;
@@ -141,6 +140,8 @@ public class CharForm {
                     skillBonuses.put(Boolean.toString(checkBox.isSelected()));
                 }
                 data.put("skill bonuses", skillBonuses);
+
+                data.put("inventory",new JSONObject(MainFrame.inventory.toString()));
 
                 RPGCharacter.writeCharJSON(data);
                 //TODO: Add inventory to JSON data
