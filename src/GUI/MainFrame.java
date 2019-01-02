@@ -20,11 +20,10 @@ public class MainFrame {
     private JPanel buttons;
     private JButton deleteButton;
 
-    /* The current loaded character to work with */
-    //public static RPGCharacter actor;
-
     /* Active inventory */
     static Inventory inventory;
+
+    static boolean debug = false;
 
     public MainFrame() {
         loadCharacterButton.addActionListener(new ActionListener() {
@@ -42,6 +41,10 @@ public class MainFrame {
                     JSONObject charJSON = RPGCharacter.loadCharJSON(fc.getName(fc.getSelectedFile()));
                     inventory = new Inventory(charJSON);
                     charFrame.updateFormData(charJSON);
+
+                    if (debug){
+                        System.out.println(inventory);
+                    }
                 }
             }
         });
@@ -67,6 +70,10 @@ public class MainFrame {
                 frame.repaint();
 
                 inventory = new Inventory();
+
+                if (debug) {
+                    System.out.println(inventory);
+                }
             }
         });
         deleteButton.addActionListener(new ActionListener() {
@@ -100,10 +107,7 @@ public class MainFrame {
         frame.setVisible(true);
 
         /* add debugging statements to here */
-        boolean debug = false;
         if (debug) {
-            inventory = new Inventory(RPGCharacter.loadCharJSON("Bitchmoney"));
-            System.out.println(inventory);
         }
 
         /* Uncomment if you think you're cool enough */

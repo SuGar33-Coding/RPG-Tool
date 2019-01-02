@@ -1,12 +1,9 @@
 package backEnd;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Inventory {
@@ -52,20 +49,12 @@ public class Inventory {
      * @param dataFile full character JSON file
      */
     public Inventory(JSONObject dataFile) {
-        //set up inventory
-        JSONArray weapons = dataFile.getJSONObject("inventory").getJSONArray("weapon");
-        JSONArray armors = dataFile.getJSONObject("inventory").getJSONArray("armor");
-        JSONArray currencies = dataFile.getJSONObject("inventory").getJSONArray("currency");
-        JSONArray miscs = dataFile.getJSONObject("inventory").getJSONArray("misc");
-
+        //set up inv structure
         inv = new HashMap<>();
         inv.put("weapon", new ArrayList<>());
         inv.put("armor", new ArrayList<>());
         inv.put("misc", new ArrayList<>());
         inv.put("currency", new ArrayList<>());
-
-        //for (String key :dataFile.getJSONObject("inventory").keySet()) {
-        //dataFile.getJSONObject("inventory").getJSONArray(key).forEach(dataLine -> addItem(key + " " + dataLine.toString()));
 
         for (String key : dataFile.getJSONObject("inventory").keySet()) {
             if (!dataFile.getJSONObject("inventory").getJSONArray(key).isEmpty()) {
@@ -75,24 +64,6 @@ public class Inventory {
             }
         }
 
-    }
-
-    public void writeInvFile(String charName) {
-        String sep = System.getProperty("file.separator");
-        File dir = new File("Characters" + sep + charName);
-        try {
-            Writer inventoryWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + charName + sep + "inventory.txt"), "utf-8"));
-            for (ArrayList<Item> itemType : this.inv.values()) {
-                for (Item i : itemType) {
-                    inventoryWriter.write(i.toString());
-                    inventoryWriter.write("\n");
-                }
-            }
-            inventoryWriter.close();
-        } catch (IOException ex) {
-            System.out.println("Something went wrong while writing inventory file.");
-            ex.printStackTrace();
-        }
     }
 
     public void addItem(String infoLine) {
@@ -112,6 +83,10 @@ public class Inventory {
         }
     }
 
+    /**
+     * Easy to read and use for JSON
+     * @return Inventory String in pretty JSON format
+     */
     public String toString() {
         String ret = "{\n";
         for (String key : inv.keySet()) {

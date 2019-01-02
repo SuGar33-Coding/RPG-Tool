@@ -3,17 +3,11 @@ package GUI;
 import backEnd.RPGCharacter;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-//import static GUI.MainFrame.actor;
-import java.util.ArrayList;
-
-//import static GUI.MainFrame.actor;
 
 public class CharForm {
     public JPanel charPan;
@@ -143,11 +137,9 @@ public class CharForm {
                     skillBonuses.put(Boolean.toString(checkBox.isSelected()));
                 }
                 data.put("skill bonuses", skillBonuses);
-
                 data.put("inventory",new JSONObject(MainFrame.inventory.toString()));
 
                 RPGCharacter.writeCharJSON(data);
-                //TODO: Add inventory to JSON data
             }
         });
 
@@ -257,9 +249,9 @@ public class CharForm {
                 if(currentBox.isSelected())
                     bonus += profBonus;
                 if(bonus<0)
-                    bString = "  " + String.valueOf(bonus);
+                    bString = "  " + bonus;
                 else
-                    bString = "  +" + String.valueOf(bonus);
+                    bString = "  +" + bonus;
                 currentBox.setText(currentString+bString);
 
                 groupCounter++;
