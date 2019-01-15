@@ -140,6 +140,7 @@ public class CharForm {
                 data.put("inventory",new JSONObject(MainFrame.inventory.toString()));
 
                 RPGCharacter.writeCharJSON(data);
+                updateFormData(data);
             }
         });
 
