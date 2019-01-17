@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -103,9 +104,20 @@ public class CharForm {
             {strSave,athleticsCheckBox,dexSave,acrobaticsCheckBox,sleightOfHandCheckBox,stealthCheckBox,conSave,intSave,arcanaCheckBox,historyCheckBox,investigationCheckBox,
                     natureCheckBox,religionCheckBox,wisSave,animalhCheckBox,insightCheckBox,medicineCheckBox,perceptionCheckBox,survivalCheckBox,chSave,deceptionCheckBox,
                     intimidationCheckBox,performanceCheckBox,persuasionCheckBox}; // Just a list of all checkboxes/skills
+    private JSONObject actor;
+
+    public CharForm(JSONObject c) {
+        actor = c;
+        addListeners();
+        updateFormData(actor);
+    }
 
     public CharForm() {
+        addListeners();
 
+    }
+
+    private void addListeners(){
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -165,30 +177,54 @@ public class CharForm {
 
             }
         });
+
+        rollButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame diceFrame = new JFrame("Dicey");
+                diceFrame.setContentPane(new DI().DicePanel);
+                diceFrame.setPreferredSize(new Dimension(500, 300));
+                diceFrame.pack();
+                diceFrame.setVisible(true);
+
+            }
+        });
+
+        invButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame invFrame = new JFrame("Inventory");
+                invFrame.setContentPane(new InvForm(actor).invPanel);
+                invFrame.setPreferredSize(new Dimension(500, 700));
+                invFrame.pack();
+                invFrame.setVisible(true);
+
+            }
+        });
     }
 
-    public void updateFormData(JSONObject charStats){
+    private void updateFormData(JSONObject charStats){
         int counter = 0;
-        playerF.setText(charStats.getString("player name")); counter++;
-        charF.setText(charStats.getString("char name")); counter++;
-        classF.setText(charStats.getString("class")); counter++;
-        raceF.setText(charStats.getString("race")); counter++;
-        levelF.setText(charStats.getString("level")); counter++;
-        alignmentF.setText(charStats.getString("alignment")); counter++;
-        xpF.setText(charStats.getString("xp")); counter++;
-        inspirationCheckBox.setSelected(charStats.getBoolean("inspiration")); counter++;
-        acField.setText(charStats.getString("ac")); counter++;
-        speedField.setText(charStats.getString("speed")); counter++;
-        maxHPField.setText(charStats.getString("max HP")); counter++;
-        currentHPField.setText(charStats.getString("current HP")); counter++;
-        hitDiceSizeF.setText(charStats.getString("hit dice size")); counter++;
-        currentHitDiceField.setText(charStats.getString("current hit dice")); counter++;
-        strengthF.setText(charStats.getString("strength")); counter++;
-        dexterityF.setText(charStats.getString("dexterity")); counter++;
-        constitutionF.setText(charStats.getString("constitution")); counter++;
-        intelligenceF.setText(charStats.getString("intelligence")); counter++;
-        wisdomF.setText(charStats.getString("wisdom")); counter++;
-        charismaF.setText(charStats.getString("charisma")); counter++;
+        playerF.setText(charStats.getString("player name"));
+        charF.setText(charStats.getString("char name"));
+        classF.setText(charStats.getString("class"));
+        raceF.setText(charStats.getString("race"));
+        levelF.setText(charStats.getString("level"));
+        alignmentF.setText(charStats.getString("alignment"));
+        xpF.setText(charStats.getString("xp"));
+        inspirationCheckBox.setSelected(charStats.getBoolean("inspiration"));
+        acField.setText(charStats.getString("ac"));
+        speedField.setText(charStats.getString("speed"));
+        maxHPField.setText(charStats.getString("max HP"));
+        currentHPField.setText(charStats.getString("current HP"));
+        hitDiceSizeF.setText(charStats.getString("hit dice size"));
+        currentHitDiceField.setText(charStats.getString("current hit dice"));
+        strengthF.setText(charStats.getString("strength"));
+        dexterityF.setText(charStats.getString("dexterity"));
+        constitutionF.setText(charStats.getString("constitution"));
+        intelligenceF.setText(charStats.getString("intelligence"));
+        wisdomF.setText(charStats.getString("wisdom"));
+        charismaF.setText(charStats.getString("charisma"));
         SB.setText("SB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(strengthF.getText())));
         DB.setText("DB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(dexterityF.getText())));
         CB.setText("CB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(constitutionF.getText())));

@@ -26,6 +26,9 @@ public class MainFrame {
     static boolean debug = false;
 
     public MainFrame() {
+        /* When load character is pressed, creates an object to interact with computers file system, and user
+           Will select character folder (characters are currently stored in folders, not just one file)
+         */
         loadCharacterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -33,21 +36,23 @@ public class MainFrame {
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
                 if (fc.getName(fc.getSelectedFile()) != null) {
-                    CharForm charFrame = new CharForm();
+                    JSONObject charJSON = RPGCharacter.loadCharJSON(fc.getName(fc.getSelectedFile()));
+                    CharForm charFrame = new CharForm(charJSON);
                     JPanel pan = charFrame.charPan;
                     frame.setContentPane(pan);
                     frame.validate();
                     frame.repaint();
-                    JSONObject charJSON = RPGCharacter.loadCharJSON(fc.getName(fc.getSelectedFile()));
-                    inventory = new Inventory(charJSON);
-                    charFrame.updateFormData(charJSON);
+                    //charFrame.updateFormData(charJSON);
 
+                    inventory = new Inventory(charJSON);
                     if (debug){
                         System.out.println(inventory);
                     }
                 }
             }
         });
+
+        // Creates new frame for dice rolling
         diceyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,9 +61,6 @@ public class MainFrame {
                 diceFrame.setPreferredSize(new Dimension(500, 300));
                 diceFrame.pack();
                 diceFrame.setVisible(true);
-            /*frame.setContentPane(new DI().DicePanel);
-            frame.validate();
-            frame.repaint();*/
 
             }
         });
