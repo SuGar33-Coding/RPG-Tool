@@ -95,6 +95,10 @@ public class CharForm {
     private JCheckBox inspirationCheckBox;
     private JLabel maxHitDiceAmount;
     private JLabel proficiency;
+    private JButton rollButton;
+    private JButton invButton;
+    private JButton spellButton;
+    private JButton loreButton;
     private JCheckBox[] checkGroup =
             {strSave,athleticsCheckBox,dexSave,acrobaticsCheckBox,sleightOfHandCheckBox,stealthCheckBox,conSave,intSave,arcanaCheckBox,historyCheckBox,investigationCheckBox,
                     natureCheckBox,religionCheckBox,wisSave,animalhCheckBox,insightCheckBox,medicineCheckBox,perceptionCheckBox,survivalCheckBox,chSave,deceptionCheckBox,
