@@ -11,8 +11,10 @@ import javax.swing.event.CaretListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 
 public class InvForm {
@@ -41,18 +43,20 @@ public class InvForm {
     private JButton eAddButton;
     private JLabel eAmountLab;
     private JTextField amountTextField;
+    private JLabel addArmorLab;
     private Inventory inventoryClass;
     private String[] types = {"weapon","armor","misc"};
     private JTextArea[] tabs = {weaponArea,armorArea,equipmentArea};
     private JPanel[] buttonPanels = {weaponButtons, armorButtons,equipButtons};
     private CharForm parentCharForm;
+    private Dimension itemPanelDim = new Dimension(110,38);
 
 
 
     public InvForm(CharForm c) {
         parentCharForm = c;
         for(JTextArea tab : tabs)
-            tab.setFont(tab.getFont().deriveFont(20f));
+            tab.setFont(tab.getFont().deriveFont(14f));
         for(JPanel panel : buttonPanels)
             panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         updateFormData(MainFrame.inventory);
@@ -92,21 +96,24 @@ public class InvForm {
         int count = c;
         int i = index;
         JButton plusButton = new JButton("+");
-        //plusButton.setPreferredSize(new Dimension(30,30));
         JButton minButton = new JButton("-");
-        //minButton.setPreferredSize(new Dimension(30,30));
         JPanel itemPanel = new JPanel();
         itemPanel.setLayout(new FlowLayout());
         itemPanel.add(plusButton);
         itemPanel.add(minButton);
-        itemPanel.setPreferredSize(new Dimension(10,10));
+        itemPanel.setMaximumSize(itemPanelDim);
         buttonPanels[count].add(itemPanel);
 
         plusButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Item item = inventory.inv.get(types[count]).get(i);
-                item.setAmount(item.getAmount()+1);
+                if((e.getModifiers() & InputEvent.SHIFT_MASK) != 0)  // Allows users to shift click to add 100, ctrl click to add 10
+                    item.setAmount(item.getAmount()+100);
+                else if ((e.getModifiers() & InputEvent.CTRL_MASK) != 0)
+                    item.setAmount(item.getAmount()+10);
+                else
+                    item.setAmount(item.getAmount()+1);
                 updateFormData(MainFrame.inventory);
             }
         });
@@ -115,11 +122,15 @@ public class InvForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Item item = inventory.inv.get(types[count]).get(i);
-                int amt = item.getAmount();
-                if(amt <= 0)
-                    inventory.inv.get(types[count]).remove(i);
+                if((e.getModifiers() & InputEvent.SHIFT_MASK) != 0)
+                    item.setAmount(item.getAmount()-100);
+                else if ((e.getModifiers() & InputEvent.CTRL_MASK) != 0)
+                    item.setAmount(item.getAmount()-10);
                 else
                     item.setAmount(item.getAmount()-1);
+
+                if(item.getAmount() < 0)
+                    inventory.inv.get(types[count]).remove(i);
                 updateFormData(MainFrame.inventory);
             }
         });
@@ -135,7 +146,7 @@ public class InvForm {
         JPanel itemPanel = new JPanel();
         itemPanel.setLayout(new FlowLayout());
         itemPanel.add(delButton);
-        itemPanel.setPreferredSize(new Dimension(10,10));
+        itemPanel.setMaximumSize(itemPanelDim);
         delPanel.add(itemPanel);
 
         delButton.addActionListener(new ActionListener() {

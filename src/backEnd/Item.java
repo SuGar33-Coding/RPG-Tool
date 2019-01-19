@@ -5,6 +5,7 @@ public class Item{
     /* Generic type */
     String type;
     String name;
+    String description;
 
     /* Weapon */
     int attackBonus;
