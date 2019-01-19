@@ -49,21 +49,23 @@ public class InvForm {
     private JTextArea[] tabs = {weaponArea,armorArea,equipmentArea};
     private JPanel[] buttonPanels = {weaponButtons, armorButtons,equipButtons};
     private CharForm parentCharForm;
-    private Dimension itemPanelDim = new Dimension(110,38);
+    private Dimension itemPanelDim = new Dimension(110,48);
+    private String sep;
 
 
 
     public InvForm(CharForm c) {
+        sep = MainFrame.inventory.getSep();
         parentCharForm = c;
         for(JTextArea tab : tabs)
-            tab.setFont(tab.getFont().deriveFont(14f));
+            tab.setFont(tab.getFont().deriveFont(12f));
         for(JPanel panel : buttonPanels)
             panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         updateFormData(MainFrame.inventory);
         eAddButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainFrame.inventory.addItem("misc "+eNameField.getText()+" "+amountTextField.getText());
+                MainFrame.inventory.addItem("misc"+sep+eNameField.getText()+sep+amountTextField.getText()+sep+"false");
                 updateFormData(MainFrame.inventory);
             }
         });
@@ -82,7 +84,7 @@ public class InvForm {
                else
                    addDeleteButton(count,i,inventory);
 
-               tabs[count].append(inventory.inv.get(types[count]).get(i).getName() + "\n\n");
+               tabs[count].append(inventory.inv.get(types[count]).get(i).getName() + "\n"+ inventory.inv.get(types[count]).get(i).getDescription()+"\n\n");
            }
            buttonPanels[count].revalidate();
         }
@@ -103,6 +105,8 @@ public class InvForm {
         itemPanel.add(minButton);
         itemPanel.setMaximumSize(itemPanelDim);
         buttonPanels[count].add(itemPanel);
+        buttonPanels[count].revalidate();
+        buttonPanels[count].repaint();
 
         plusButton.addActionListener(new ActionListener() {
             @Override
@@ -148,6 +152,8 @@ public class InvForm {
         itemPanel.add(delButton);
         itemPanel.setMaximumSize(itemPanelDim);
         delPanel.add(itemPanel);
+        buttonPanels[count].revalidate();
+        buttonPanels[count].repaint();
 
         delButton.addActionListener(new ActionListener() {
             @Override

@@ -14,7 +14,9 @@ public class Item{
 
     /* Armor */
     int bonus;
-    String armorType;
+    //String armorType;
+
+    boolean isCurrency;
 
     /* Currency */
     int amount = 0;
@@ -31,13 +33,15 @@ public class Item{
      * @param attackBonus
      * @param damageDice
      * @param damageType
+     * @param description
      */
-    public Item(String type, String name, int attackBonus, String damageDice, String damageType) {
+    public Item(String type, String name, int attackBonus, String damageDice, String damageType, String description) {
         this.type = type;
         this.name = name;
         this.attackBonus = attackBonus;
         this.damageDice = damageDice;
         this.damageType = damageType;
+        this.description = description;
     }
 
     /**
@@ -45,21 +49,23 @@ public class Item{
      * @param type
      * @param name
      * @param bonus
-     * @param armorType
+     * @param description
      */
-    public Item(String type, String name, int bonus, String armorType) {
+    // removed armorType because it does not really have any application.
+    public Item(String type, String name, int bonus,String description) {
         this.type = type;
         this.name = name;
         this.bonus = bonus;
-        this.armorType = armorType;
+        this.description = description;
     }
 
     /**
      * For Misc type
      * @param type
      * @param name
+     * @param description
      */
-    /*public Item(String type, String name) {
+    /*public Item(String type, String name, String description) {
         this.type = type;
         this.name = name;
         this.amount = amount;
@@ -70,11 +76,15 @@ public class Item{
      * @param type
      * @param name
      * @param amount
+     * @param description
+     * @param isCurrency
      */
-    public Item(String type, String name, int amount) {
+    public Item(String type, String name, int amount, String description, boolean isCurrency) {
         this.type = type;
         this.name = name;
         this.amount = amount;
+        this.description = description;
+        this.isCurrency = isCurrency;
     }
 
     /* Getters and setters */
@@ -93,19 +103,18 @@ public class Item{
                         + " " + this.name
                         + " " + this.attackBonus
                         + " " + this.damageDice
-                        + " " + this.damageType;
+                        + " " + this.damageType
+                        + " " + this.description;
             case "armor":
                 return this.type
                         + " " + this.name
                         + " " + this.bonus
-                        + " " + this.armorType;
+                        + " " + this.description;
             case "misc":
                 return this.type
-                        + " " + this.name;
-            case "currency":
-                return this.type
                         + " " + this.name
-                        + " " + this.amount;
+                        + " " + this.amount
+                        + " " + this.description;
         }
 
         return this.type + this.name;
@@ -118,4 +127,6 @@ public class Item{
     public void setAmount(int n) {
         amount = n;
     }
+
+    public String getDescription() {return description; }
 }
