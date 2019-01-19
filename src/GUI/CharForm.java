@@ -194,7 +194,7 @@ public class CharForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame invFrame = new JFrame("Inventory");
-                invFrame.setContentPane(new InvForm().invPanel);
+                invFrame.setContentPane(new InvForm(CharForm.this).invPanel);
                 invFrame.setPreferredSize(new Dimension(500, 700));
                 invFrame.pack();
                 invFrame.setVisible(true);
