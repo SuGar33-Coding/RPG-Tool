@@ -16,7 +16,7 @@ public class Item{
     String armorType;
 
     /* Currency */
-    int amount;
+    int amount = 0;
 
     public Item() {
         this.type = "CODE-BREAKING_ERROR";
@@ -58,13 +58,14 @@ public class Item{
      * @param type
      * @param name
      */
-    public Item(String type, String name) {
+    /*public Item(String type, String name) {
         this.type = type;
         this.name = name;
-    }
+        this.amount = amount;
+    }*/
 
     /**
-     * For Currency type
+     * For Misc(Currency?) type
      * @param type
      * @param name
      * @param amount
@@ -107,5 +108,13 @@ public class Item{
         }
 
         return this.type + this.name;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int n) {
+        amount = n;
     }
 }

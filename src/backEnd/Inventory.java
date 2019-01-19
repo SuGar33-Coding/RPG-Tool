@@ -75,11 +75,11 @@ public class Inventory {
             case "armor":
                 this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]), stringData[3]));
                 break;
-            case "currency":
+            case "misc":
                 this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2])));
                 break;
-            case "misc":
-                this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1]));
+            //case "misc":
+                //this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1]));
         }
     }
 

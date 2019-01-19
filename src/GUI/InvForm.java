@@ -1,6 +1,7 @@
 package GUI;
 
 import backEnd.Inventory;
+import backEnd.Item;
 import com.sun.tools.javac.Main;
 import org.json.JSONObject;
 
@@ -31,13 +32,19 @@ public class InvForm {
     private JTextArea armorArea;
     private JTextArea equipmentArea;
     private JLabel addLabel;
-    private JPanel equipDeleteButtons;
-    private JPanel armorDeleteButtons;
-    private JPanel weaponDeleteButtons;
+    private JPanel equipButtons;
+    private JPanel armorButtons;
+    private JPanel weaponButtons;
+    private JLabel addEquip;
+    private JLabel eNameLabel;
+    private JTextField eNameField;
+    private JButton eAddButton;
+    private JLabel eAmountLab;
+    private JTextField amountTextField;
     private Inventory inventoryClass;
     private String[] types = {"weapon","armor","misc"};
     private JTextArea[] tabs = {weaponArea,armorArea,equipmentArea};
-    private JPanel[] deletePanels = {weaponDeleteButtons, armorDeleteButtons, equipDeleteButtons};
+    private JPanel[] buttonPanels = {weaponButtons, armorButtons,equipButtons};
     private CharForm parentCharForm;
 
 
@@ -46,24 +53,76 @@ public class InvForm {
         parentCharForm = c;
         for(JTextArea tab : tabs)
             tab.setFont(tab.getFont().deriveFont(20f));
+        for(JPanel panel : buttonPanels)
+            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         updateFormData(MainFrame.inventory);
+        eAddButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainFrame.inventory.addItem("misc "+eNameField.getText()+" "+amountTextField.getText());
+                updateFormData(MainFrame.inventory);
+            }
+        });
     }
 
     private void updateFormData(Inventory inventory){
         for(int count = 0; count < types.length; count++){
             tabs[count].setText("");
-            deletePanels[count].removeAll();
+            buttonPanels[count].removeAll();
            int length = inventory.inv.get(types[count]).size();
            for(int i = 0; i < length; i++) {
-               tabs[count].append(inventory.inv.get(types[count]).get(i).getName() + "\n");
-               addDeleteButton(count, i, inventory);
+               if(types[count].equals("misc")) {  // If the type of the object is misc, we will include the amount of the item in front and not include a delete button.
+                   tabs[count].append(inventory.inv.get(types[count]).get(i).getAmount() + " ");  // Instead of deleting, misc items will be removed when amount goes below 0.
+                   addPlusMinus(count,i,inventory);
+               }
+               else
+                   addDeleteButton(count,i,inventory);
+
+               tabs[count].append(inventory.inv.get(types[count]).get(i).getName() + "\n\n");
            }
-           deletePanels[count].revalidate();
+           buttonPanels[count].revalidate();
         }
         String[] pieces = {"Copper","Silver","Gold","Electrum","Platinum"};
         JTextField[] pieceFields = {copperField,silverField,goldField,electrumField,platinumField};
        // for(int i = 0; i < pieces.length; i++)
             //inventory.inv.get("currency").
+    }
+
+    private void addPlusMinus(int c, int index, Inventory inventory){
+        int count = c;
+        int i = index;
+        JButton plusButton = new JButton("+");
+        //plusButton.setPreferredSize(new Dimension(30,30));
+        JButton minButton = new JButton("-");
+        //minButton.setPreferredSize(new Dimension(30,30));
+        JPanel itemPanel = new JPanel();
+        itemPanel.setLayout(new FlowLayout());
+        itemPanel.add(plusButton);
+        itemPanel.add(minButton);
+        itemPanel.setPreferredSize(new Dimension(10,10));
+        buttonPanels[count].add(itemPanel);
+
+        plusButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Item item = inventory.inv.get(types[count]).get(i);
+                item.setAmount(item.getAmount()+1);
+                updateFormData(MainFrame.inventory);
+            }
+        });
+
+        minButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Item item = inventory.inv.get(types[count]).get(i);
+                int amt = item.getAmount();
+                if(amt <= 0)
+                    inventory.inv.get(types[count]).remove(i);
+                else
+                    item.setAmount(item.getAmount()-1);
+                updateFormData(MainFrame.inventory);
+            }
+        });
     }
 
     private void addDeleteButton(int c, int index, Inventory inventory){
@@ -72,9 +131,12 @@ public class InvForm {
         JButton delButton = new JButton("Delete");
         delButton.setHorizontalAlignment(SwingConstants.LEFT);
         delButton.setVerticalAlignment(SwingConstants.BOTTOM);
-        JPanel delPanel = deletePanels[count];
-        delPanel.setLayout(new BoxLayout(delPanel, BoxLayout.PAGE_AXIS));
-        delPanel.add(delButton);
+        JPanel delPanel = buttonPanels[count];
+        JPanel itemPanel = new JPanel();
+        itemPanel.setLayout(new FlowLayout());
+        itemPanel.add(delButton);
+        itemPanel.setPreferredSize(new Dimension(10,10));
+        delPanel.add(itemPanel);
 
         delButton.addActionListener(new ActionListener() {
             @Override
