@@ -100,7 +100,7 @@ public class Inventory {
         for (String key : inv.keySet()) {
             ret += "\t\"" + key + "\": [\n";
             for (Item item : inv.get(key)) {
-                ret += "\t\t\"" + item.toString().substring(item.toString().indexOf(" ") + 1) + "\",\n";
+                ret += "\t\t\"" + item.toString().substring(item.toString().indexOf(sep) + 1) + "\",\n";
             }
             if (!inv.get(key).isEmpty()) {
                 ret = ret.substring(0, ret.length() - 2);

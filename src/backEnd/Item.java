@@ -16,7 +16,7 @@ public class Item{
     int bonus;
     //String armorType;
 
-    boolean isCurrency;
+    boolean isCurrency = false;
 
     /* Currency */
     int amount = 0;
@@ -97,24 +97,26 @@ public class Item{
     }
 
     public String toString() {
+        String sep = "@";
         switch (this.type) {
             case "weapon":
                 return this.type
-                        + " " + this.name
-                        + " " + this.attackBonus
-                        + " " + this.damageDice
-                        + " " + this.damageType
-                        + " " + this.description;
+                        + sep + this.name
+                        + sep + this.attackBonus
+                        + sep + this.damageDice
+                        + sep + this.damageType
+                        + sep + this.description;
             case "armor":
                 return this.type
-                        + " " + this.name
-                        + " " + this.bonus
-                        + " " + this.description;
+                        + sep + this.name
+                        + sep + this.bonus
+                        + sep + this.description;
             case "misc":
                 return this.type
-                        + " " + this.name
-                        + " " + this.amount
-                        + " " + this.description;
+                        + sep + this.name
+                        + sep + this.amount
+                        + sep + this.description
+                        + sep + this.isCurrency;
         }
 
         return this.type + this.name;
@@ -127,6 +129,8 @@ public class Item{
     public void setAmount(int n) {
         amount = n;
     }
+
+    public boolean isCurrency(){return isCurrency;}
 
     public String getDescription() {return description; }
 }
