@@ -30,10 +30,8 @@ public class InvForm {
 
 
 
-    public InvForm(JSONObject actor) {
-        inventoryClass = new Inventory(actor);
-
-        updateFormData(inventoryClass);
+    public InvForm() {
+        updateFormData(MainFrame.inventory);
     }
 
     private void updateFormData(Inventory inventory){
