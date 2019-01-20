@@ -157,6 +157,8 @@ public class CharForm {
                 data.put("background",MainFrame.background);
                 data.put("notes",MainFrame.notes);
                 data.put("featuresntraits",MainFrame.featsntraits);
+                data.put("spellbook",new JSONArray(MainFrame.spellBook.toString()));
+
 
                 RPGCharacter.writeCharJSON(data);
                 updateFormData(data);

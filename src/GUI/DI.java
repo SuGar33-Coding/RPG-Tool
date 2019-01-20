@@ -1,9 +1,12 @@
 package GUI;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import backEnd.Dicey;
 import backEnd.Inventory;
@@ -73,6 +76,7 @@ public class DI {
             public void actionPerformed(ActionEvent e) {
                 int roll[] = Dicey.Roll(1,20,weapon.getBonus());
                 resultTextArea.append("\nResult: " + Dicey.rollToString(roll));
+                nat(20,roll);
             }
         });
     }
@@ -95,9 +99,78 @@ public class DI {
                     int rolls[] = Dicey.Roll(num,sides,buff);
                     String rollString = Dicey.rollToString(rolls);
                     resultTextArea.append("\nResult: " + rollString);
+
+                    nat(sides,rolls);
                 }
             }
         });
+    }
+
+    // Following code for hardcore gamers only
+    private void nat(int sides, int[] rolls){
+        if(sides == 20 && rolls[rolls.length-2] == 20){
+            for(int i = 0; i < 50; i++)
+                resultTextArea.append("OMG NAT 20 BOIO, YOU JUST CRITTED ALL OVER THE PLACE\n");
+            freakout();
+        }
+        else if(sides == 20 && rolls[rolls.length-2]==1){
+            for(int i = 0; i < 50; i++)
+                resultTextArea.append("OMG NAT 1 BOIO, PHAT RIP, RIP THICCY 2K18\n");
+            freakout();
+        }
+    }
+
+    private void freakout(){
+        /*for(int i = 0; i < 100000; i++){
+            DicePanel.setBackground(Color.BLACK);
+            DicePanel.repaint();
+            DicePanel.setBackground(Color.GRAY);
+            DicePanel.repaint();
+            DicePanel.setBackground(Color.BLUE);
+            DicePanel.repaint();
+            DicePanel.setBackground(Color.CYAN);
+            DicePanel.repaint();
+            DicePanel.setBackground(Color.GREEN);
+            DicePanel.repaint();
+            DicePanel.setBackground(Color.YELLOW);
+            DicePanel.repaint();
+            DicePanel.setBackground(Color.ORANGE);
+            DicePanel.repaint();
+            DicePanel.setBackground(Color.RED);
+            DicePanel.repaint();
+        }*/
+        File audioFile = new File("deja-vu.wav");
+        System.out.println(audioFile.getPath());
+
+
+
+        try {
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+
+            AudioFormat format = audioStream.getFormat();
+
+            DataLine.Info info = new DataLine.Info(Clip.class, format);
+
+            Clip audioClip = (Clip) AudioSystem.getLine(info);
+
+            //audioClip.addLineListener(this);
+
+            audioClip.open(audioStream);
+
+            audioClip.start();
+
+            //audioClip.close();
+
+        } catch (UnsupportedAudioFileException ex) {
+            System.out.println("The specified audio file is not supported.");
+            ex.printStackTrace();
+        } catch (LineUnavailableException ex) {
+            System.out.println("Audio line for playing back is unavailable.");
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            System.out.println("Error playing the audio file.");
+            ex.printStackTrace();
+        }
     }
 
 

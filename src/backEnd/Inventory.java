@@ -31,7 +31,7 @@ public class Inventory {
      * DEPRECATED, use JSON
      * @param inventoryFile .txt file with inventory data
      */
-    public Inventory(File inventoryFile) {
+    /*public Inventory(File inventoryFile) {
         //set up inventory
         inv = new HashMap<>();
         inv.put("weapon", new ArrayList<>());
@@ -47,7 +47,7 @@ public class Inventory {
             System.out.println("Error loading inventory");
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * Create Inventory object from JSON file

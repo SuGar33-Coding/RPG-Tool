@@ -1,7 +1,7 @@
 package backEnd;
 public class Dicey {
 
-    public static int[] Roll(int number, int sides, int buff){  // Returns an array of each roll value, a total, and a total with buff added
+    public static int[] Roll(int number, int sides, int buff){
         int total = 0;
         int[] rolls = new int[number+2];
         for(int i = 0; i < number; i++) {
@@ -11,7 +11,7 @@ public class Dicey {
         rolls[number] = total;
         total += buff;
         rolls[number+1] = total;
-        return rolls;
+        return rolls; // Returns an array of each roll value, a total, and a total with buff added
     }
 
     /**

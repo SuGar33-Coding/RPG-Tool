@@ -23,6 +23,8 @@ public class MainFrame {
     /* Active inventory */
     static Inventory inventory;
     static String background, notes, featsntraits;
+    static Spellbook spellBook;
+    static String sep = "@";
 
     static boolean debug = false;
 
@@ -49,6 +51,7 @@ public class MainFrame {
                     //charFrame.updateFormData(charJSON);
 
                     inventory = new Inventory(charJSON);
+                    spellBook = new Spellbook(charJSON);
                     if (debug){
                         System.out.println(inventory);
                     }
@@ -79,6 +82,7 @@ public class MainFrame {
                 frame.repaint();
 
                 inventory = new Inventory();
+                spellBook = new Spellbook();
 
                 if (debug) {
                     System.out.println(inventory);
