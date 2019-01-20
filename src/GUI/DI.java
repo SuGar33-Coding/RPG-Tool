@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 
 import backEnd.Dicey;
 import backEnd.Inventory;
@@ -120,25 +122,8 @@ public class DI {
         }
     }
 
-    private void freakout(){
-        /*for(int i = 0; i < 100000; i++){
-            DicePanel.setBackground(Color.BLACK);
-            DicePanel.repaint();
-            DicePanel.setBackground(Color.GRAY);
-            DicePanel.repaint();
-            DicePanel.setBackground(Color.BLUE);
-            DicePanel.repaint();
-            DicePanel.setBackground(Color.CYAN);
-            DicePanel.repaint();
-            DicePanel.setBackground(Color.GREEN);
-            DicePanel.repaint();
-            DicePanel.setBackground(Color.YELLOW);
-            DicePanel.repaint();
-            DicePanel.setBackground(Color.ORANGE);
-            DicePanel.repaint();
-            DicePanel.setBackground(Color.RED);
-            DicePanel.repaint();
-        }*/
+    public void freakout(){
+
         File audioFile = new File("deja-vu.wav");
         System.out.println(audioFile.getPath());
 
@@ -171,6 +156,29 @@ public class DI {
             System.out.println("Error playing the audio file.");
             ex.printStackTrace();
         }
+
+        ArrayList<JPanel> freakPanels = new ArrayList<>();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        for(int i = 0; i < 100; i++){
+            Random rand = new Random();
+            float r = rand.nextFloat();
+            float g = rand.nextFloat();
+            float b = rand.nextFloat();
+            Color randomColor = new Color(r,g,b);
+            JFrame freakFrame = new JFrame("YOOOOOO");
+            JPanel freakPanel = new JPanel();
+            freakFrame.setMinimumSize(new Dimension(300,300));
+            freakPanel.setMinimumSize(new Dimension(300,300));
+            freakFrame.setLocation((int)(Math.random()*screenSize.getWidth()),(int)(Math.random()*screenSize.getHeight()));
+            freakPanel.setOpaque(true);
+            freakPanel.setBackground(randomColor);
+            freakPanels.add(freakPanel);
+            freakFrame.add(freakPanel);
+            freakFrame.pack();
+            freakFrame.setVisible(true);
+            freakPanel.setVisible(true);
+        }
+
     }
 
 
