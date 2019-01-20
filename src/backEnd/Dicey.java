@@ -41,5 +41,20 @@ public class Dicey {
         return zeroArray;
     }
 
+    public static String rollToString(int[] rolls,int buff){
+        String rollString = String.valueOf(rolls[0]);
+        for(int i=1; i<rolls.length-2;i++){
+            rollString += " + " + String.valueOf(rolls[i]);
+        }
+        rollString += " = " + String.valueOf(rolls[rolls.length-2]);
+        if(buff != 0) {
+            if (buff > 0)
+                rollString += "+";
+            rollString += buff + " = " + String.valueOf(rolls[rolls.length - 1]);
+        }
+
+        return rollString;
+    }
+
     //public static int
 }

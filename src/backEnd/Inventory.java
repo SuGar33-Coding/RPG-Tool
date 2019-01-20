@@ -10,6 +10,8 @@ public class Inventory {
     public Map<String, ArrayList<Item>> inv;
     private String sep = "@";
 
+    private String[] types = {"weapon","armor","misc","currency"};
+
     public String getSep() {
         return sep;
     }
@@ -20,10 +22,8 @@ public class Inventory {
      */
     public Inventory() {
         inv = new HashMap<>();
-        inv.put("weapon", new ArrayList<>());
-        inv.put("armor", new ArrayList<>());
-        inv.put("misc", new ArrayList<>());
-        inv.put("currency", new ArrayList<>());
+        for(String type : types)
+            inv.put(type, new  ArrayList<>());
     }
 
     /**
@@ -74,19 +74,15 @@ public class Inventory {
     public void addItem(String infoLine) {
         String[] stringData = infoLine.split(sep);
         switch (stringData[0]) {
-            case "weapon":  // weapons must be added in the form "weapon name atkBonus damageDice damageType description"
-                this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]), stringData[3], stringData[4], stringData[5]));
+            case "weapon":  // weapons must be added in the form "weapon name atkBonus damageDice description isEquipped"
+                this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]), stringData[3], stringData[4], Boolean.parseBoolean(stringData[5])));
                 break;
-            case "armor": // armor must be added in the form "armor name defBonus description"
-                System.out.println(infoLine);
-                System.out.println(stringData[3]);
-                this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]), stringData[3]));
+            case "armor": // armor must be added in the form "armor name isEquipped defBonus description isEquipped"
+                this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]),Boolean.parseBoolean(stringData[4]), stringData[3]));
                 break;
-            case "misc": // armor must be added in the form "misc name amnt description isCurrency"
+            case "misc": // armor must be added in the form "misc name amnt description isCurrency isEquipped"
                 this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1], Integer.parseInt(stringData[2]), stringData[3], Boolean.parseBoolean(stringData[4])));
                 break;
-            //case "currency
-                //this.inv.get(stringData[0]).add(new Item(stringData[0], stringData[1]));
         }
     }
 
@@ -113,5 +109,9 @@ public class Inventory {
         ret += "\n}";
 
         return ret;
+    }
+
+    public String[] getTypes() {
+        return types;
     }
 }

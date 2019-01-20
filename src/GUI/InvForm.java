@@ -11,16 +11,6 @@ import java.awt.event.InputEvent;
 
 public class InvForm {
     public JPanel invPanel;
-    private JLabel copperLabel;
-    private JTextField copperField;
-    private JTextField silverField;
-    private JTextField goldField;
-    private JTextField electrumField;
-    private JTextField platinumField;
-    private JLabel silverLabel;
-    private JLabel goldLabel;
-    private JLabel electrumLabel;
-    private JLabel platinumLabel;
     private JTabbedPane fullInvPane;
     private JTextArea weaponArea;
     private JTextArea armorArea;
@@ -45,14 +35,25 @@ public class InvForm {
     private JLabel cNameLabel;
     private JTextField eDescriptionTextField;
     private JTextField cDescriptionField;
+    private JTextField aNameField;
+    private JTextField aBonusField;
+    private JButton aAddButton;
+    private JTextField aDescriptionField;
+    private JTextField wNameField;
+    private JTextField wBonusField;
+    private JTextField wDamageField;
+    private JTextField wDescriptionField;
+    private JButton wAddButton;
     private Inventory inventoryClass;
-    private String[] types = {"weapon","armor","misc"};
+    private String[] types = MainFrame.inventory.getTypes();
     private JTextArea[] tabs = {weaponArea,armorArea,equipmentArea,currencyArea};
     private JPanel[] buttonPanels = {weaponButtons, armorButtons,equipButtons,currencyButtons};
+    private int WEAPON_POS = 0;
+    private int ARMOR_POS = 1;
     private int MISC_POS = 2;
     private int CURRENCY_POS = 3;
     private CharForm parentCharForm;
-    private Dimension itemPanelDim = new Dimension(110,48);
+    private Dimension itemPanelDim = new Dimension(175,48);
     private String sep;
 
 
@@ -62,21 +63,69 @@ public class InvForm {
         parentCharForm = c;
         for(JTextArea tab : tabs)
             tab.setFont(tab.getFont().deriveFont(12f));
-        for(JPanel panel : buttonPanels)
+        for(JPanel panel : buttonPanels) {
             panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+            Dimension d = panel.getMinimumSize();
+            d.width = 200;
+            panel.setMinimumSize(d);
+        }
         updateFormData(MainFrame.inventory);
         eAddButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainFrame.inventory.addItem("misc"+sep+eNameField.getText()+sep+ eAmountTextField.getText()+sep+eDescriptionTextField.getText()+sep+"false");
+                JTextField[] buttonFields = {eNameField,eAmountTextField,eDescriptionTextField};
+                String infoLine = "misc"+sep;
+                for(JTextField field : buttonFields) {
+                    infoLine += field.getText() + sep;
+                    field.setText("");
+                }
+                infoLine += "false";
+                MainFrame.inventory.addItem(infoLine);
                 updateMiscCurrency(MainFrame.inventory);
             }
         });
         cAddButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainFrame.inventory.addItem("misc"+sep+cNameField.getText()+sep+ cAmountField.getText()+sep+cDescriptionField.getText()+sep+"true");
+                JTextField[] buttonFields = {cNameField,cAmountField,cDescriptionField};
+                String infoLine = "misc"+sep;
+                for(JTextField field : buttonFields) {
+                    infoLine += field.getText() + sep;
+                    field.setText("");
+                }
+                infoLine += "true";
+                MainFrame.inventory.addItem(infoLine);
                 updateMiscCurrency(MainFrame.inventory);
+            }
+        });
+
+        aAddButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JTextField[] buttonFields = {aNameField,aBonusField,aDescriptionField};
+                String infoLine = "armor"+sep;
+                for(JTextField field : buttonFields) {
+                    infoLine += field.getText() + sep;
+                    field.setText("");
+                }
+                infoLine += "false";
+                MainFrame.inventory.addItem(infoLine);
+                updateWeaponArmor(ARMOR_POS,MainFrame.inventory);
+            }
+        });
+
+        wAddButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JTextField[] buttonFields = {wNameField,wBonusField,wDamageField,wDescriptionField};
+                String infoLine = "weapon"+sep;
+                for(JTextField field : buttonFields) {
+                    infoLine += field.getText() + sep;
+                    field.setText("");
+                }
+                infoLine += "false";
+                MainFrame.inventory.addItem(infoLine);
+                updateWeaponArmor(WEAPON_POS,MainFrame.inventory);
             }
         });
     }
@@ -84,16 +133,10 @@ public class InvForm {
     private void updateFormData(Inventory inventory){
         for(int count = 0; count < types.length; count++){
             tabs[count].setText("");
-           if(types[count].equals("misc"))
-               updateMiscCurrency(inventory);
-           else
+           if(!types[count].equals("misc"))
                updateWeaponArmor(count,inventory);
            }
-
-        //String[] pieces = {"Copper","Silver","Gold","Electrum","Platinum"};
-        //JTextField[] pieceFields = {copperField,silverField,goldField,electrumField,platinumField};
-       // for(int i = 0; i < pieces.length; i++)
-            //inventory.inv.get("currency").
+         updateMiscCurrency(inventory);  // For some reason currency is not displaying at first unless called a second time
     }
 
     public void updateMiscCurrency(Inventory inventory){
@@ -116,6 +159,7 @@ public class InvForm {
             JTextArea tab = tabs[count];
 
             tab.append(item.getAmount() + " ");
+
             addPlusMinus(count, i, inventory);
             tab.append(item.getName() + "\n" + item.getDescription() + "\n\n");
         }
@@ -191,13 +235,18 @@ public class InvForm {
     private void addDeleteButton(int c, int index, Inventory inventory){
         int count = c;
         int i = index;
+        Item item = inventory.inv.get(types[count]).get(i);
         JButton delButton = new JButton("Delete");
-        delButton.setHorizontalAlignment(SwingConstants.LEFT);
-        delButton.setVerticalAlignment(SwingConstants.BOTTOM);
+        final JButton equipButton = new JButton("Equip");
+        if(item.isEquipped())
+            equipButton.setText("Unequip");
+
 
         JPanel delPanel = buttonPanels[count];
         JPanel itemPanel = new JPanel();
-        itemPanel.setLayout(new FlowLayout());
+        itemPanel.setLayout(new BoxLayout(itemPanel,BoxLayout.LINE_AXIS));
+        itemPanel.add(equipButton);
+        itemPanel.add(Box.createRigidArea(new Dimension(20,5)));
         itemPanel.add(delButton);
         itemPanel.setMaximumSize(itemPanelDim);
         delPanel.add(itemPanel);
@@ -207,6 +256,36 @@ public class InvForm {
             public void actionPerformed(ActionEvent e) {
                 inventory.inv.get(types[count]).remove(i);
                 updateFormData(MainFrame.inventory);
+            }
+        });
+
+        equipButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(item.isWeapon()) {
+                    if (item.isEquipped()) {  // Button at this point will say 'Unequip'
+                        // If the item is equipped, change button back to saying 'Equip'
+                        int x = 1;
+                        item.setEquipped(false);
+                        equipButton.setText("Equip");
+                    } else {  // Equips the weapon
+                        item.setEquipped(true);
+                        equipButton.setText("Unequip");
+                    }
+                }
+                else{
+                    if (item.isEquipped()) {  // Button at this point will say 'Unequip'
+                        // If the item is equipped, change button back to saying 'Equip' and subtract ac bonus from ac
+                        parentCharForm.setAC(parentCharForm.getAC() - item.getBonus());
+                        item.setEquipped(false);
+                        equipButton.setText("Equip");
+                    } else {  // Equips the item and adds the bonus AC
+                        parentCharForm.setAC(parentCharForm.getAC() + item.getBonus());
+                        item.setEquipped(true);
+                        equipButton.setText("Unequip");
+                    }
+                }
+
             }
         });
     }

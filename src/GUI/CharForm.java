@@ -182,7 +182,7 @@ public class CharForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame diceFrame = new JFrame("Dicey");
-                diceFrame.setContentPane(new DI().DicePanel);
+                diceFrame.setContentPane(new DI(MainFrame.inventory).DicePanel);
                 diceFrame.setPreferredSize(new Dimension(500, 300));
                 diceFrame.pack();
                 diceFrame.setVisible(true);
@@ -299,4 +299,8 @@ public class CharForm {
             }
         }
     }
+
+    public void setAC(int n){acField.setText(Integer.toString(n));}
+
+    public int getAC(){return Integer.parseInt(acField.getText());}
 }

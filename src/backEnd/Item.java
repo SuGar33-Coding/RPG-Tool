@@ -8,15 +8,16 @@ public class Item{
     String description;
 
     /* Weapon */
-    int attackBonus;
+    //int attackBonus;  See bonus for attack bonus
     String damageDice;
-    String damageType;
+    private boolean isWeapon = false;
 
     /* Armor */
-    int bonus;
+    int bonus = 0;
     //String armorType;
 
     boolean isCurrency = false;
+    boolean isEquipped = false;
 
     /* Currency */
     int amount = 0;
@@ -32,16 +33,17 @@ public class Item{
      * @param name
      * @param attackBonus
      * @param damageDice
-     * @param damageType
      * @param description
      */
-    public Item(String type, String name, int attackBonus, String damageDice, String damageType, String description) {
+    // Removed damageType as parameter, should just include in description.
+    public Item(String type, String name, int attackBonus, String damageDice, String description, boolean isEquipped) {
         this.type = type;
         this.name = name;
-        this.attackBonus = attackBonus;
+        this.bonus = attackBonus;
         this.damageDice = damageDice;
-        this.damageType = damageType;
         this.description = description;
+        this.isEquipped = isEquipped;
+        this.isWeapon = true;
     }
 
     /**
@@ -52,11 +54,12 @@ public class Item{
      * @param description
      */
     // removed armorType because it does not really have any application.
-    public Item(String type, String name, int bonus,String description) {
+    public Item(String type, String name, int bonus,boolean isEquipped,String description) {
         this.type = type;
         this.name = name;
         this.bonus = bonus;
         this.description = description;
+        this.isEquipped = isEquipped;
     }
 
     /**
@@ -102,15 +105,16 @@ public class Item{
             case "weapon":
                 return this.type
                         + sep + this.name
-                        + sep + this.attackBonus
+                        + sep + this.bonus
                         + sep + this.damageDice
-                        + sep + this.damageType
-                        + sep + this.description;
+                        + sep + this.description
+                        + sep + this.isEquipped;
             case "armor":
                 return this.type
                         + sep + this.name
                         + sep + this.bonus
-                        + sep + this.description;
+                        + sep + this.description
+                        + sep + this.isEquipped;
             case "misc":
                 return this.type
                         + sep + this.name
@@ -132,5 +136,13 @@ public class Item{
 
     public boolean isCurrency(){return isCurrency;}
 
-    public String getDescription() {return description; }
+    public String getDescription() {return description;}
+
+    public int getBonus(){return bonus;}
+
+    public boolean isEquipped(){return isEquipped;}
+
+    public void setEquipped(boolean equip){isEquipped = equip;}
+
+    public boolean isWeapon(){return isWeapon;};
 }

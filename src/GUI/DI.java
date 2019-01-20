@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import backEnd.Dicey;
+import backEnd.Inventory;
+import backEnd.Item;
 
 public class DI {
     public JPanel DicePanel;
@@ -19,15 +21,47 @@ public class DI {
     private JButton rollButton;
     private JScrollPane resultsScrollPane;
     private JTextArea resultTextArea;
+    private JPanel equippedItemsPane;
+    private JPanel equippedItemsButtonPane;
+    private Dimension itemButtonsDim = new Dimension(175,48);
+    private Dimension itemPaneDim = new Dimension(1,18);
 
-    public DI() {
+    public DI() {  // If roll is accessed from the front screen
+        addRollListener();
+    }
 
-        /*backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainFrame.init();  // Return to main menu
-            }
-        }); some nice legacy code for ya*/
+    public DI(Inventory inventory){  // If roll is accessed from character sheet, equipped items will also appear.
+        addRollListener();
+        equippedItemsPane.setLayout(new BoxLayout(equippedItemsPane, BoxLayout.PAGE_AXIS));
+        equippedItemsButtonPane.setLayout(new BoxLayout(equippedItemsButtonPane, BoxLayout.PAGE_AXIS));
+        String[] types = inventory.getTypes();
+        for(String type : types)
+            if(type == "weapon")
+                for(Item weapon : inventory.inv.get("weapon"))
+                    if(weapon.isEquipped())
+                        addEquippedItemRolls(weapon);
+
+    }
+
+    private void addEquippedItemRolls(Item weapon){
+        JLabel weaponName = new JLabel(weapon.getName());
+        equippedItemsPane.add(Box.createRigidArea(itemPaneDim));
+        equippedItemsPane.add(weaponName);
+
+        JButton attackRollButton = new JButton("Attack Roll");
+        JButton damageRollButton = new JButton("Damage Roll");
+
+        JPanel itemButtons = new JPanel();
+        itemButtons.setLayout(new FlowLayout());
+        itemButtons.setPreferredSize(itemButtonsDim);
+
+        itemButtons.add(attackRollButton);
+        itemButtons.add(damageRollButton);
+
+        equippedItemsButtonPane.add(itemButtons);
+    }
+
+    private void addRollListener(){
         rollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,19 +77,12 @@ public class DI {
                     try {sides = Integer.parseInt(sidef);} catch (NumberFormatException ex) {sides = 0;}
 
                     int rolls[] = Dicey.Roll(num,sides,buff);
-                    String rollString = String.valueOf(rolls[0]);
-                    for(int i=1; i<rolls.length-2;i++){
-                        rollString += " + " + String.valueOf(rolls[i]);
-                    }
-                    rollString += " = " + String.valueOf(rolls[rolls.length-2]);
-                    if(buff != 0) {
-                        if (buff > 0)
-                            rollString += "+";
-                        rollString += buff + " = " + String.valueOf(rolls[rolls.length - 1]);
-                    }
+                    String rollString = Dicey.rollToString(rolls,buff);
                     resultTextArea.append("\nResult: " + rollString);
                 }
             }
         });
     }
+
+
 }
