@@ -63,8 +63,16 @@ public class DI {
         damageRollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int rolls[] = Dicey.Roll(weapon.getDamageDice());
-                resultTextArea.append("\nResult: " + Dicey.rollToString(rolls));
+                int roll[] = Dicey.Roll(weapon.getDamageDice());
+                resultTextArea.append("\nResult: " + Dicey.rollToString(roll));
+            }
+        });
+
+        attackRollButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int roll[] = Dicey.Roll(1,20,weapon.getBonus());
+                resultTextArea.append("\nResult: " + Dicey.rollToString(roll));
             }
         });
     }
