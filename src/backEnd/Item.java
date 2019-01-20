@@ -9,7 +9,7 @@ public class Item{
 
     /* Weapon */
     //int attackBonus;  See bonus for attack bonus
-    String damageDice;
+    String damageDice = "0";
     private boolean isWeapon = false;
 
     /* Armor */
@@ -144,5 +144,7 @@ public class Item{
 
     public void setEquipped(boolean equip){isEquipped = equip;}
 
-    public boolean isWeapon(){return isWeapon;};
+    public boolean isWeapon(){return isWeapon;}
+
+    public String getDamageDice(){return damageDice;}
 }

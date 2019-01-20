@@ -59,6 +59,14 @@ public class DI {
         itemButtons.add(damageRollButton);
 
         equippedItemsButtonPane.add(itemButtons);
+
+        damageRollButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int rolls[] = Dicey.Roll(weapon.getDamageDice());
+                resultTextArea.append("\nResult: " + Dicey.rollToString(rolls));
+            }
+        });
     }
 
     private void addRollListener(){
@@ -77,7 +85,7 @@ public class DI {
                     try {sides = Integer.parseInt(sidef);} catch (NumberFormatException ex) {sides = 0;}
 
                     int rolls[] = Dicey.Roll(num,sides,buff);
-                    String rollString = Dicey.rollToString(rolls,buff);
+                    String rollString = Dicey.rollToString(rolls);
                     resultTextArea.append("\nResult: " + rollString);
                 }
             }
