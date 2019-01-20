@@ -30,6 +30,7 @@ public class DI {
     private JPanel equippedItemsButtonPane;
     private Dimension itemButtonsDim = new Dimension(175,48);
     private Dimension itemPaneDim = new Dimension(1,18);
+    private boolean madlad = false;
 
     public DI() {  // If roll is accessed from the front screen
         addRollListener();
@@ -78,7 +79,8 @@ public class DI {
             public void actionPerformed(ActionEvent e) {
                 int roll[] = Dicey.Roll(1,20,weapon.getBonus());
                 resultTextArea.append("\nResult: " + Dicey.rollToString(roll));
-                nat(20,roll);
+                if(madlad)
+                    nat(20,roll);
             }
         });
     }
@@ -102,7 +104,8 @@ public class DI {
                     String rollString = Dicey.rollToString(rolls);
                     resultTextArea.append("\nResult: " + rollString);
 
-                    nat(sides,rolls);
+                    if(madlad)
+                        nat(sides,rolls);
                 }
             }
         });

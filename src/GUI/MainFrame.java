@@ -25,6 +25,7 @@ public class MainFrame {
     static String background, notes, featsntraits;
     static Spellbook spellBook;
     static String sep = "@";
+    static Dimension mainDim = new Dimension(700, 800);
 
     static boolean debug = false;
 
@@ -43,7 +44,7 @@ public class MainFrame {
                     background = charJSON.getString("background");
                     notes = charJSON.getString("notes");
                     featsntraits = charJSON.getString("featuresntraits");
-                    CharForm charFrame = new CharForm(charJSON);
+                    CharForm charFrame = new CharForm(charJSON,frame);
                     JPanel pan = charFrame.charPan;
                     frame.setContentPane(pan);
                     frame.validate();
@@ -63,10 +64,12 @@ public class MainFrame {
         diceyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int diceyWidth = 500;
                 JFrame diceFrame = new JFrame("Dicey");
                 diceFrame.setContentPane(new DI().DicePanel);
-                diceFrame.setPreferredSize(new Dimension(500, 300));
+                diceFrame.setPreferredSize(new Dimension(diceyWidth, 300));
                 diceFrame.pack();
+                diceFrame.setLocation(frame.getLocation().x-diceyWidth,frame.getLocation().y);
                 diceFrame.setVisible(true);
 
             }
@@ -77,7 +80,7 @@ public class MainFrame {
                 background = "";
                 notes = "";
                 featsntraits = "";
-                frame.setContentPane(new CharForm().charPan);
+                frame.setContentPane(new CharForm(frame).charPan);
                 frame.validate();
                 frame.repaint();
 
@@ -114,9 +117,14 @@ public class MainFrame {
         MainFrame mainFrame = new MainFrame();
         JPanel mainMenu = mainFrame.getMainMenu();
         frame.setContentPane(mainMenu);
-        frame.setPreferredSize(new Dimension(700, 800));
+        frame.setPreferredSize(mainDim);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int centerX = (int)((screenSize.getWidth()-frame.getWidth())/2);
+        int centerXadjust = 50; // Inv and Spell frames are slightly larger, so we should shift the main screen left a bit
+        int centerY = 25;
+        frame.setLocation(centerX-centerXadjust,centerY);
         frame.setVisible(true);
 
         /* add debugging statements to here */

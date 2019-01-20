@@ -121,7 +121,7 @@
                     </constraints>
                     <properties>
                       <labelFor value="788b5"/>
-                      <text value="Description:"/>
+                      <text value="Notes:"/>
                     </properties>
                   </component>
                   <component id="788b5" class="javax.swing.JTextField" binding="wDescriptionField">
@@ -252,7 +252,7 @@
                     </constraints>
                     <properties>
                       <labelFor value="67f9f"/>
-                      <text value="Description:"/>
+                      <text value="Notes:"/>
                     </properties>
                   </component>
                   <component id="67f9f" class="javax.swing.JTextField" binding="aDescriptionField">
@@ -383,7 +383,7 @@
                     </constraints>
                     <properties>
                       <labelFor value="1fdc4"/>
-                      <text value="Description:"/>
+                      <text value="Notes:"/>
                     </properties>
                   </component>
                   <component id="1fdc4" class="javax.swing.JTextField" binding="eDescriptionTextField">
@@ -548,7 +548,7 @@
                     </constraints>
                     <properties>
                       <labelFor value="5cf5d"/>
-                      <text value="Description:"/>
+                      <text value="Notes:"/>
                     </properties>
                   </component>
                   <component id="5cf5d" class="javax.swing.JTextField" binding="cDescriptionField">

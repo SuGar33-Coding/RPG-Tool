@@ -105,16 +105,22 @@ public class CharForm {
                     natureCheckBox,religionCheckBox,wisSave,animalhCheckBox,insightCheckBox,medicineCheckBox,perceptionCheckBox,survivalCheckBox,chSave,deceptionCheckBox,
                     intimidationCheckBox,performanceCheckBox,persuasionCheckBox}; // Just a list of all checkboxes/skills
     private JSONObject actor;
+    private JFrame frame;
+    private final int diceyWidth = 500;
+    private final int diceyHeight = 300;
+    private final int invWidth = 650;
+    private final int invHeight = 500;
 
-    public CharForm(JSONObject c) {
+    public CharForm(JSONObject c, JFrame frame) {
         actor = c;
+        this.frame = frame;
         addListeners();
         updateFormData(actor);
     }
 
-    public CharForm() {
+    public CharForm(JFrame frame) {
         addListeners();
-
+        this.frame = frame;
     }
 
     private void addListeners(){
@@ -188,8 +194,9 @@ public class CharForm {
             public void actionPerformed(ActionEvent e) {
                 JFrame diceFrame = new JFrame("Dicey");
                 diceFrame.setContentPane(new DI(MainFrame.inventory).DicePanel);
-                diceFrame.setPreferredSize(new Dimension(500, 300));
+                diceFrame.setPreferredSize(new Dimension(diceyWidth, diceyHeight));
                 diceFrame.pack();
+                diceFrame.setLocation(frame.getLocation().x-diceyWidth,frame.getLocation().y);
                 diceFrame.setVisible(true);
 
             }
@@ -200,8 +207,9 @@ public class CharForm {
             public void actionPerformed(ActionEvent e) {
                 JFrame invFrame = new JFrame("Inventory");
                 invFrame.setContentPane(new InvForm(CharForm.this).invPanel);
-                invFrame.setPreferredSize(new Dimension(700, 700));
+                invFrame.setPreferredSize(new Dimension(invWidth, invHeight));
                 invFrame.pack();
+                invFrame.setLocation(frame.getLocation().x+frame.getWidth(),frame.getLocation().y);
                 invFrame.setVisible(true);
 
             }
@@ -210,11 +218,26 @@ public class CharForm {
         noteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame invFrame = new JFrame("Notes");
-                invFrame.setContentPane(new noteForm().notePanel);
-                invFrame.setPreferredSize(new Dimension(500, 700));
-                invFrame.pack();
-                invFrame.setVisible(true);
+                int noteWidth = 500;
+                JFrame noteFrame = new JFrame("Notes");
+                noteFrame.setContentPane(new noteForm().notePanel);
+                noteFrame.setPreferredSize(new Dimension(noteWidth, 700));
+                noteFrame.pack();
+                noteFrame.setLocation(frame.getLocation().x-noteWidth,frame.getLocation().y+diceyHeight);
+                noteFrame.setVisible(true);
+
+            }
+        });
+
+        spellButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame spellFrame = new JFrame("Spellbook");
+                spellFrame.setContentPane(new SpellForm(CharForm.this).spellPane);
+                spellFrame.setPreferredSize(new Dimension(650, 500));
+                spellFrame.pack();
+                spellFrame.setLocation(frame.getLocation().x+frame.getWidth(),frame.getLocation().y+invHeight);
+                spellFrame.setVisible(true);
 
             }
         });
