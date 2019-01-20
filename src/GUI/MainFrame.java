@@ -22,6 +22,7 @@ public class MainFrame {
 
     /* Active inventory */
     static Inventory inventory;
+    static String background, notes, featsntraits;
 
     static boolean debug = false;
 
@@ -37,6 +38,9 @@ public class MainFrame {
                 fc.showOpenDialog(mainMenu);
                 if (fc.getName(fc.getSelectedFile()) != null) {
                     JSONObject charJSON = RPGCharacter.loadCharJSON(fc.getName(fc.getSelectedFile()));
+                    background = charJSON.getString("background");
+                    notes = charJSON.getString("notes");
+                    featsntraits = charJSON.getString("featuresntraits");
                     CharForm charFrame = new CharForm(charJSON);
                     JPanel pan = charFrame.charPan;
                     frame.setContentPane(pan);
@@ -67,6 +71,9 @@ public class MainFrame {
         newCharacterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                background = "";
+                notes = "";
+                featsntraits = "";
                 frame.setContentPane(new CharForm().charPan);
                 frame.validate();
                 frame.repaint();

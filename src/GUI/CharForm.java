@@ -99,7 +99,7 @@ public class CharForm {
     private JButton rollButton;
     private JButton invButton;
     private JButton spellButton;
-    private JButton loreButton;
+    private JButton noteButton;
     private JCheckBox[] checkGroup =
             {strSave,athleticsCheckBox,dexSave,acrobaticsCheckBox,sleightOfHandCheckBox,stealthCheckBox,conSave,intSave,arcanaCheckBox,historyCheckBox,investigationCheckBox,
                     natureCheckBox,religionCheckBox,wisSave,animalhCheckBox,insightCheckBox,medicineCheckBox,perceptionCheckBox,survivalCheckBox,chSave,deceptionCheckBox,
@@ -154,6 +154,9 @@ public class CharForm {
                 }
                 data.put("skill bonuses", skillBonuses);
                 data.put("inventory",new JSONObject(MainFrame.inventory.toString()));
+                data.put("background",MainFrame.background);
+                data.put("notes",MainFrame.notes);
+                data.put("featuresntraits",MainFrame.featsntraits);
 
                 RPGCharacter.writeCharJSON(data);
                 updateFormData(data);
@@ -196,6 +199,18 @@ public class CharForm {
                 JFrame invFrame = new JFrame("Inventory");
                 invFrame.setContentPane(new InvForm(CharForm.this).invPanel);
                 invFrame.setPreferredSize(new Dimension(700, 700));
+                invFrame.pack();
+                invFrame.setVisible(true);
+
+            }
+        });
+
+        noteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame invFrame = new JFrame("Notes");
+                invFrame.setContentPane(new noteForm().notePanel);
+                invFrame.setPreferredSize(new Dimension(500, 700));
                 invFrame.pack();
                 invFrame.setVisible(true);
 
