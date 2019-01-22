@@ -108,7 +108,7 @@ public class CharForm {
     private JFrame frame;
     private final int diceyWidth = 500;
     private final int diceyHeight = 300;
-    private final int invWidth = 650;
+    private final int invWidth = 750;
     private final int invHeight = 500;
 
     public CharForm(JSONObject c, JFrame frame) {
@@ -182,7 +182,7 @@ public class CharForm {
                     String append = "";
                     if(bonus >= 0)
                         append += "+";
-                    append += String.valueOf(bonus);
+                    append += String.valueOf(bonus)+"  ";
                     proficiency.setText("Proficiency Bonus:  "+append);
                 } catch (NumberFormatException ex){}
 
@@ -343,4 +343,6 @@ public class CharForm {
     public void setAC(int n){acField.setText(Integer.toString(n));}
 
     public int getAC(){return Integer.parseInt(acField.getText());}
+
+    public JFrame getFrame(){return frame;}
 }

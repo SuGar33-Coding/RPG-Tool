@@ -35,7 +35,7 @@ public class Item{
      * @param damageDice
      * @param description
      */
-    // Removed damageType as parameter, should just include in description.
+    // Removed damageType as parameter, should just include in description if needed.
     public Item(String type, String name, int attackBonus, String damageDice, String description, boolean isEquipped) {
         this.type = type;
         this.name = name;
@@ -138,7 +138,11 @@ public class Item{
 
     public String getDescription() {return description;}
 
+    public void setDescription(String s){description = s;}
+
     public int getBonus(){return bonus;}
+
+    public void setBonus(int n){bonus = n;}
 
     public boolean isEquipped(){return isEquipped;}
 
@@ -147,4 +151,8 @@ public class Item{
     public boolean isWeapon(){return isWeapon;}
 
     public String getDamageDice(){return damageDice;}
+
+    public void setDamageDice(String s){damageDice = s;}
+
+    public String getType(){return type;}
 }

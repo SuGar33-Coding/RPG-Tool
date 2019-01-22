@@ -69,7 +69,14 @@ public class DI {
         damageRollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int buff;
+                String bufff = buffField.getText();
+                try {buff = Integer.parseInt(bufff);} catch (NumberFormatException ex) {buff = 0;}
+
                 int roll[] = Dicey.Roll(weapon.getDamageDice());
+
+                int weaponBuff = roll[roll.length-1]-roll[roll.length-2];
+                roll[roll.length-1] += weaponBuff + buff;
                 resultTextArea.append("\nResult: " + Dicey.rollToString(roll));
             }
         });
@@ -77,7 +84,11 @@ public class DI {
         attackRollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int roll[] = Dicey.Roll(1,20,weapon.getBonus());
+                int buff;
+                String bufff = buffField.getText();
+                try {buff = Integer.parseInt(bufff);} catch (NumberFormatException ex) {buff = 0;}
+
+                int roll[] = Dicey.Roll(1,20,weapon.getBonus()+buff);
                 resultTextArea.append("\nResult: " + Dicey.rollToString(roll));
                 if(madlad)
                     nat(20,roll);
@@ -141,13 +152,9 @@ public class DI {
 
             Clip audioClip = (Clip) AudioSystem.getLine(info);
 
-            //audioClip.addLineListener(this);
-
             audioClip.open(audioStream);
 
             audioClip.start();
-
-            //audioClip.close();
 
         } catch (UnsupportedAudioFileException ex) {
             System.out.println("The specified audio file is not supported.");
@@ -162,6 +169,7 @@ public class DI {
 
         ArrayList<JPanel> freakPanels = new ArrayList<>();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        JPanel freakPanel;
         for(int i = 0; i < 100; i++){
             Random rand = new Random();
             float r = rand.nextFloat();
@@ -169,7 +177,7 @@ public class DI {
             float b = rand.nextFloat();
             Color randomColor = new Color(r,g,b);
             JFrame freakFrame = new JFrame("YOOOOOO");
-            JPanel freakPanel = new JPanel();
+            freakPanel = new JPanel();
             freakFrame.setMinimumSize(new Dimension(300,300));
             freakPanel.setMinimumSize(new Dimension(300,300));
             freakFrame.setLocation((int)(Math.random()*screenSize.getWidth()),(int)(Math.random()*screenSize.getHeight()));

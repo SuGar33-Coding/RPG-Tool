@@ -44,16 +44,22 @@ public class InvForm {
     private JTextField wDamageField;
     private JTextField wDescriptionField;
     private JButton wAddButton;
+    private JPanel weaponTab;
+    private JPanel armorTab;
+    private JPanel equipmentTab;
+    private JPanel currencyTab;
     private Inventory inventoryClass;
     private String[] types = MainFrame.inventory.getTypes();
-    private JTextArea[] tabs = {weaponArea,armorArea,equipmentArea,currencyArea};
+    private JPanel[] tabs = {weaponTab,armorTab,equipmentTab,currencyTab};
+    private JTextArea[] areas = {weaponArea,armorArea,equipmentArea,currencyArea};
     private JPanel[] buttonPanels = {weaponButtons, armorButtons,equipButtons,currencyButtons};
     private int WEAPON_POS = 0;
     private int ARMOR_POS = 1;
     private int MISC_POS = 2;
     private int CURRENCY_POS = 3;
     private CharForm parentCharForm;
-    private Dimension itemPanelDim = new Dimension(175,48);
+    private int buttonPanelWidth = 275;
+    private Dimension itemPanelDim = new Dimension(buttonPanelWidth,48);
     private String sep;
 
 
@@ -61,15 +67,25 @@ public class InvForm {
     public InvForm(CharForm c) {
         sep = MainFrame.inventory.getSep();
         parentCharForm = c;
-        for(JTextArea tab : tabs)
-            tab.setFont(tab.getFont().deriveFont(12f));
+        Color background = invPanel.getBackground().brighter();
+
+        for(JTextArea area : areas) {
+            area.setFont(area.getFont().deriveFont(20f));
+            area.setBackground(background);
+        }
+        for(JPanel tab : tabs)
+            tab.setBackground(background);
         for(JPanel panel : buttonPanels) {
             panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
             Dimension d = panel.getMinimumSize();
-            d.width = 200;
+            d.width = buttonPanelWidth;
             panel.setMinimumSize(d);
+            panel.setBackground(background);
         }
+
         updateFormData(MainFrame.inventory);
+
+
         eAddButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -132,7 +148,7 @@ public class InvForm {
 
     private void updateFormData(Inventory inventory){
         for(int count = 0; count < types.length; count++){
-            tabs[count].setText("");
+            areas[count].setText("");
            if(!types[count].equals("misc"))
                updateWeaponArmor(count,inventory);
            }
@@ -145,8 +161,8 @@ public class InvForm {
 
         buttonPanels[MISC_POS].removeAll();  // Clears everything on button panels and text areas
         buttonPanels[CURRENCY_POS].removeAll();
-        tabs[MISC_POS].setText("");
-        tabs[CURRENCY_POS].setText("");
+        areas[MISC_POS].setText("");
+        areas[CURRENCY_POS].setText("");
 
         for(int i = 0; i < length; i++) {
             Item item = inventory.inv.get(types[MISC_POS]).get(i);
@@ -156,12 +172,12 @@ public class InvForm {
             else
                 count = MISC_POS;
 
-            JTextArea tab = tabs[count];
+            JTextArea area = areas[count];
 
-            tab.append(item.getAmount() + " ");
+            area.append("\n" + item.getAmount() + " ");
 
             addPlusMinus(count, i, inventory);
-            tab.append(item.getName() + "\n" + item.getDescription() + "\n\n");
+            area.append(item.getName() + "\n");
         }
         buttonPanels[MISC_POS].revalidate();
         buttonPanels[CURRENCY_POS].revalidate();
@@ -173,11 +189,11 @@ public class InvForm {
         int length = inventory.inv.get(types[count]).size();
         JPanel buttonPanel = buttonPanels[count];
         buttonPanel.removeAll();
-        tabs[count].setText("");
+        areas[count].setText("");
 
         for(int i = 0; i < length; i++) {
             Item item = inventory.inv.get(types[count]).get(i);
-            tabs[count].append(item.getName() + "\n" + item.getDescription() + "\n\n");
+            areas[count].append("\n" + item.getName() + "\n");
             addDeleteButton(count,i,inventory);
         }
 
@@ -196,6 +212,7 @@ public class InvForm {
         itemPanel.add(plusButton);
         itemPanel.add(minButton);
         itemPanel.setMaximumSize(itemPanelDim);
+        itemPanel.setBackground(invPanel.getBackground().brighter());
 
         buttonPanel = buttonPanels[count];
         buttonPanel.add(itemPanel);
@@ -235,20 +252,35 @@ public class InvForm {
     private void addDeleteButton(int c, int index, Inventory inventory){
         int count = c;
         int i = index;
+        int rigidSpace = 10;
         Item item = inventory.inv.get(types[count]).get(i);
         JButton delButton = new JButton("Delete");
+        JButton detailButton = new JButton("Details");
         final JButton equipButton = new JButton("Equip");
         if(item.isEquipped())
             equipButton.setText("Unequip");
+
+        /*Dimension buttonDim = new Dimension(15,20);
+        delButton.setMaximumSize(buttonDim);
+        detailButton.setMaximumSize(buttonDim);
+        equipButton.setMaximumSize(buttonDim);*/
+
+        Font font = new Font("STLiti",Font.BOLD,14);
+        delButton.setFont(font);
+        detailButton.setFont(font);
+        equipButton.setFont(font);
 
 
         JPanel delPanel = buttonPanels[count];
         JPanel itemPanel = new JPanel();
         itemPanel.setLayout(new BoxLayout(itemPanel,BoxLayout.LINE_AXIS));
         itemPanel.add(equipButton);
-        itemPanel.add(Box.createRigidArea(new Dimension(20,5)));
+        itemPanel.add(Box.createRigidArea(new Dimension(rigidSpace,5)));
+        itemPanel.add(detailButton);
+        itemPanel.add(Box.createRigidArea(new Dimension(rigidSpace,5)));
         itemPanel.add(delButton);
         itemPanel.setMaximumSize(itemPanelDim);
+        itemPanel.setBackground(invPanel.getBackground().brighter());
         delPanel.add(itemPanel);
 
         delButton.addActionListener(new ActionListener() {
@@ -286,6 +318,19 @@ public class InvForm {
                     }
                 }
 
+            }
+        });
+
+        detailButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame detailFrame = new JFrame("Details");
+                detailFrame.setContentPane(new detailForm(item).detailPanel);
+                detailFrame.setPreferredSize(new Dimension(450, 300));
+                detailFrame.pack();
+                detailFrame.setVisible(true);
+                JFrame frame = parentCharForm.getFrame();
+                detailFrame.setLocation(frame.getLocation().x+frame.getWidth(),frame.getLocation().y);
             }
         });
     }

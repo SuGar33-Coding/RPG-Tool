@@ -251,7 +251,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Dexterity"/>
+                  <text value="Dexterity "/>
                 </properties>
               </component>
               <component id="e1b6a" class="javax.swing.JLabel" binding="constitution">
@@ -261,7 +261,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Constitution"/>
+                  <text value="Constitution "/>
                 </properties>
               </component>
               <component id="f94b0" class="javax.swing.JLabel" binding="intelligence">
@@ -271,7 +271,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Intelligence"/>
+                  <text value="Intelligence "/>
                 </properties>
               </component>
               <component id="6c604" class="javax.swing.JLabel" binding="wisdom">
@@ -281,7 +281,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Wisdom"/>
+                  <text value="Wisdom "/>
                 </properties>
               </component>
               <component id="a8e44" class="javax.swing.JLabel" binding="charisma">
@@ -291,7 +291,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Charisma"/>
+                  <text value="Charisma "/>
                 </properties>
               </component>
               <component id="bd03a" class="javax.swing.JTextField" binding="strengthF">
@@ -411,7 +411,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Strength"/>
+                  <text value="Strength "/>
                 </properties>
               </component>
             </children>
@@ -702,24 +702,6 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="a3866" class="javax.swing.JLabel" binding="AC">
-            <constraints>
-              <grid row="0" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="AC: "/>
-            </properties>
-          </component>
-          <component id="62aa" class="javax.swing.JTextField" binding="acField">
-            <constraints>
-              <grid row="0" column="1" row-span="3" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="20" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <columns value="2"/>
-            </properties>
-          </component>
           <component id="3e472" class="javax.swing.JLabel" binding="speed">
             <constraints>
               <grid row="0" column="2" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -828,12 +810,10 @@
               </component>
               <component id="e7199" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                    <preferred-size width="3" height="-1"/>
-                  </grid>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="d"/>
+                  <text value="d  "/>
                 </properties>
               </component>
               <component id="54a8" class="javax.swing.JTextField" binding="hitDiceSizeF">
@@ -850,6 +830,8 @@
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <minimum-size width="15" height="-1"/>
+                    <preferred-size width="20" height="-1"/>
+                    <maximum-size width="25" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>
@@ -873,22 +855,40 @@
               </hspacer>
             </children>
           </grid>
+          <component id="8fc0c" class="javax.swing.JLabel" binding="proficiency">
+            <constraints>
+              <grid row="2" column="0" row-span="3" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Proficiency Bonus: +0"/>
+            </properties>
+          </component>
+          <component id="a3866" class="javax.swing.JLabel" binding="AC">
+            <constraints>
+              <grid row="2" column="2" row-span="3" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="AC: "/>
+            </properties>
+          </component>
+          <component id="62aa" class="javax.swing.JTextField" binding="acField">
+            <constraints>
+              <grid row="2" column="3" row-span="3" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="20" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <columns value="2"/>
+            </properties>
+          </component>
           <component id="ec25a" class="javax.swing.JCheckBox" binding="inspirationCheckBox" default-binding="true">
             <constraints>
-              <grid row="2" column="3" row-span="3" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="-1" height="5"/>
               </grid>
             </constraints>
             <properties>
               <text value="Inspiration"/>
-            </properties>
-          </component>
-          <component id="8fc0c" class="javax.swing.JLabel" binding="proficiency">
-            <constraints>
-              <grid row="3" column="0" row-span="2" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Proficiency Bonus: +0"/>
             </properties>
           </component>
         </children>

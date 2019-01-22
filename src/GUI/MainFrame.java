@@ -19,13 +19,22 @@ public class MainFrame {
     private JLabel welcomeLabel;
     private JPanel buttons;
     private JButton deleteButton;
+    private JButton settingsButton;
+    private int tester = 0;
 
     /* Active inventory */
     static Inventory inventory;
+    /* Active notes */
     static String background, notes, featsntraits;
+    /* Active spellbook */
     static Spellbook spellBook;
-    static String sep = "@";
-    static Dimension mainDim = new Dimension(700, 800);
+
+    static String sep = "@";  // Separator used in JSON character files to separate different pieces of data.
+    static Dimension mainDim = new Dimension(725, 800);
+
+    /* List of the component types so that fonts and backgrounds can be easily changed */
+    static String[] componentFonts = {"Button.font","Label.font","Panel.font","CheckBox.font","CheckBoxMenuItem.font","ScrollPane.font","TabbedPane.font","TextField.font","TextArea.font"};
+    static String[] componentBackgrounds = {"Panel.background","Frame.background","ScrollPane.background","TabbedPane.background","TextArea.background","Label.background","CheckBox.background","CheckBoxMenuItem.font"};
 
     static boolean debug = false;
 
@@ -111,9 +120,38 @@ public class MainFrame {
             }
         });
 
+        settingsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(tester == 0){
+                    for(String s : componentBackgrounds)
+                        UIManager.put(s, Color.red);
+                    tester = 1;
+                    //System.out.println(UIManager.getColor("Panel.background"));
+                    mainMenu.revalidate();
+                    mainMenu.repaint();
+                }
+                else{
+                    for(String s : componentBackgrounds)
+                        UIManager.put(s, Color.lightGray);
+                    tester = 0;
+                    //System.out.println(UIManager.getColor("Panel.background"));
+                    mainMenu.revalidate();
+                    mainMenu.repaint();
+                }
+
+            }
+        });
+
     }
 
     public static void main(String[] args) {
+        for(String s : componentFonts)
+            UIManager.put(s, new Font("STLiti", Font.BOLD, 16));
+        for(String s : componentBackgrounds)
+            UIManager.put(s, new Color(174,162,135));
+        UIManager.put("Button.background",Color.lightGray);
+
         MainFrame mainFrame = new MainFrame();
         JPanel mainMenu = mainFrame.getMainMenu();
         frame.setContentPane(mainMenu);
@@ -126,6 +164,9 @@ public class MainFrame {
         int centerY = 25;
         frame.setLocation(centerX-centerXadjust,centerY);
         frame.setVisible(true);
+
+        mainFrame.setNotOpaque();
+        // So if we set all upper panels to opaque(false), background color on main panel will come through
 
         /* add debugging statements to here */
         if (debug) {
@@ -153,6 +194,11 @@ public class MainFrame {
                 rhet = rhet + path.charAt(i);
 
         return rhet;
+    }
+
+    private void setNotOpaque(){
+        welcomePanel.setOpaque(false);
+        buttons.setOpaque(false);
     }
 
     public void letsRide() {
