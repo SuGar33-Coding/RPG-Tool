@@ -13,14 +13,21 @@ public class Spellbook {
 
     private int attackBonus;
     private int spellDC;
-    private int spellAbility = 1; // must be 1-6, 1:str, 2:con, 3:dex, 4:int, 5:wis, 6:cha
+    private String spellAbility; // must be 1-6, 1:str, 2:con, 3:dex, 4:int, 5:wis, 6:cha
 
-    JSONObject charStats;
+    RPGCharacter actor;
 
-    public Spellbook(JSONObject c){
-        charStats = c;
+    /**
+     * Default constructor
+     */
+    public Spellbook() {
+        this.spellAbility = "intelligence";
+    }
 
-        JSONArray textBook = charStats.getJSONArray("spellbook");
+    public Spellbook(RPGCharacter characer, JSONObject charJSON){
+        this.actor = characer;
+
+        JSONArray textBook = charJSON.getJSONArray("spellbook");
         int length = textBook.length();
         if (!textBook.isEmpty()) {
             for (int i = 0; i < length; i++) {
@@ -29,11 +36,7 @@ public class Spellbook {
         }
 
 
-        setAttackBonusNDC(charStats.getInt("spell ability"));
-    }
-
-    public Spellbook(){
-
+        setAttackBonusNDC(charJSON.getString("spell ability"));
     }
 
     // @param infoLine must come in the form "name, level, castingTime, range, duration, damageDice, description, isPrepared"
@@ -60,34 +63,34 @@ public class Spellbook {
 
     public int getSpellDC(){return spellDC;}
 
-    public void setAttackBonusNDC(int bonus){
+    public void setAttackBonusNDC(String bonus){
         switch(bonus){
-            case 1:
+            case "strength":
                 attackBonus = MainFrame.getCharFrame().getSB();
                 break;
-            case 2:
+            case "constitution":
                 attackBonus = MainFrame.getCharFrame().getCB();
                 break;
-            case 3:
+            case "dexterity":
                 attackBonus = MainFrame.getCharFrame().getDB();
                 break;
-            case 4:
+            case "intelligence":
                 attackBonus = MainFrame.getCharFrame().getIB();
                 break;
-            case 5:
+            case "wisdom":
                 attackBonus = MainFrame.getCharFrame().getWB();
                 break;
-            case 6:
+            case "charisma":
                 attackBonus = MainFrame.getCharFrame().getChB();
                 break;
             default:
                 attackBonus = 0;
                 break;
         }
-        attackBonus += RPGCharacter.calculateProficiencyBonus(Integer.parseInt(charStats.getString("level")));
+        attackBonus += Integer.parseInt(actor.getLevel());
         spellDC = attackBonus+8;
         spellAbility = bonus;
     }
 
-    public int getSpellAbility(){return spellAbility;}
+    public String getSpellAbility(){return spellAbility;}
 }

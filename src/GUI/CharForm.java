@@ -170,7 +170,7 @@ public class CharForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame diceFrame = new JFrame("Dicey");
-                diceFrame.setContentPane(new DI(MainFrame.inventory).DicePanel);
+                diceFrame.setContentPane(new DI(actor).DicePanel);
                 diceFrame.setPreferredSize(new Dimension(diceyWidth, diceyHeight));
                 diceFrame.pack();
                 diceFrame.setLocation(frame.getLocation().x-diceyWidth,frame.getLocation().y);
@@ -197,7 +197,7 @@ public class CharForm {
             public void actionPerformed(ActionEvent e) {
                 int noteWidth = 500;
                 JFrame noteFrame = new JFrame("Notes");
-                noteFrame.setContentPane(new noteForm().notePanel);
+                noteFrame.setContentPane(new noteForm(actor).notePanel);
                 noteFrame.setPreferredSize(new Dimension(noteWidth, 700));
                 noteFrame.pack();
                 noteFrame.setLocation(frame.getLocation().x-noteWidth,frame.getLocation().y+diceyHeight);
@@ -277,12 +277,12 @@ public class CharForm {
             skillBonuses.put(Boolean.toString(checkBox.isSelected()));
         }
         data.put("skill bonuses", skillBonuses);
-        data.put("inventory",new JSONObject(MainFrame.inventory.toString()));
-        data.put("background",MainFrame.background);
-        data.put("notes",MainFrame.notes);
-        data.put("featuresntraits",MainFrame.featsntraits);
-        data.put("spellbook",new JSONArray(MainFrame.spellBook.toString()));
-        data.put("spell ability",MainFrame.spellBook.getSpellAbility());
+        data.put("inventory",new JSONObject(character.inventory.toString()));
+        data.put("background",character.background);
+        data.put("notes",character.notes);
+        data.put("featuresntraits",character.featsntraits);
+        data.put("spellbook",new JSONArray(character.spellBook.toString()));
+        data.put("spell ability",character.spellBook.getSpellAbility());
 
         return data;
     }
@@ -403,4 +403,8 @@ public class CharForm {
     public int getProfBonus(){return profBonus;}
 
     public int getInvHeight(){return invHeight;}
+
+    public RPGCharacter getActor() {
+        return actor;
+    }
 }

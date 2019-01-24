@@ -10,10 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import backEnd.Dicey;
-import backEnd.Inventory;
-import backEnd.Item;
-import backEnd.Spell;
+import backEnd.*;
 
 public class DI {
     public JPanel DicePanel;
@@ -33,22 +30,24 @@ public class DI {
     private Dimension itemPaneDim = new Dimension(1,18);
     private boolean madlad = false;
 
+    private RPGCharacter actor;
+
     public DI() {  // If roll is accessed from the front screen
         addRollListener();
     }
 
-    public DI(Inventory inventory){  // If roll is accessed from character sheet, equipped items will also appear.
+    public DI(RPGCharacter actor){  // If roll is accessed from character sheet, equipped items will also appear.
         addRollListener();
         equippedItemsPane.setLayout(new BoxLayout(equippedItemsPane, BoxLayout.PAGE_AXIS));
         equippedItemsButtonPane.setLayout(new BoxLayout(equippedItemsButtonPane, BoxLayout.PAGE_AXIS));
-        String[] types = inventory.getTypes();
+        String[] types = actor.inventory.getTypes();
         for(String type : types)
             if(type == "weapon")
-                for(Item weapon : inventory.inv.get("weapon"))
+                for(Item weapon : actor.inventory.inv.get("weapon"))
                     if(weapon.isEquipped())
                         addEquippedItemRolls(weapon);
 
-        ArrayList<Spell> spells = MainFrame.spellBook.getSpells();
+        ArrayList<Spell> spells = actor.spellBook.getSpells();
 
         for(Spell spell : spells)
             if(spell.isPrepared())
@@ -142,7 +141,7 @@ public class DI {
                 String bufff = buffField.getText();
                 try {buff = Integer.parseInt(bufff);} catch (NumberFormatException ex) {buff = 0;}
 
-                int roll[] = Dicey.Roll(1,20,MainFrame.spellBook.getAttackBonus()+buff);
+                int roll[] = Dicey.Roll(1,20,actor.spellBook.getAttackBonus()+buff);
                 resultTextArea.append("\nResult: " + Dicey.rollToString(roll));
                 if(madlad)
                     nat(20,roll);

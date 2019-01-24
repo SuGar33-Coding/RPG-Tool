@@ -1,5 +1,7 @@
 package GUI;
 
+import backEnd.RPGCharacter;
+
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
@@ -13,19 +15,23 @@ public class noteForm {
     private JTextArea backgroundArea;
     private JTextArea notesArea;
 
-    public noteForm(){
+    private RPGCharacter actor;
+
+    public noteForm(RPGCharacter character){
+        this.actor = character;
+
         Color background = notePanel.getBackground();
-        backgroundArea.setText(MainFrame.background);
+        backgroundArea.setText(actor.background);
         backgroundArea.setBackground(background.brighter());
-        notesArea.setText(MainFrame.notes);
+        notesArea.setText(actor.notes);
         notesArea.setBackground(background.brighter());
-        featsTraitsProficiencies.setText(MainFrame.featsntraits);
+        featsTraitsProficiencies.setText(actor.featsntraits);
         featsTraitsProficiencies.setBackground(background.brighter());
 
         backgroundArea.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
-                MainFrame.background = backgroundArea.getText();
+                actor.background = backgroundArea.getText();
             }
         });
 
@@ -33,14 +39,14 @@ public class noteForm {
                 .addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
-                MainFrame.notes = notesArea.getText();
+                actor.notes = notesArea.getText();
             }
         });
 
         featsTraitsProficiencies.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
-                MainFrame.featsntraits = featsTraitsProficiencies.getText();
+                actor.featsntraits = featsTraitsProficiencies.getText();
             }
         });
     }

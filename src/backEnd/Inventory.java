@@ -16,6 +16,8 @@ public class Inventory {
         return sep;
     }
 
+    private RPGCharacter actor;
+
     /**
      * Default constructor
      * Sets up the Map struct
@@ -53,7 +55,8 @@ public class Inventory {
      * Create Inventory object from JSON file
      * @param dataFile full character JSON file
      */
-    public Inventory(JSONObject dataFile) {
+    public Inventory(RPGCharacter character, JSONObject dataFile) {
+        this.actor = character;
         //set up inv structure
         inv = new HashMap<>();
         inv.put("weapon", new ArrayList<>());

@@ -45,12 +45,6 @@ public class MainFrame {
 
     /* Active character */
     static RPGCharacter character;
-    /* Active inventory */
-    static Inventory inventory;
-    /* Active notes */
-    static String background, notes, featsntraits;
-    /* Active spellbook */
-    static Spellbook spellBook;
 
     static String sep = "@";  // Separator used in JSON character files to separate different pieces of data.
     static Dimension mainDim = new Dimension(725, 800);
@@ -83,9 +77,6 @@ public class MainFrame {
                 fc.showOpenDialog(mainMenu);
                 if (fc.getName(fc.getSelectedFile()) != null) {
                     JSONObject charJSON = IO.loadCharJSON(fc.getName(fc.getSelectedFile()));
-                    background = charJSON.getString("background");
-                    notes = charJSON.getString("notes");
-                    featsntraits = charJSON.getString("featuresntraits");
 
                     character = new RPGCharacter(charJSON);
 
@@ -95,13 +86,6 @@ public class MainFrame {
                     frame.setContentPane(pan);
                     frame.validate();
                     frame.repaint();
-
-                    inventory = new Inventory(charJSON);
-                    spellBook = new Spellbook(charJSON);
-
-                    if (debug){
-                        System.out.println(inventory);
-                    }
                 }
             }
         });
@@ -124,20 +108,11 @@ public class MainFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 character = new RPGCharacter();
-                inventory = new Inventory();
-                spellBook = new Spellbook();
 
-                background = "";
-                notes = "";
-                featsntraits = "";
                 charFrame = new CharForm(character, frame);
                 frame.setContentPane(charFrame.charPan);
                 frame.validate();
                 frame.repaint();
-
-                if (debug) {
-                    System.out.println(inventory);
-                }
             }
         });
         deleteButton.addActionListener(new ActionListener() {

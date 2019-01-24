@@ -38,11 +38,12 @@ public class SpellForm {
     private Dimension spellPanelDim = new Dimension(buttonPanelWidth, 48);
     private ButtonGroup spellCastingAbilityGroup = new ButtonGroup();
     private JRadioButton[] spellCastingRadioButtons = {strButton,consButton,dexterityRadioButton,intelligenceRadioButton,wisdomRadioButton,charismaRadioButton};
-    private final Spellbook spellbook = MainFrame.spellBook;
+    private Spellbook spellbook;
 
-    public SpellForm(CharForm c) {
+    public SpellForm(CharForm form) {
         sep = MainFrame.sep;
-        parentCharForm = c;
+        parentCharForm = form;
+        spellbook = form.getActor().spellBook;
 
         Color background = spellPane.getBackground().brighter();
 
@@ -57,7 +58,7 @@ public class SpellForm {
         buttonPanel.setMinimumSize(d);
         buttonPanel.setBackground(background);
 
-        updateFormData(MainFrame.spellBook);
+        updateFormData(spellbook);
 
         for(JRadioButton button : spellCastingRadioButtons)
             button.addActionListener(new spellCastingAbilityListener());
@@ -72,8 +73,8 @@ public class SpellForm {
                     field.setText("");
                 }
                 infoLine += "false";
-                MainFrame.spellBook.addSpell(infoLine);
-                updateFormData(MainFrame.spellBook);
+                spellbook.addSpell(infoLine);
+                updateFormData(spellbook);
             }
         });
     }
@@ -84,22 +85,22 @@ public class SpellForm {
         updateBonusNDC();
 
         switch(spellbook.getSpellAbility()){
-            case 1:
+            case "strength":
                 strButton.setSelected(true);
                 break;
-            case 2:
+            case "constitution":
                 consButton.setSelected(true);
                 break;
-            case 3:
+            case "dexterity":
                 dexterityRadioButton.setSelected(true);
                 break;
-            case 4:
+            case "intelligence":
                 intelligenceRadioButton.setSelected(true);
                 break;
-            case 5:
+            case "wisdom":
                 wisdomRadioButton.setSelected(true);
                 break;
-            case 6:
+            case "charisma":
                 charismaRadioButton.setSelected(true);
                 break;
         }
@@ -152,7 +153,7 @@ public class SpellForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 spells.remove(count);
-                updateFormData(MainFrame.spellBook);
+                updateFormData(spellbook);
             }
         });
 
@@ -187,17 +188,17 @@ public class SpellForm {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(strButton.isSelected())
-                spellbook.setAttackBonusNDC(1);
+                spellbook.setAttackBonusNDC("strength");
             else if(consButton.isSelected())
-                spellbook.setAttackBonusNDC(2);
+                spellbook.setAttackBonusNDC("constitution");
             else if(dexterityRadioButton.isSelected())
-                spellbook.setAttackBonusNDC(3);
+                spellbook.setAttackBonusNDC("dexterity");
             else if(intelligenceRadioButton.isSelected())
-                spellbook.setAttackBonusNDC(4);
+                spellbook.setAttackBonusNDC("intelligence");
             else if(wisdomRadioButton.isSelected())
-                spellbook.setAttackBonusNDC(5);
+                spellbook.setAttackBonusNDC("wisdom");
             else if(charismaRadioButton.isSelected())
-                spellbook.setAttackBonusNDC(6);
+                spellbook.setAttackBonusNDC("charisma");
 
 
             updateBonusNDC();

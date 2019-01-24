@@ -45,6 +45,16 @@ public class RPGCharacter {
     private String proficiency;
     private String maxHitDiceAmount;
 
+    /* Active inventory */
+    public Inventory inventory;
+    /* Active notes */
+    public String background, notes, featsntraits;
+    /* Active spellbook */
+    public Spellbook spellBook;
+
+    /**
+     * Default constructor (could you tell)
+     */
     public RPGCharacter() {
         this.playerName = "_DEFAULT";
         this.charName = "_DEFAULT";
@@ -77,29 +87,35 @@ public class RPGCharacter {
         this.ChB = "_DEFAULT";
         this.proficiency = "_DEFAULT";
         this.maxHitDiceAmount = this.level;
+
+        this.inventory = new Inventory();
+        this.spellBook = new Spellbook();
+        this.background = "";
+        this.notes = "";
+        this.featsntraits = "";
     }
 
-    public RPGCharacter(JSONObject charStats) {
-        this.playerName = charStats.getString("player name");
-        this.charName = charStats.getString("char name");
-        this.charClass = charStats.getString("class");
-        this.race = charStats.getString("race");
-        this.level = charStats.getString("level");
-        this.alignment = charStats.getString("alignment");
-        this.xp = charStats.getString("xp");
-        this.inspiration = charStats.getBoolean("inspiration");
-        this.ac = charStats.getString("ac");
-        this.speed = charStats.getString("speed");
-        this.maxHP = charStats.getString("max HP");
-        this.currentHP = charStats.getString("current HP");
-        this.hitDiceSize = charStats.getString("hit dice size");
-        this.currentHitDice = charStats.getString("current hit dice");
-        this.strength = charStats.getString("strength");
-        this.dexterity = charStats.getString("dexterity");
-        this.constitution = charStats.getString("constitution");
-        this.intelligence = charStats.getString("intelligence");
-        this.wisdom = charStats.getString("wisdom");
-        this.charisma = charStats.getString("charisma");
+    public RPGCharacter(JSONObject charJSON) {
+        this.playerName = charJSON.getString("player name");
+        this.charName = charJSON.getString("char name");
+        this.charClass = charJSON.getString("class");
+        this.race = charJSON.getString("race");
+        this.level = charJSON.getString("level");
+        this.alignment = charJSON.getString("alignment");
+        this.xp = charJSON.getString("xp");
+        this.inspiration = charJSON.getBoolean("inspiration");
+        this.ac = charJSON.getString("ac");
+        this.speed = charJSON.getString("speed");
+        this.maxHP = charJSON.getString("max HP");
+        this.currentHP = charJSON.getString("current HP");
+        this.hitDiceSize = charJSON.getString("hit dice size");
+        this.currentHitDice = charJSON.getString("current hit dice");
+        this.strength = charJSON.getString("strength");
+        this.dexterity = charJSON.getString("dexterity");
+        this.constitution = charJSON.getString("constitution");
+        this.intelligence = charJSON.getString("intelligence");
+        this.wisdom = charJSON.getString("wisdom");
+        this.charisma = charJSON.getString("charisma");
 
         boolean[][] skills = {new boolean[2],
                 new boolean[4],
@@ -110,13 +126,20 @@ public class RPGCharacter {
         int k = 0;
         for (int i = 0; i < skills.length; i++) {
             for (int j = 0; j < skills[i].length; j++) {
-                skills[i][j] = charStats.getJSONArray("skill bonuses").getBoolean(k);
+                skills[i][j] = charJSON.getJSONArray("skill bonuses").getBoolean(k);
                 k++;
             }
         }
         this.skills = skills;
 
         this.proficiency = Integer.toString(calculateProficiencyBonus(Integer.parseInt(this.level)));
+
+        this.background = charJSON.getString("background");
+        this.notes = charJSON.getString("notes");
+        this.featsntraits = charJSON.getString("featuresntraits");
+
+        this.inventory = new Inventory(this, charJSON);
+        this.spellBook = new Spellbook(this, charJSON);
     }
 
     public static int calculateActionBonus(String rawStat) {
@@ -288,7 +311,7 @@ public class RPGCharacter {
 
     public void setIntelligence(String intelligence) {
         this.intelligence = intelligence;
-        this.SB = Integer.toString(calculateActionBonus(intelligence));
+        this.IB = Integer.toString(calculateActionBonus(intelligence));
     }
 
     public String getWisdom() {
@@ -387,5 +410,29 @@ public class RPGCharacter {
 
     public void setProficiency(String proficiency) {
         this.proficiency = proficiency;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getFeatsntraits() {
+        return featsntraits;
+    }
+
+    public void setFeatsntraits(String featsntraits) {
+        this.featsntraits = featsntraits;
     }
 }

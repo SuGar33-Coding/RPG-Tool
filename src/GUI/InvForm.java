@@ -2,6 +2,7 @@ package GUI;
 
 import backEnd.Inventory;
 import backEnd.Item;
+import backEnd.RPGCharacter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +50,7 @@ public class InvForm {
     private JPanel equipmentTab;
     private JPanel currencyTab;
     private Inventory inventoryClass;
-    private String[] types = MainFrame.inventory.getTypes();
+    private String[] types;
     private JPanel[] tabs = {weaponTab,armorTab,equipmentTab,currencyTab};
     private JTextArea[] areas = {weaponArea,armorArea,equipmentArea,currencyArea};
     private JPanel[] buttonPanels = {weaponButtons, armorButtons,equipButtons,currencyButtons};
@@ -58,15 +59,19 @@ public class InvForm {
     private int MISC_POS = 2;
     private int CURRENCY_POS = 3;
     private CharForm parentCharForm;
+    private RPGCharacter actor;
     private int buttonPanelWidth = 275;
     private Dimension itemPanelDim = new Dimension(buttonPanelWidth,48);
     private String sep;
 
 
 
-    public InvForm(CharForm c) {
-        sep = MainFrame.inventory.getSep();
-        parentCharForm = c;
+    public InvForm(CharForm form) {
+        parentCharForm = form;
+        actor = parentCharForm.getActor();
+        sep = actor.inventory.getSep();
+        types = actor.inventory.getTypes();
+
         Color background = invPanel.getBackground().brighter();
 
         for(JTextArea area : areas) {
@@ -83,7 +88,7 @@ public class InvForm {
             panel.setBackground(background);
         }
 
-        updateFormData(MainFrame.inventory);
+        updateFormData(actor.inventory);
 
 
         eAddButton.addActionListener(new ActionListener() {
@@ -96,8 +101,8 @@ public class InvForm {
                     field.setText("");
                 }
                 infoLine += "false";
-                MainFrame.inventory.addItem(infoLine);
-                updateMiscCurrency(MainFrame.inventory);
+                actor.inventory.addItem(infoLine);
+                updateMiscCurrency(actor.inventory);
             }
         });
         cAddButton.addActionListener(new ActionListener() {
@@ -110,8 +115,8 @@ public class InvForm {
                     field.setText("");
                 }
                 infoLine += "true";
-                MainFrame.inventory.addItem(infoLine);
-                updateMiscCurrency(MainFrame.inventory);
+                actor.inventory.addItem(infoLine);
+                updateMiscCurrency(actor.inventory);
             }
         });
 
@@ -125,8 +130,8 @@ public class InvForm {
                     field.setText("");
                 }
                 infoLine += "false";
-                MainFrame.inventory.addItem(infoLine);
-                updateWeaponArmor(ARMOR_POS,MainFrame.inventory);
+                actor.inventory.addItem(infoLine);
+                updateWeaponArmor(ARMOR_POS,actor.inventory);
             }
         });
 
@@ -140,8 +145,8 @@ public class InvForm {
                     field.setText("");
                 }
                 infoLine += "false";
-                MainFrame.inventory.addItem(infoLine);
-                updateWeaponArmor(WEAPON_POS,MainFrame.inventory);
+                actor.inventory.addItem(infoLine);
+                updateWeaponArmor(WEAPON_POS,actor.inventory);
             }
         });
     }
@@ -227,7 +232,7 @@ public class InvForm {
                     item.setAmount(item.getAmount()+10);
                 else
                     item.setAmount(item.getAmount()+1);
-                updateMiscCurrency(MainFrame.inventory);
+                updateMiscCurrency(actor.inventory);
             }
         });
 
@@ -244,7 +249,7 @@ public class InvForm {
 
                 if(item.getAmount() < 0)
                     inventory.inv.get(types[MISC_POS]).remove(i);
-                updateMiscCurrency(MainFrame.inventory);
+                updateMiscCurrency(actor.inventory);
             }
         });
     }
@@ -287,7 +292,7 @@ public class InvForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 inventory.inv.get(types[count]).remove(i);
-                updateFormData(MainFrame.inventory);
+                updateFormData(actor.inventory);
             }
         });
 
