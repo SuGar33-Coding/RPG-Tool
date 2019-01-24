@@ -21,6 +21,7 @@ public class Inventory {
     /**
      * Default constructor
      * Sets up the Map struct
+     * Inventory is always dependent on an actor instance
      */
     public Inventory(RPGCharacter character) {
         this.actor = character;

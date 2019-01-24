@@ -19,6 +19,7 @@ public class Spellbook {
 
     /**
      * Default constructor
+     * Spellbook is always dependent on an actor instance
      */
     public Spellbook(RPGCharacter character) {
         this.actor = character;
