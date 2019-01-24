@@ -35,6 +35,8 @@
             </constraints>
             <properties>
               <columns value="25"/>
+              <text value=""/>
+              <toolTipText value="text"/>
             </properties>
           </component>
           <hspacer id="4134f">
@@ -62,6 +64,7 @@
             <properties>
               <columns value="35"/>
               <text value=""/>
+              <toolTipText value="text"/>
             </properties>
           </component>
           <hspacer id="17d41">
@@ -87,6 +90,8 @@
             </constraints>
             <properties>
               <columns value="10"/>
+              <text value=""/>
+              <toolTipText value="text"/>
             </properties>
           </component>
           <hspacer id="7ab51">
@@ -131,6 +136,8 @@
             </constraints>
             <properties>
               <columns value="20"/>
+              <text value=""/>
+              <toolTipText value="text"/>
             </properties>
           </component>
           <component id="cda9d" class="javax.swing.JLabel" binding="level">
@@ -149,6 +156,8 @@
             </constraints>
             <properties>
               <columns value="2"/>
+              <text value=""/>
+              <toolTipText value="number"/>
             </properties>
           </component>
           <component id="41d89" class="javax.swing.JLabel" binding="alignment">
@@ -167,6 +176,7 @@
             </constraints>
             <properties>
               <columns value="20"/>
+              <toolTipText value="text"/>
             </properties>
           </component>
           <component id="55134" class="javax.swing.JLabel" binding="xp">
@@ -220,6 +230,7 @@
             </constraints>
             <properties>
               <columns value="7"/>
+              <toolTipText value="number"/>
             </properties>
           </component>
         </children>
