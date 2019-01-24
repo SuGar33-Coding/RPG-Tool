@@ -117,20 +117,15 @@ public class CharForm {
 
     private int profBonus = 0;
 
-    public CharForm(RPGCharacter c, JFrame frame) {
-        this.actor = c;
-        this.frame = frame;
-        addListeners();
-        updateFormData(actor);
-    }
-
     /**
-     * Assumes default (empty) RPGCharacter in MainFrame
+     * Only intended constructor
+     * @param actor the active character instance
+     * @param frame
      */
-    public CharForm(JFrame frame) {
-        addListeners();
+    public CharForm(RPGCharacter actor, JFrame frame) {
+        this.actor = actor;
         this.frame = frame;
-        this.actor = MainFrame.character;
+        addListeners();
     }
 
     private void addListeners(){
@@ -292,7 +287,7 @@ public class CharForm {
         return data;
     }
 
-    private void updateFormData(RPGCharacter character){
+    public void updateFormData(RPGCharacter character){
         playerF.setText(character.getPlayerName());
         charF.setText(character.getCharName());
         classF.setText(character.getCharClass());

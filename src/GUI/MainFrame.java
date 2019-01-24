@@ -90,6 +90,7 @@ public class MainFrame {
                     character = new RPGCharacter(charJSON);
 
                     charFrame = new CharForm(character,frame);
+                    charFrame.updateFormData(character);
                     JPanel pan = charFrame.charPan;
                     frame.setContentPane(pan);
                     frame.validate();
@@ -129,7 +130,7 @@ public class MainFrame {
                 background = "";
                 notes = "";
                 featsntraits = "";
-                charFrame = new CharForm(frame);
+                charFrame = new CharForm(character, frame);
                 frame.setContentPane(charFrame.charPan);
                 frame.validate();
                 frame.repaint();
