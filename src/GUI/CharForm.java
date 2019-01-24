@@ -111,6 +111,8 @@ public class CharForm {
     private final int invWidth = 750;
     private final int invHeight = 500;
 
+    private int profBonus = 0;
+
     public CharForm(JSONObject c, JFrame frame) {
         actor = c;
         this.frame = frame;
@@ -130,7 +132,7 @@ public class CharForm {
                 MainFrame.init();  // Return to main menu
             }
         });
-        updateSaveButton.addActionListener(new ActionListener() {  // TODO: Handle parsing errors
+        updateSaveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JSONObject data = new JSONObject();
@@ -164,9 +166,10 @@ public class CharForm {
                 data.put("notes",MainFrame.notes);
                 data.put("featuresntraits",MainFrame.featsntraits);
                 data.put("spellbook",new JSONArray(MainFrame.spellBook.toString()));
+                data.put("spell ability",MainFrame.spellBook.getSpellAbility());
 
 
-                RPGCharacter.writeCharJSON(data);
+                RPGCharacter.writeCharJSON(data,MainFrame.getFilepath());
                 updateFormData(data);
             }
         });
@@ -175,7 +178,7 @@ public class CharForm {
         levelF.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
-                maxHitDiceAmount.setText(levelF.getText());
+                maxHitDiceAmount.setText(levelF.getText()+" ");
                 try{
                     int lvl = Integer.parseInt(levelF.getText());
                     int bonus = RPGCharacter.calculateProficiencyBonus(lvl);
@@ -234,7 +237,7 @@ public class CharForm {
             public void actionPerformed(ActionEvent e) {
                 JFrame spellFrame = new JFrame("Spellbook");
                 spellFrame.setContentPane(new SpellForm(CharForm.this).spellPane);
-                spellFrame.setPreferredSize(new Dimension(650, 500));
+                spellFrame.setPreferredSize(new Dimension(700, 500));
                 spellFrame.pack();
                 spellFrame.setLocation(frame.getLocation().x+frame.getWidth(),frame.getLocation().y+invHeight);
                 spellFrame.setVisible(true);
@@ -265,13 +268,22 @@ public class CharForm {
         intelligenceF.setText(charStats.getString("intelligence"));
         wisdomF.setText(charStats.getString("wisdom"));
         charismaF.setText(charStats.getString("charisma"));
-        SB.setText("SB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(strengthF.getText())));
-        DB.setText("DB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(dexterityF.getText())));
-        CB.setText("CB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(constitutionF.getText())));
-        IB.setText("IB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(intelligenceF.getText())));
-        WB.setText("WB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(wisdomF.getText())));
-        ChB.setText("ChB: "+RPGCharacter.calculateActionBonus(Integer.parseInt(charismaF.getText())));
-        int profBonus = RPGCharacter.calculateProficiencyBonus(Integer.parseInt(levelF.getText()));
+        try {
+            SB.setText("SB: " + RPGCharacter.calculateActionBonus(Integer.parseInt(strengthF.getText()))+ " ");
+            DB.setText("DB: " + RPGCharacter.calculateActionBonus(Integer.parseInt(dexterityF.getText()))+ " ");
+            CB.setText("CB: " + RPGCharacter.calculateActionBonus(Integer.parseInt(constitutionF.getText()))+ " ");
+            IB.setText("IB: " + RPGCharacter.calculateActionBonus(Integer.parseInt(intelligenceF.getText()))+ " ");
+            WB.setText("WB: " + RPGCharacter.calculateActionBonus(Integer.parseInt(wisdomF.getText()))+ " ");
+            ChB.setText("ChB: " + RPGCharacter.calculateActionBonus(Integer.parseInt(charismaF.getText()))+ " ");
+        } catch (NumberFormatException ex){
+            SB.setText("0 ");
+            DB.setText("0 ");
+            CB.setText("0 ");
+            IB.setText("0 ");
+            WB.setText("0 ");
+            ChB.setText("0 ");
+        }
+        profBonus = RPGCharacter.calculateProficiencyBonus(Integer.parseInt(levelF.getText()));
         boolean[][] skills = {new boolean[2],
                 new boolean[4],
                 new boolean[1],
@@ -345,4 +357,20 @@ public class CharForm {
     public int getAC(){return Integer.parseInt(acField.getText());}
 
     public JFrame getFrame(){return frame;}
+
+    public int getSB(){return Integer.parseInt(SB.getText().substring(4,SB.getText().length()-1));}
+
+    public int getDB(){return Integer.parseInt(DB.getText().substring(4,DB.getText().length()-1));}
+
+    public int getIB(){return Integer.parseInt(IB.getText().substring(4,IB.getText().length()-1));}
+
+    public int getCB(){return Integer.parseInt(CB.getText().substring(4,CB.getText().length()-1));}
+
+    public int getWB(){return Integer.parseInt(WB.getText().substring(4,WB.getText().length()-1));}
+
+    public int getChB(){return Integer.parseInt(ChB.getText().substring(5,ChB.getText().length()-1));}
+
+    public int getProfBonus(){return profBonus;}
+
+    public int getInvHeight(){return invHeight;}
 }

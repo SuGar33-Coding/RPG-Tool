@@ -9,7 +9,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
+// TODO: Make it so that if someone does an incorrect input in any text field, it shows error on JOptionPane.  Or put any error in general on JOptionPane.
+
+/* TODO:    BUGS!!!!!!!!
+    No description for currency and equipment;
+    didn't do a detail page for spells;
+
+    set min size for text fields.
+
+    double digit bonuses for skills break everything. (CharForm line 312);
+
+    make sure that windows made from charForm do not go off screen;
+
+    make damage field in inventory for weapons bigger;
+
+    check if you can leave attk bonus blank
+ */
+
 public class MainFrame {
+    private static boolean maintenance = false;
+
+
     private static JFrame frame = new JFrame("RPG Tool");
     private JPanel mainMenu;
     private JButton newCharacterButton;
@@ -19,8 +39,9 @@ public class MainFrame {
     private JLabel welcomeLabel;
     private JPanel buttons;
     private JButton deleteButton;
-    private JButton settingsButton;
     private int tester = 0;
+
+    static String filepath;
 
     /* Active inventory */
     static Inventory inventory;
@@ -33,19 +54,29 @@ public class MainFrame {
     static Dimension mainDim = new Dimension(725, 800);
 
     /* List of the component types so that fonts and backgrounds can be easily changed */
-    static String[] componentFonts = {"Button.font","Label.font","Panel.font","CheckBox.font","CheckBoxMenuItem.font","ScrollPane.font","TabbedPane.font","TextField.font","TextArea.font"};
-    static String[] componentBackgrounds = {"Panel.background","Frame.background","ScrollPane.background","TabbedPane.background","TextArea.background","Label.background","CheckBox.background","CheckBoxMenuItem.font"};
+    static String[] componentFonts = {"Button.font","Label.font","Panel.font","CheckBox.font","CheckBoxMenuItem.font","ScrollPane.font",
+            "TabbedPane.font","TextField.font","TextArea.font","RadioButton.font"};
+    static String[] componentBackgrounds = {"Panel.background","Frame.background","ScrollPane.background","TabbedPane.background",
+            "TextArea.background","Label.background","CheckBox.background","CheckBoxMenuItem.background","RadioButton.background"};
+    static Color defaultColor = new Color(174,162,135);
 
     static boolean debug = false;
+
+    static CharForm charFrame;
+
+
 
     public MainFrame() {
         /* When load character is pressed, creates an object to interact with computers file system, and user
            Will select character folder (characters are currently stored in folders, not just one file)
          */
+
         loadCharacterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fc = new JFileChooser("Characters");
+                JFileChooser fc;
+                fc = new JFileChooser(new File(filepath));
+                //JOptionPane.showMessageDialog(null,filepath,"alert",JOptionPane.ERROR_MESSAGE);
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
                 if (fc.getName(fc.getSelectedFile()) != null) {
@@ -53,7 +84,7 @@ public class MainFrame {
                     background = charJSON.getString("background");
                     notes = charJSON.getString("notes");
                     featsntraits = charJSON.getString("featuresntraits");
-                    CharForm charFrame = new CharForm(charJSON,frame);
+                    charFrame = new CharForm(charJSON,frame);
                     JPanel pan = charFrame.charPan;
                     frame.setContentPane(pan);
                     frame.validate();
@@ -89,7 +120,8 @@ public class MainFrame {
                 background = "";
                 notes = "";
                 featsntraits = "";
-                frame.setContentPane(new CharForm(frame).charPan);
+                charFrame = new CharForm(frame);
+                frame.setContentPane(charFrame.charPan);
                 frame.validate();
                 frame.repaint();
 
@@ -104,11 +136,11 @@ public class MainFrame {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fc = new JFileChooser("Characters");
+                JFileChooser fc = new JFileChooser(filepath);
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
                 String fldrName = fc.getName(fc.getSelectedFile());
-                File dir = new File("Characters" + System.getProperty("file.separator") + fldrName);
+                File dir = new File(filepath + System.getProperty("file.separator") + fldrName);
 
                 if (dir.isDirectory() != false) {
                     File[] listFiles = dir.listFiles();
@@ -120,36 +152,40 @@ public class MainFrame {
             }
         });
 
-        settingsButton.addActionListener(new ActionListener() {
+        /*settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(tester == 0){
                     for(String s : componentBackgrounds)
                         UIManager.put(s, Color.red);
                     tester = 1;
-                    //System.out.println(UIManager.getColor("Panel.background"));
-                    mainMenu.revalidate();
-                    mainMenu.repaint();
+                    mainMenu.setBackground(Color.darkGray);
                 }
                 else{
                     for(String s : componentBackgrounds)
                         UIManager.put(s, Color.lightGray);
                     tester = 0;
-                    //System.out.println(UIManager.getColor("Panel.background"));
-                    mainMenu.revalidate();
-                    mainMenu.repaint();
+                    mainMenu.setBackground(defaultColor);
                 }
 
             }
-        });
+        });*/
 
     }
 
     public static void main(String[] args) {
+        try{
+            if(maintenance)
+                filepath = "Characters";
+            else
+                filepath = MainFrame.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()+
+                        System.getProperty("file.separator")+".." + System.getProperty("file.separator") + "Characters";
+        } catch (Exception ex){System.out.println("Something went wrong");}
+
         for(String s : componentFonts)
             UIManager.put(s, new Font("STLiti", Font.BOLD, 16));
         for(String s : componentBackgrounds)
-            UIManager.put(s, new Color(174,162,135));
+            UIManager.put(s, defaultColor);
         UIManager.put("Button.background",Color.lightGray);
 
         MainFrame mainFrame = new MainFrame();
@@ -160,7 +196,7 @@ public class MainFrame {
         frame.pack();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int centerX = (int)((screenSize.getWidth()-frame.getWidth())/2);
-        int centerXadjust = 50; // Inv and Spell frames are slightly larger, so we should shift the main screen left a bit
+        int centerXadjust = 100; // Inv and Spell frames are slightly larger, so we should shift the main screen left a bit
         int centerY = 25;
         frame.setLocation(centerX-centerXadjust,centerY);
         frame.setVisible(true);
@@ -199,6 +235,7 @@ public class MainFrame {
     private void setNotOpaque(){
         welcomePanel.setOpaque(false);
         buttons.setOpaque(false);
+        //buttons.remove(settingsButton);
     }
 
     public void letsRide() {
@@ -233,4 +270,8 @@ public class MainFrame {
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
+
+    public static String getFilepath(){return filepath;}
+
+    public static CharForm getCharFrame(){return charFrame;}
 }

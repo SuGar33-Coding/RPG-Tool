@@ -5,6 +5,7 @@ import backEnd.RPGCharacter;
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+import java.awt.*;
 
 public class noteForm {
     public JPanel notePanel;
@@ -15,9 +16,13 @@ public class noteForm {
     private JTextArea notesArea;
 
     public noteForm(){
+        Color background = notePanel.getBackground();
         backgroundArea.setText(MainFrame.background);
+        backgroundArea.setBackground(background.brighter());
         notesArea.setText(MainFrame.notes);
+        notesArea.setBackground(background.brighter());
         featsTraitsProficiencies.setText(MainFrame.featsntraits);
+        featsTraitsProficiencies.setBackground(background.brighter());
 
         backgroundArea.addCaretListener(new CaretListener() {
             @Override

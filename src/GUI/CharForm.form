@@ -637,35 +637,11 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="3312b" class="javax.swing.JButton" binding="updateSaveButton" default-binding="true">
-            <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Update/Save"/>
-            </properties>
-          </component>
           <hspacer id="2c9c5">
             <constraints>
               <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
           </hspacer>
-          <component id="e1dd9" class="javax.swing.JButton" binding="rollButton">
-            <constraints>
-              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Roll!"/>
-            </properties>
-          </component>
-          <component id="1f5ef" class="javax.swing.JButton" binding="invButton">
-            <constraints>
-              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Inventory"/>
-            </properties>
-          </component>
           <component id="4fe6e" class="javax.swing.JButton" binding="backButton">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -674,20 +650,44 @@
               <text value="Back"/>
             </properties>
           </component>
-          <component id="c90a2" class="javax.swing.JButton" binding="spellButton">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Spells"/>
-            </properties>
-          </component>
           <component id="31073" class="javax.swing.JButton" binding="noteButton">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Notes"/>
+            </properties>
+          </component>
+          <component id="e1dd9" class="javax.swing.JButton" binding="rollButton">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Roll!"/>
+            </properties>
+          </component>
+          <component id="3312b" class="javax.swing.JButton" binding="updateSaveButton" default-binding="true">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Update/Save"/>
+            </properties>
+          </component>
+          <component id="1f5ef" class="javax.swing.JButton" binding="invButton">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Inventory"/>
+            </properties>
+          </component>
+          <component id="c90a2" class="javax.swing.JButton" binding="spellButton">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Spells"/>
             </properties>
           </component>
         </children>

@@ -22,6 +22,7 @@ public class detailForm {
     public detailForm(Item item){
         notesArea.setLineWrap(true);
         notesArea.setWrapStyleWord(true);
+        notesArea.setBackground(detailPanel.getBackground().brighter());
 
         if(item.isWeapon())
             weaponInit(item);

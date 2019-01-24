@@ -13,6 +13,7 @@ import java.util.Random;
 import backEnd.Dicey;
 import backEnd.Inventory;
 import backEnd.Item;
+import backEnd.Spell;
 
 public class DI {
     public JPanel DicePanel;
@@ -47,6 +48,13 @@ public class DI {
                     if(weapon.isEquipped())
                         addEquippedItemRolls(weapon);
 
+        ArrayList<Spell> spells = MainFrame.spellBook.getSpells();
+
+        for(Spell spell : spells)
+            if(spell.isPrepared())
+                addPreparedSpellRolls(spell);
+
+        resultTextArea.setBackground(DicePanel.getBackground().brighter());
     }
 
     private void addEquippedItemRolls(Item weapon){
@@ -75,8 +83,8 @@ public class DI {
 
                 int roll[] = Dicey.Roll(weapon.getDamageDice());
 
-                int weaponBuff = roll[roll.length-1]-roll[roll.length-2];
-                roll[roll.length-1] += weaponBuff + buff;
+                //int weaponBuff = roll[roll.length-1]-roll[roll.length-2];
+                roll[roll.length-1] += buff;
                 resultTextArea.append("\nResult: " + Dicey.rollToString(roll));
             }
         });
@@ -89,6 +97,52 @@ public class DI {
                 try {buff = Integer.parseInt(bufff);} catch (NumberFormatException ex) {buff = 0;}
 
                 int roll[] = Dicey.Roll(1,20,weapon.getBonus()+buff);
+                resultTextArea.append("\nResult: " + Dicey.rollToString(roll));
+                if(madlad)
+                    nat(20,roll);
+            }
+        });
+    }
+
+    private void addPreparedSpellRolls(Spell spell){
+        JLabel spellName = new JLabel(spell.getName());
+        equippedItemsPane.add(Box.createRigidArea(itemPaneDim));
+        equippedItemsPane.add(spellName);
+
+        JButton attackRollButton = new JButton("Attack Roll");
+        JButton damageRollButton = new JButton("Damage/Heal Roll");
+
+        JPanel itemButtons = new JPanel();
+        itemButtons.setLayout(new FlowLayout());
+        itemButtons.setPreferredSize(itemButtonsDim);
+
+        itemButtons.add(attackRollButton);
+        itemButtons.add(damageRollButton);
+
+        equippedItemsButtonPane.add(itemButtons);
+
+        damageRollButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int buff;
+                String bufff = buffField.getText();
+                try {buff = Integer.parseInt(bufff);} catch (NumberFormatException ex) {buff = 0;}
+
+                int roll[] = Dicey.Roll(spell.getDamageDice());
+
+                roll[roll.length-1] += buff;
+                resultTextArea.append("\nResult: " + Dicey.rollToString(roll));
+            }
+        });
+
+        attackRollButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int buff;
+                String bufff = buffField.getText();
+                try {buff = Integer.parseInt(bufff);} catch (NumberFormatException ex) {buff = 0;}
+
+                int roll[] = Dicey.Roll(1,20,MainFrame.spellBook.getAttackBonus()+buff);
                 resultTextArea.append("\nResult: " + Dicey.rollToString(roll));
                 if(madlad)
                     nat(20,roll);

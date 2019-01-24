@@ -1,5 +1,7 @@
 package backEnd;
 
+import GUI.MainFrame;
+import com.sun.tools.javac.Main;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -9,16 +11,17 @@ public class RPGCharacter {
     public static int calculateActionBonus(int rawStat) {
         return (rawStat - 10) / 2;
     }
+    private static String filepath = MainFrame.getFilepath();
 
     /**
      * Main write to character JSON file
      * @param charData
      */
-    public static void writeCharJSON(JSONObject charData) {
+    public static void writeCharJSON(JSONObject charData,String f) {
         String sep = System.getProperty("file.separator");
-        File dir = new File("Characters" + sep + charData.get("char name"));
+        File dir = new File(filepath +  sep + charData.get("char name"));
         dir.mkdir();
-        try (Writer charWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Characters" + sep + charData.get("char name") + sep + charData.get("char name") + "_data.json"), "utf-8"));) {
+        try (Writer charWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filepath +  sep + charData.get("char name") + sep + charData.get("char name") + "_data.json"), "utf-8"));) {
             charWriter.write(charData.toString(4));
         } catch (IOException ex) {
             System.out.println("Something went wrong while writing data file.");
@@ -33,11 +36,11 @@ public class RPGCharacter {
      */
     public static JSONObject loadCharJSON(String charName) {
         String sep = System.getProperty("file.separator");
-        String filePath = "Characters" + sep + charName;//.replace(" ","_");  TODO: Decide whether we want under scores(does function without)
+        String path = filepath + sep + charName;//.replace(" ","_");  TODO: Decide whether we want under scores(does function without)
 
         /* Read from file into array of stats */
         String json = "";
-        File statsFile = new File(filePath + sep + charName + "_data.json");
+        File statsFile = new File(path + sep + charName + "_data.json");
         try {
             BufferedReader br = new BufferedReader(new FileReader(statsFile));
             StringBuilder sb = new StringBuilder();
