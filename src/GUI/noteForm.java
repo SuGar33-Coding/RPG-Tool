@@ -1,7 +1,5 @@
 package GUI;
 
-import backEnd.RPGCharacter;
-
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;

@@ -27,7 +27,7 @@ import java.io.*;
  */
 
 public class MainFrame {
-    private static boolean maintenance = false;
+    private static boolean maintenance = true;
 
 
     private static JFrame frame = new JFrame("RPG Tool");
@@ -43,6 +43,8 @@ public class MainFrame {
 
     static String filepath;
 
+    /* Active character */
+    static RPGCharacter character;
     /* Active inventory */
     static Inventory inventory;
     /* Active notes */
@@ -80,19 +82,22 @@ public class MainFrame {
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.showOpenDialog(mainMenu);
                 if (fc.getName(fc.getSelectedFile()) != null) {
-                    JSONObject charJSON = RPGCharacter.loadCharJSON(fc.getName(fc.getSelectedFile()));
+                    JSONObject charJSON = IO.loadCharJSON(fc.getName(fc.getSelectedFile()));
                     background = charJSON.getString("background");
                     notes = charJSON.getString("notes");
                     featsntraits = charJSON.getString("featuresntraits");
-                    charFrame = new CharForm(charJSON,frame);
+
+                    character = new RPGCharacter(charJSON);
+
+                    charFrame = new CharForm(character,frame);
                     JPanel pan = charFrame.charPan;
                     frame.setContentPane(pan);
                     frame.validate();
                     frame.repaint();
-                    //charFrame.updateFormData(charJSON);
 
                     inventory = new Inventory(charJSON);
                     spellBook = new Spellbook(charJSON);
+
                     if (debug){
                         System.out.println(inventory);
                     }
@@ -117,6 +122,10 @@ public class MainFrame {
         newCharacterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                character = new RPGCharacter();
+                inventory = new Inventory();
+                spellBook = new Spellbook();
+
                 background = "";
                 notes = "";
                 featsntraits = "";
@@ -124,9 +133,6 @@ public class MainFrame {
                 frame.setContentPane(charFrame.charPan);
                 frame.validate();
                 frame.repaint();
-
-                inventory = new Inventory();
-                spellBook = new Spellbook();
 
                 if (debug) {
                     System.out.println(inventory);

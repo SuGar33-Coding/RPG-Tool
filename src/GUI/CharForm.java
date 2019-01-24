@@ -1,5 +1,6 @@
 package GUI;
 
+import backEnd.IO;
 import backEnd.RPGCharacter;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -104,7 +105,10 @@ public class CharForm {
             {strSave,athleticsCheckBox,dexSave,acrobaticsCheckBox,sleightOfHandCheckBox,stealthCheckBox,conSave,intSave,arcanaCheckBox,historyCheckBox,investigationCheckBox,
                     natureCheckBox,religionCheckBox,wisSave,animalhCheckBox,insightCheckBox,medicineCheckBox,perceptionCheckBox,survivalCheckBox,chSave,deceptionCheckBox,
                     intimidationCheckBox,performanceCheckBox,persuasionCheckBox}; // Just a list of all checkboxes/skills
-    private JSONObject actor;
+
+    /* reference to the active character */
+    private RPGCharacter actor;
+
     private JFrame frame;
     private final int diceyWidth = 500;
     private final int diceyHeight = 300;
@@ -113,16 +117,20 @@ public class CharForm {
 
     private int profBonus = 0;
 
-    public CharForm(JSONObject c, JFrame frame) {
-        actor = c;
+    public CharForm(RPGCharacter c, JFrame frame) {
+        this.actor = c;
         this.frame = frame;
         addListeners();
         updateFormData(actor);
     }
 
+    /**
+     * Assumes default (empty) RPGCharacter in MainFrame
+     */
     public CharForm(JFrame frame) {
         addListeners();
         this.frame = frame;
+        this.actor = MainFrame.character;
     }
 
     private void addListeners(){
@@ -135,42 +143,13 @@ public class CharForm {
         updateSaveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JSONObject data = new JSONObject();
-                data.put("player name",playerF.getText());
-                data.put("char name", charF.getText());
-                data.put("class", classF.getText());
-                data.put("race", raceF.getText());
-                data.put("level", levelF.getText());
-                data.put("alignment", alignmentF.getText());
-                data.put("xp", xpF.getText());
-                data.put("inspiration", Boolean.toString(inspirationCheckBox.isSelected()));
-                data.put("ac", acField.getText());
-                data.put("speed", speedField.getText());
-                data.put("max HP", maxHPField.getText());
-                data.put("current HP", currentHPField.getText());
-                data.put("hit dice size", hitDiceSizeF.getText());
-                data.put("current hit dice", currentHitDiceField.getText());
-                data.put("strength", strengthF.getText());
-                data.put("dexterity", dexterityF.getText());
-                data.put("constitution", constitutionF.getText());
-                data.put("intelligence", intelligenceF.getText());
-                data.put("wisdom", wisdomF.getText());
-                data.put("charisma", charismaF.getText());
-                JSONArray skillBonuses = new JSONArray();
-                for(JCheckBox checkBox : checkGroup){
-                    skillBonuses.put(Boolean.toString(checkBox.isSelected()));
-                }
-                data.put("skill bonuses", skillBonuses);
-                data.put("inventory",new JSONObject(MainFrame.inventory.toString()));
-                data.put("background",MainFrame.background);
-                data.put("notes",MainFrame.notes);
-                data.put("featuresntraits",MainFrame.featsntraits);
-                data.put("spellbook",new JSONArray(MainFrame.spellBook.toString()));
-                data.put("spell ability",MainFrame.spellBook.getSpellAbility());
+                saveToActor(actor);
 
+                JSONObject data = characterToJSON(actor);
 
-                RPGCharacter.writeCharJSON(data,MainFrame.getFilepath());
-                updateFormData(data);
+                IO.writeCharJSON(data,MainFrame.getFilepath());
+
+                updateFormData(actor);
             }
         });
 
@@ -246,35 +225,101 @@ public class CharForm {
         });
     }
 
-    private void updateFormData(JSONObject charStats){
-        int counter = 0;
-        playerF.setText(charStats.getString("player name"));
-        charF.setText(charStats.getString("char name"));
-        classF.setText(charStats.getString("class"));
-        raceF.setText(charStats.getString("race"));
-        levelF.setText(charStats.getString("level"));
-        alignmentF.setText(charStats.getString("alignment"));
-        xpF.setText(charStats.getString("xp"));
-        inspirationCheckBox.setSelected(charStats.getBoolean("inspiration"));
-        acField.setText(charStats.getString("ac"));
-        speedField.setText(charStats.getString("speed"));
-        maxHPField.setText(charStats.getString("max HP"));
-        currentHPField.setText(charStats.getString("current HP"));
-        hitDiceSizeF.setText(charStats.getString("hit dice size"));
-        currentHitDiceField.setText(charStats.getString("current hit dice"));
-        strengthF.setText(charStats.getString("strength"));
-        dexterityF.setText(charStats.getString("dexterity"));
-        constitutionF.setText(charStats.getString("constitution"));
-        intelligenceF.setText(charStats.getString("intelligence"));
-        wisdomF.setText(charStats.getString("wisdom"));
-        charismaF.setText(charStats.getString("charisma"));
+    private void saveToActor(RPGCharacter character) {
+        character.setPlayerName(playerF.getText());
+        character.setCharName(charF.getText());
+        character.setCharClass(classF.getText());
+        character.setRace(raceF.getText());
+        character.setLevel(levelF.getText());
+        character.setAlignment(alignmentF.getText());
+        character.setXp(xpF.getText());
+        character.setInspiration(inspirationCheckBox.isSelected());
+        character.setAc(acField.getText());
+        character.setSpeed(speedField.getText());
+        character.setMaxHP(maxHPField.getText());
+        character.setCurrentHP(currentHPField.getText());
+        character.setHitDiceSize(hitDiceSizeF.getText());
+        character.setCurrentHitDice(currentHitDiceField.getText());
+        character.setStrength(strengthF.getText());
+        character.setDexterity(dexterityF.getText());
+        character.setConstitution(constitutionF.getText());
+        character.setIntelligence(intelligenceF.getText());
+        character.setWisdom(wisdomF.getText());
+        character.setCharisma(charismaF.getText());
+        boolean[] skills = new boolean[checkGroup.length];
+        int i = 0;
+        for(JCheckBox checkBox : checkGroup){
+            skills[i] = checkBox.isSelected();
+            i++;
+        }
+        character.setSkills1D(skills);
+    }
+
+    private JSONObject characterToJSON(RPGCharacter character) {
+        JSONObject data = new JSONObject();
+        data.put("player name",character.getPlayerName());
+        data.put("char name", character.getCharName());
+        data.put("class", character.getCharClass());
+        data.put("race", character.getRace());
+        data.put("level", character.getLevel());
+        data.put("alignment", character.getAlignment());
+        data.put("xp", character.getXp());
+        data.put("inspiration", Boolean.toString(character.isInspiration()));
+        data.put("ac", character.getAc());
+        data.put("speed", character.getSpeed());
+        data.put("max HP", character.getMaxHP());
+        data.put("current HP", character.getCurrentHP());
+        data.put("hit dice size", character.getHitDiceSize());
+        data.put("current hit dice", character.getCurrentHitDice());
+        data.put("strength", character.getStrength());
+        data.put("dexterity", character.getDexterity());
+        data.put("constitution", character.getConstitution());
+        data.put("intelligence", character.getIntelligence());
+        data.put("wisdom", character.getWisdom());
+        data.put("charisma", character.getCharisma());
+        JSONArray skillBonuses = new JSONArray();
+        for(JCheckBox checkBox : checkGroup){
+            skillBonuses.put(Boolean.toString(checkBox.isSelected()));
+        }
+        data.put("skill bonuses", skillBonuses);
+        data.put("inventory",new JSONObject(MainFrame.inventory.toString()));
+        data.put("background",MainFrame.background);
+        data.put("notes",MainFrame.notes);
+        data.put("featuresntraits",MainFrame.featsntraits);
+        data.put("spellbook",new JSONArray(MainFrame.spellBook.toString()));
+        data.put("spell ability",MainFrame.spellBook.getSpellAbility());
+
+        return data;
+    }
+
+    private void updateFormData(RPGCharacter character){
+        playerF.setText(character.getPlayerName());
+        charF.setText(character.getCharName());
+        classF.setText(character.getCharClass());
+        raceF.setText(character.getRace());
+        levelF.setText(character.getLevel());
+        alignmentF.setText(character.getAlignment());
+        xpF.setText(character.getXp());
+        inspirationCheckBox.setSelected(character.isInspiration());
+        acField.setText(character.getAc());
+        speedField.setText(character.getSpeed());
+        maxHPField.setText(character.getMaxHP());
+        currentHPField.setText(character.getCurrentHP());
+        hitDiceSizeF.setText(character.getHitDiceSize());
+        currentHitDiceField.setText(character.getCurrentHitDice());
+        strengthF.setText(character.getStrength());
+        dexterityF.setText(character.getDexterity());
+        constitutionF.setText(character.getConstitution());
+        intelligenceF.setText(character.getIntelligence());
+        wisdomF.setText(character.getWisdom());
+        charismaF.setText(character.getCharisma());
         try {
-            SB.setText("SB: " + RPGCharacter.calculateActionBonus(Integer.parseInt(strengthF.getText()))+ " ");
-            DB.setText("DB: " + RPGCharacter.calculateActionBonus(Integer.parseInt(dexterityF.getText()))+ " ");
-            CB.setText("CB: " + RPGCharacter.calculateActionBonus(Integer.parseInt(constitutionF.getText()))+ " ");
-            IB.setText("IB: " + RPGCharacter.calculateActionBonus(Integer.parseInt(intelligenceF.getText()))+ " ");
-            WB.setText("WB: " + RPGCharacter.calculateActionBonus(Integer.parseInt(wisdomF.getText()))+ " ");
-            ChB.setText("ChB: " + RPGCharacter.calculateActionBonus(Integer.parseInt(charismaF.getText()))+ " ");
+            SB.setText("SB: " + RPGCharacter.calculateActionBonus(strengthF.getText())+ " ");
+            DB.setText("DB: " + RPGCharacter.calculateActionBonus(dexterityF.getText())+ " ");
+            CB.setText("CB: " + RPGCharacter.calculateActionBonus(constitutionF.getText())+ " ");
+            IB.setText("IB: " + RPGCharacter.calculateActionBonus(intelligenceF.getText())+ " ");
+            WB.setText("WB: " + RPGCharacter.calculateActionBonus(wisdomF.getText())+ " ");
+            ChB.setText("ChB: " + RPGCharacter.calculateActionBonus(charismaF.getText())+ " ");
         } catch (NumberFormatException ex){
             SB.setText("0 ");
             DB.setText("0 ");
@@ -283,26 +328,16 @@ public class CharForm {
             WB.setText("0 ");
             ChB.setText("0 ");
         }
-        profBonus = RPGCharacter.calculateProficiencyBonus(Integer.parseInt(levelF.getText()));
-        boolean[][] skills = {new boolean[2],
-                new boolean[4],
-                new boolean[1],
-                new boolean[6],
-                new boolean[6],
-                new boolean[5]};
-        int k = 0;
-        for (int i = 0; i < skills.length; i++) {
-            for (int j = 0; j < skills[i].length; j++) {
-                skills[i][j] = charStats.getJSONArray("skill bonuses").getBoolean(k);
-                k++;
-            }
-        }
+        profBonus = Integer.parseInt(actor.getProficiency());
+
+        boolean[][] skills = actor.getSkills();
+
         String append = "";
         if(profBonus >= 0)
             append += "+";
         append += String.valueOf(profBonus);
         proficiency.setText("Proficiency Bonus:  "+append);
-        maxHitDiceAmount.setText(String.valueOf(levelF.getText()));
+        maxHitDiceAmount.setText(String.valueOf(actor.getLevel()));
 
         int groupCounter = 0;
         for(int i = 0; i<skills.length; i++){
@@ -318,22 +353,22 @@ public class CharForm {
                 String bString;
                 switch(i) {
                     case 0:
-                        bonus = RPGCharacter.calculateActionBonus(Integer.parseInt(strengthF.getText()));
+                        bonus = RPGCharacter.calculateActionBonus(strengthF.getText());
                         break;
                     case 1:
-                        bonus = RPGCharacter.calculateActionBonus(Integer.parseInt(dexterityF.getText()));
+                        bonus = RPGCharacter.calculateActionBonus(dexterityF.getText());
                         break;
                     case 2:
-                        bonus = RPGCharacter.calculateActionBonus(Integer.parseInt(constitutionF.getText()));
+                        bonus = RPGCharacter.calculateActionBonus(constitutionF.getText());
                         break;
                     case 3:
-                        bonus = RPGCharacter.calculateActionBonus(Integer.parseInt(intelligenceF.getText()));
+                        bonus = RPGCharacter.calculateActionBonus(intelligenceF.getText());
                         break;
                     case 4:
-                        bonus = RPGCharacter.calculateActionBonus(Integer.parseInt(wisdomF.getText()));
+                        bonus = RPGCharacter.calculateActionBonus(wisdomF.getText());
                         break;
                     case 5:
-                        bonus = RPGCharacter.calculateActionBonus(Integer.parseInt(charismaF.getText()));
+                        bonus = RPGCharacter.calculateActionBonus(charismaF.getText());
                         break;
                     default:
                         bonus = 0;
