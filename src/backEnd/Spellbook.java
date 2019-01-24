@@ -20,12 +20,14 @@ public class Spellbook {
     /**
      * Default constructor
      */
-    public Spellbook() {
+    public Spellbook(RPGCharacter character) {
+        this.actor = character;
         this.spellAbility = "intelligence";
+        //setAttackBonusNDC(spellAbility);
     }
 
-    public Spellbook(RPGCharacter characer, JSONObject charJSON){
-        this.actor = characer;
+    public Spellbook(RPGCharacter character, JSONObject charJSON){
+        this.actor = character;
 
         JSONArray textBook = charJSON.getJSONArray("spellbook");
         int length = textBook.length();
@@ -66,22 +68,22 @@ public class Spellbook {
     public void setAttackBonusNDC(String bonus){
         switch(bonus){
             case "strength":
-                attackBonus = MainFrame.getCharFrame().getSB();
+                attackBonus = Integer.parseInt(actor.getSB());
                 break;
             case "constitution":
-                attackBonus = MainFrame.getCharFrame().getCB();
+                attackBonus = Integer.parseInt(actor.getCB());
                 break;
             case "dexterity":
-                attackBonus = MainFrame.getCharFrame().getDB();
+                attackBonus = Integer.parseInt(actor.getDB());
                 break;
             case "intelligence":
-                attackBonus = MainFrame.getCharFrame().getIB();
+                attackBonus = Integer.parseInt(actor.getIB());
                 break;
             case "wisdom":
-                attackBonus = MainFrame.getCharFrame().getWB();
+                attackBonus = Integer.parseInt(actor.getWB());
                 break;
             case "charisma":
-                attackBonus = MainFrame.getCharFrame().getChB();
+                attackBonus = Integer.parseInt(actor.getChB());
                 break;
             default:
                 attackBonus = 0;

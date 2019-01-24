@@ -107,7 +107,7 @@ public class CharForm {
                     intimidationCheckBox,performanceCheckBox,persuasionCheckBox}; // Just a list of all checkboxes/skills
 
     /* reference to the active character */
-    private RPGCharacter actor;
+    public RPGCharacter actor;
 
     private JFrame frame;
     private final int diceyWidth = 500;

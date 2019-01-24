@@ -1,5 +1,6 @@
 package GUI;
 
+import backEnd.RPGCharacter;
 import backEnd.Spell;
 import backEnd.Spellbook;
 
@@ -38,12 +39,12 @@ public class SpellForm {
     private Dimension spellPanelDim = new Dimension(buttonPanelWidth, 48);
     private ButtonGroup spellCastingAbilityGroup = new ButtonGroup();
     private JRadioButton[] spellCastingRadioButtons = {strButton,consButton,dexterityRadioButton,intelligenceRadioButton,wisdomRadioButton,charismaRadioButton};
-    private Spellbook spellbook;
+    private RPGCharacter actor;
 
     public SpellForm(CharForm form) {
         sep = MainFrame.sep;
         parentCharForm = form;
-        spellbook = form.getActor().spellBook;
+        this.actor = parentCharForm.actor;
 
         Color background = spellPane.getBackground().brighter();
 
@@ -58,7 +59,7 @@ public class SpellForm {
         buttonPanel.setMinimumSize(d);
         buttonPanel.setBackground(background);
 
-        updateFormData(spellbook);
+        updateFormData(actor.spellBook);
 
         for(JRadioButton button : spellCastingRadioButtons)
             button.addActionListener(new spellCastingAbilityListener());
@@ -73,8 +74,8 @@ public class SpellForm {
                     field.setText("");
                 }
                 infoLine += "false";
-                spellbook.addSpell(infoLine);
-                updateFormData(spellbook);
+                actor.spellBook.addSpell(infoLine);
+                updateFormData(actor.spellBook);
             }
         });
     }
@@ -153,7 +154,7 @@ public class SpellForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 spells.remove(count);
-                updateFormData(spellbook);
+                updateFormData(actor.spellBook);
             }
         });
 
@@ -188,17 +189,17 @@ public class SpellForm {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(strButton.isSelected())
-                spellbook.setAttackBonusNDC("strength");
+                actor.spellBook.setAttackBonusNDC("strength");
             else if(consButton.isSelected())
-                spellbook.setAttackBonusNDC("constitution");
+                actor.spellBook.setAttackBonusNDC("constitution");
             else if(dexterityRadioButton.isSelected())
-                spellbook.setAttackBonusNDC("dexterity");
+                actor.spellBook.setAttackBonusNDC("dexterity");
             else if(intelligenceRadioButton.isSelected())
-                spellbook.setAttackBonusNDC("intelligence");
+                actor.spellBook.setAttackBonusNDC("intelligence");
             else if(wisdomRadioButton.isSelected())
-                spellbook.setAttackBonusNDC("wisdom");
+                actor.spellBook.setAttackBonusNDC("wisdom");
             else if(charismaRadioButton.isSelected())
-                spellbook.setAttackBonusNDC("charisma");
+                actor.spellBook.setAttackBonusNDC("charisma");
 
 
             updateBonusNDC();
@@ -206,12 +207,12 @@ public class SpellForm {
     }
 
     private void updateBonusNDC(){
-        spellDCLabel.setText("Spell Save DC: "+spellbook.getSpellDC()+" ");
+        spellDCLabel.setText("Spell Save DC: "+actor.spellBook.getSpellDC()+" ");
 
-        if(spellbook.getAttackBonus() >= 0)
-            attackBonusLabel.setText("Attack Bonus: +"+spellbook.getAttackBonus()+" ");
+        if(actor.spellBook.getAttackBonus() >= 0)
+            attackBonusLabel.setText("Attack Bonus: +"+actor.spellBook.getAttackBonus()+" ");
         else
-            attackBonusLabel.setText("Attack Bonus: "+spellbook.getAttackBonus()+" ");
+            attackBonusLabel.setText("Attack Bonus: "+actor.spellBook.getAttackBonus()+" ");
     }
 
 }

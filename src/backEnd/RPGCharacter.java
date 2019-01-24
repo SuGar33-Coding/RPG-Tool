@@ -56,40 +56,8 @@ public class RPGCharacter {
      * Default constructor (could you tell)
      */
     public RPGCharacter() {
-        this.playerName = "_DEFAULT";
-        this.charName = "_DEFAULT";
-        this.charClass = "_DEFAULT";
-        this.race = "_DEFAULT";
-        this.level = "_DEFAULT";
-        this.alignment = "_DEFAULT";
-        this.xp = "_DEFAULT";
-        this.inspiration = false;
-        this.ac = "_DEFAULT";
-        this.speed = "_DEFAULT";
-        this.maxHP = "_DEFAULT";
-        this.currentHP = "_DEFAULT";
-        this.hitDiceSize = "_DEFAULT";
-        this.currentHitDice = "_DEFAULT";
-        this.strength = "_DEFAULT";
-        this.dexterity = "_DEFAULT";
-        this.constitution = "_DEFAULT";
-        this.intelligence = "_DEFAULT";
-        this.wisdom = "_DEFAULT";
-        this.charisma = "_DEFAULT";
-
-        this.skills1D = new boolean[10];
-
-        this.SB = "_DEFAULT";
-        this.DB = "_DEFAULT";
-        this.CB = "_DEFAULT";
-        this.IB = "_DEFAULT";
-        this.WB = "_DEFAULT";
-        this.ChB = "_DEFAULT";
-        this.proficiency = "_DEFAULT";
-        this.maxHitDiceAmount = this.level;
-
-        this.inventory = new Inventory();
-        this.spellBook = new Spellbook();
+        this.inventory = new Inventory(this);
+        this.spellBook = new Spellbook(this);
         this.background = "";
         this.notes = "";
         this.featsntraits = "";
@@ -111,11 +79,17 @@ public class RPGCharacter {
         this.hitDiceSize = charJSON.getString("hit dice size");
         this.currentHitDice = charJSON.getString("current hit dice");
         this.strength = charJSON.getString("strength");
+        this.SB = Integer.toString(calculateActionBonus(this.strength));
         this.dexterity = charJSON.getString("dexterity");
+        this.DB = Integer.toString(calculateActionBonus(dexterity));
         this.constitution = charJSON.getString("constitution");
+        this.CB = Integer.toString(calculateActionBonus(constitution));
         this.intelligence = charJSON.getString("intelligence");
+        this.IB = Integer.toString(calculateActionBonus(intelligence));
         this.wisdom = charJSON.getString("wisdom");
+        this.WB = Integer.toString(calculateActionBonus(wisdom));
         this.charisma = charJSON.getString("charisma");
+        this.ChB = Integer.toString(calculateActionBonus(charisma));
 
         boolean[][] skills = {new boolean[2],
                 new boolean[4],

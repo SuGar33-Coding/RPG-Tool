@@ -36,7 +36,8 @@ public class DI {
         addRollListener();
     }
 
-    public DI(RPGCharacter actor){  // If roll is accessed from character sheet, equipped items will also appear.
+    public DI(RPGCharacter character){  // If roll is accessed from character sheet, equipped items will also appear.
+        this.actor = character;
         addRollListener();
         equippedItemsPane.setLayout(new BoxLayout(equippedItemsPane, BoxLayout.PAGE_AXIS));
         equippedItemsButtonPane.setLayout(new BoxLayout(equippedItemsButtonPane, BoxLayout.PAGE_AXIS));

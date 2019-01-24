@@ -22,7 +22,8 @@ public class Inventory {
      * Default constructor
      * Sets up the Map struct
      */
-    public Inventory() {
+    public Inventory(RPGCharacter character) {
+        this.actor = character;
         inv = new HashMap<>();
         for(String type : types)
             inv.put(type, new  ArrayList<>());
